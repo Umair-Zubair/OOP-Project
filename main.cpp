@@ -21,6 +21,7 @@ int main( int argc, char *argv[] )
     }
 
     SDL_Event windowEvent;
+    //SDL_SetRenderDrawColor(renderer,0,255,0,255);
 
     while ( true )
     {
