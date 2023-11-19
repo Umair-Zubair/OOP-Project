@@ -101,3 +101,12 @@ void maze::placeObstacles(){
         //this loop keeps on generating cols and rows and placing obstacles until 2 obstcales are placed
     }
 }  
+
+bool maze::isValidMove(int x, int y) const {
+    // Check if the coordinates are within the boundaries of the maze
+    if (x >= 0 && x < width && y >= 0 && y < height) {
+        // Check if there is no wall (graph[x][y] != 1) and no obstacle (graph[x][y] != 2)
+        return graph[x][y] != 1 && graph[x][y] != 2;
+    }
+    return false; // Coordinates are out of bounds
+}
