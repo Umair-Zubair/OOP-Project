@@ -13,4 +13,5 @@ class maze{
     void thirdFrame();
     void fourthFrame();
     void placeObstacles();
+    bool isValidMove(int x, int y) const;
 };
