@@ -37,6 +37,8 @@ void Enemy::moveTowardsPlayer(const std::pair<int, int>& playerLocation) {
     }
 }
 
+//  test test
+
 int Enemy::attackPlayer() {
     // Select a random weapon from the available weapons
     int randomIndex = rand() % weapons.size();
