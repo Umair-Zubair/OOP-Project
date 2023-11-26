@@ -50,7 +50,7 @@ int main( int argc, char *argv[] )
     RenderWindow window("Test", 800, 600);
 
     // Load a texture on the screen.
-    SDL_Texture* playerModel = window.loadTexture("idle_model_1.png");
+    SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
 
     // need to make a loop for game running so that window stays popped up.
 
