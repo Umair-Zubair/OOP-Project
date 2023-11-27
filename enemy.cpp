@@ -3,7 +3,7 @@
 Enemy::Enemy(int mazeSize, maze* mazeObj) : gameMaze(mazeObj), health(100) {
     srand(static_cast<unsigned>(time(nullptr)));
     location = std::make_pair(rand() % mazeSize, rand() % mazeSize);
-    weaponType = "Sword"; // Only one weapon type, i.e., Sword
+    weaponType = "Sword"; // weapon Sword
 }
 
 // hello
