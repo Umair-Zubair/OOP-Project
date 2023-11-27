@@ -21,7 +21,18 @@ int main( int argc, char *argv[] )
     }
 
     SDL_Event windowEvent;
-    //SDL_SetRenderDrawColor(renderer,0,255,0,255);
+    // The window we'll be rendering to
+    SDL_Window *gWindow = NULL;
+
+    // The window renderer
+    SDL_Renderer *gRenderer = NULL;
+
+    // Current displayed texture
+    SDL_Texture *gTexture = NULL;
+    // global reference to png image sheets
+    SDL_Texture *assets = NULL;
+    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    gTexture = loadTexture("brownTile.png");
 
     while ( true )
     {
