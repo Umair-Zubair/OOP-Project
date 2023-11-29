@@ -1,7 +1,9 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+
 #include "RenderWindow.hpp"
+
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
 // Please look at command for mingw and sdl installation locaton.(For group members.)
@@ -9,82 +11,62 @@ using namespace std;
 
 const int WIDTH = 800, HEIGHT = 600;
 
-int main( int argc, char *argv[] )
-{
-    // SDL_Init( SDL_INIT_EVERYTHING );
-
-    // SDL_Window *window = SDL_CreateWindow( "Hello SDL WORLD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI );
-
-    // if ( NULL == window )
-    // {
-    //     std::cout << "Could not create window: " << SDL_GetError( ) << std::endl;
-    //     return 1;
-    // }
-
-    // SDL_Event windowEvent;
-    // //SDL_SetRenderDrawColor(renderer,0,255,0,255);
-
-    // while ( true )
-    // {
-    //     if ( SDL_PollEvent( &windowEvent ) )
-    //     {
-    //         if ( SDL_QUIT == windowEvent.type )
-    //         { break; }
-    //     }
-    // }
-
-    // SDL_DestroyWindow( window );
-    // SDL_Quit( );
-
-    // return EXIT_SUCCESS;
-    // // Rough to see how to display a window in SDL.
-    // // Need to run SDL renderer and SDL rect for sprites.
-    // // need to wrok on the mazes and then display them.
-
-    // NEED TO GIVE ERROR IF PNG LOADS OR NOT.
-
-    if (!(IMG_INIT_PNG)){
-        cout << "IMG_init has failed. Error: " << SDL_GetError() << endl;
+void renderBrownTile(SDL_Renderer* renderer, int x, int y, int tileWidth, int tileHeight) {
+    SDL_Surface* surface = SDL_LoadBMP("brownTile.bmp"); // Load brownTile.bmp (assuming it's a BMP file)
+    if (!surface) {
+        std::cout << "Failed to load brownTile.bmp: " << SDL_GetError() << std::endl;
+        // Handle error
     }
 
-    SDL_Event windowEvent;
-    // The window we'll be rendering to
-    SDL_Window *gWindow = NULL;
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
 
-    // The window renderer
-    SDL_Renderer *gRenderer = NULL;
+    SDL_Rect destRect = { 0, 0, 100, 0}; // Destination rectangle for rendering
+    SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 
-    // Current displayed texture
-    SDL_Texture *gTexture = NULL;
-    // global reference to png image sheets
-    SDL_Texture *assets = NULL;
-    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    gTexture = loadTexture("brownTile.png");
-    RenderWindow window("Test", 800, 600);
-
-    // Load a texture on the screen.
-    SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
-
-    // need to make a loop for game running so that window stays popped up.
-
-    bool gameRunning = true;
-
-    SDL_Event event;
-
-    while (gameRunning)
-    {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
-                gameRunning = false;
-            }
-        }
-        window.clear();
-        window.render(playerModel);
-        window.display();
-    }
-
-    
-    SDL_Quit();
+    SDL_DestroyTexture(texture);
 }
+
+int SDL_main() {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+
+    // SDL initialization
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cout << "SDL initialization failed: " << SDL_GetError() << std::endl;
+        return -1;
+    }
+
+    // Create a window
+    window = SDL_CreateWindow("Render Brown Tile", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    if (!window) {
+        std::cout << "Failed to create window: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return -1;
+    }
+
+    // Create a renderer
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        std::cout << "Failed to create renderer: " << SDL_GetError() << std::endl;
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
+
+    // Render the brown tile at specific coordinates (e.g., x = 100, y = 100) with width and height
+    renderBrownTile(renderer, 0, 0, 100, 75); // Assuming a tile size of 32x32 pixels
+
+    SDL_RenderPresent(renderer);
+
+    // Delay to see the rendered image (you might have game loop here)
+    SDL_Delay(3000);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+}
+

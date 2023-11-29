@@ -1,12 +1,17 @@
 #include "maze.hpp"
 #include <random>
+#include "RenderWindow.hpp"
 
 maze::maze(){
     //overloaded constructor called whenever a new frame is created in main
     //initalizes whole array to 0
+    SDL_Texture *gTexture = NULL;
+    SDL_Window *gWindow = NULL;
+    //RenderWindow window("Test", 800, 600);
     for (int row=0;row<width;row++){
         for (int col=0;col<height;col++){
             graph[row][col]=0;
+            //SDL_Texture* tiles = window.loadTexture("brownTile.png");
         }
     }
 }
