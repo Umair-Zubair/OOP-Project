@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Entity.hpp"
 
 class RenderWindow
 {
@@ -14,7 +15,7 @@ class RenderWindow
         // need to render the texture that is being loaded.
         // need to display the texture.
         void clear(); //this is to clear anything old data that renderer has currently.
-        void render(SDL_Texture* _texture);// render function.
+        void render(Entity &_entity);// render function.
         void display();
 
 };

@@ -1,4 +1,6 @@
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
+#include "maze.hpp"
 #include <iostream>
 using namespace std;
 
@@ -20,24 +22,33 @@ void RenderWindow::clear() {
     SDL_RenderClear(renderer);
 }
 
-void RenderWindow::render(SDL_Texture* _texture)
+void RenderWindow::render(Entity &_entity)
 {
     // width height of player 64 pix (rn testing it. If needed change later.).
     // 112 by 185.
     SDL_Rect src;
-    src.w = 112;
-    src.h = 185;
-    src.x = 0;
-    src.y = 0;
+    src.w = _entity.getCurrentLocation().w;
+    src.h = _entity.getCurrentLocation().h;
+    src.x = _entity.getCurrentLocation().x;
+    src.y = _entity.getCurrentLocation().y;
 
     SDL_Rect dst;
-    dst.x = 200;
-    dst.y = 100;
-    dst.w = 64;
-    dst.h = 64;
+    dst.x = _entity.getX();
+    dst.y = _entity.GetY();
+    
+    // For maze.
+    if (static_cast<maze*>(&_entity) != nullptr){
+        // need to store width and height of the brownTile.
+        dst.w = 100;
+        dst.h = 75;
+    }
+    else{
+        dst.w = 128;
+        dst.h = 128;
+    }
 
     // SDL_RenderCopy(renderer, _texture, NULL, NULL);
-    SDL_RenderCopy(renderer, _texture, &src, &dst);
+    SDL_RenderCopy(renderer, _entity.getTexture(), &src, &dst);
 }
 
 void RenderWindow::display()

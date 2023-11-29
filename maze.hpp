@@ -1,5 +1,10 @@
 #include "drawing.hpp"
-class maze{
+#include <SDL.h>
+#include <SDL_image.h>
+#include "Entity.hpp"
+#include <vector>
+
+class maze: public Entity{
     protected:
     enum {width = 8, height = 8};
     int graph[width][height];
@@ -7,10 +12,11 @@ class maze{
     int obstacles[width][height];
     int obstacleCount=0;
     SDL_Rect srcRect, moverRect;
+    SDL_Texture* ptr;
     public:
-    maze();
+    maze(SDL_Texture *ptr);
     void makeGraph();
-    void firstFrame();
+    std::vector<Entity> firstFrame();
     void secondFrame();
     void thirdFrame();
     void fourthFrame();

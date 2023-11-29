@@ -4,6 +4,9 @@
 #include <SDL_image.h>
 
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
+#include "maze.hpp"
+#include <vector>
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -75,24 +78,98 @@ const int WIDTH = 800, HEIGHT = 600;
     return 0;
 }*/
 
-#include "game.hpp"
+// #include "game.hpp"
 
-int main(int argc, char *argv[]){
-    Game game;
-    srand(time(NULL));
-    if( !game.init() ){
-		printf( "Failed to initialize!\n" );
-        return 0;
-	}
-		//Load media
-    if( !game.loadMedia() ){
-        printf( "Failed to load media!\n" );
-        return 0;
+// int main(int argc, char *argv[]){
+    
+//     Game game;
+//     srand(time(NULL));
+//     if( !game.init() ){
+// 		printf( "Failed to initialize!\n" );
+//         return 0;
+// 	}
+// 		//Load media
+//     if( !game.loadMedia() ){
+//         printf( "Failed to load media!\n" );
+//         return 0;
+//     }
+
+//     game.run();
+//     game.close();
+
+//     return 0;
+// }
+
+int main( int argc, char *argv[] )
+{
+    
+   
+    // if ( NULL == window )
+    // {
+    //     std::cout << "Could not create window: " << SDL_GetError( ) << std::endl;
+    //     return 1;
+    // }
+    // SDL_Event windowEvent;
+    // //SDL_SetRenderDrawColor(renderer,0,255,0,255);
+    // while ( true )
+    // {
+    //     if ( SDL_PollEvent( &windowEvent ) )
+    //     {
+    //         if ( SDL_QUIT == windowEvent.type )
+    //         { break; }
+    //     }
+    // }
+    // SDL_DestroyWindow( window );
+    // SDL_Quit( );
+    // return EXIT_SUCCESS;
+    // // Rough to see how to display a window in SDL.
+    // // Need to run SDL renderer and SDL rect for sprites.
+    // // need to wrok on the mazes and then display them.
+    // NEED TO GIVE ERROR IF PNG LOADS OR NOT.
+    if (!(IMG_INIT_PNG)){
+        cout << "IMG_init has failed. Error: " << SDL_GetError() << endl;
     }
+    
+    SDL_Event windowEvent;
+    //SDL_SetRenderDrawColor(renderer,0,255,0,255);
+    RenderWindow window("Test", 1280, 720);
+    // Load a texture on the screen.
+    SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
+    SDL_Texture* Tile = window.loadTexture("brownTile.png");
+    // need to make a loop for game running so that window stays popped up.
+    Entity playerModel1(500,200, playerModel);
+    maze maze1(Tile);
+    vector<Entity> wall;
+    wall = maze1.firstFrame();
+    bool gameRunning = true;
+    SDL_Event event;
+    while (gameRunning)
+    {
+        if ( SDL_PollEvent( &windowEvent ) )
+        while (SDL_PollEvent(&event))
+        {
+            if ( SDL_QUIT == windowEvent.type )
+            { break; }
+            if (event.type == SDL_QUIT)
+            {
+                gameRunning = false;
+            }
+        }
+        window.clear();
+        // this is to render each wall pixel on the screen.
+        for(int i =0; i<wall.size(); i++){
+            window.render(wall[i]);
+        }
 
-    game.run();
-    game.close();
-
-    return 0;
+        window.render(playerModel1);
+        window.display();
+    }
+   
+    // Rough to see how to display a window in SDL.
+    // Need to run SDL renderer and SDL rect for sprites.
+    // need to wrok on the mazes and then display them.
+    // window.cleanUp();
+    SDL_Quit();
 }
+
 
