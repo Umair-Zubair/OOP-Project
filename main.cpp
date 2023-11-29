@@ -1,4 +1,5 @@
 #include <iostream>
+//#include<SDL2/SDL.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -11,7 +12,7 @@ using namespace std;
 
 const int WIDTH = 800, HEIGHT = 600;
 
-void renderBrownTile(SDL_Renderer* renderer, int x, int y, int tileWidth, int tileHeight) {
+/*void renderBrownTile(SDL_Renderer* renderer, int x, int y, int tileWidth, int tileHeight) {
     SDL_Surface* surface = SDL_LoadBMP("brownTile.bmp"); // Load brownTile.bmp (assuming it's a BMP file)
     if (!surface) {
         std::cout << "Failed to load brownTile.bmp: " << SDL_GetError() << std::endl;
@@ -25,9 +26,9 @@ void renderBrownTile(SDL_Renderer* renderer, int x, int y, int tileWidth, int ti
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 
     SDL_DestroyTexture(texture);
-}
+}*/
 
-int SDL_main() {
+/*int main() {
     SDL_Window* window;
     SDL_Renderer* renderer;
 
@@ -55,17 +56,42 @@ int SDL_main() {
     }
 
     // Render the brown tile at specific coordinates (e.g., x = 100, y = 100) with width and height
-    renderBrownTile(renderer, 0, 0, 100, 75); // Assuming a tile size of 32x32 pixels
+    //renderBrownTile(renderer, 0, 0, 100, 75); // Assuming a tile size of 32x32 pixels
 
     SDL_RenderPresent(renderer);
 
     // Delay to see the rendered image (you might have game loop here)
     SDL_Delay(3000);
 
+    RenderWindow window("Test", 800, 600);
+    // Load a texture on the screen.
+    //SDL_Texture* playerModel = window.loadTexture("idle_model_1.png");
+    SDL_Texture* playerModel = window.loadTexture("brownTile.bmp");
     // Cleanup
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+
+    return 0;
+}*/
+
+#include "game.hpp"
+
+int main(int argc, char *argv[]){
+    Game game;
+    srand(time(NULL));
+    if( !game.init() ){
+		printf( "Failed to initialize!\n" );
+        return 0;
+	}
+		//Load media
+    if( !game.loadMedia() ){
+        printf( "Failed to load media!\n" );
+        return 0;
+    }
+
+    game.run();
+    game.close();
 
     return 0;
 }

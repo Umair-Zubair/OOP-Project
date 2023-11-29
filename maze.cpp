@@ -5,13 +5,9 @@
 maze::maze(){
     //overloaded constructor called whenever a new frame is created in main
     //initalizes whole array to 0
-    SDL_Texture *gTexture = NULL;
-    SDL_Window *gWindow = NULL;
-    //RenderWindow window("Test", 800, 600);
     for (int row=0;row<width;row++){
         for (int col=0;col<height;col++){
             graph[row][col]=0;
-            //SDL_Texture* tiles = window.loadTexture("brownTile.png");
         }
     }
 }
@@ -25,6 +21,9 @@ void maze::firstFrame(){    //this function makes the first fram of the maze
         case(0):
             graph[row][4]=1;
             graph[row][6]=1;
+            srcRect = {0,0,122,116};
+            moverRect = {0,0,122,116};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             break;
         case(1):
             for (int col=0;col<width;col++){
