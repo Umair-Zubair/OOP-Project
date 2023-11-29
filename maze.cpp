@@ -14,42 +14,74 @@ maze::maze(){
 
 void maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
+    int temp = 0;
     for (int row=0;row<height;row++){ 
         switch (row){   //hard coded rows to draw the walls
         //graph[row][col] is set to 1 wherever walls need to be drawn
         //these coordinates will also be used to check if the player is making a valid move
         case(0):
             graph[row][4]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {300,0,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             graph[row][6]=1;
-            srcRect = {0,0,122,116};
-            moverRect = {0,0,122,116};
+            srcRect = {0,0,100,75};
+            moverRect = {600,0,100,75};
             SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             break;
         case(1):
             for (int col=0;col<width;col++){
-                if (col!=5){
+                if (col!=4 && col!=5){
                     graph[row][col]=1;
+                    srcRect = {0,0,100,75};
+                    moverRect = {temp,75,100,75};
+                    SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
                 }
+                temp+= 100;
             }
+            temp = 0;
             break;
         case(4):
             for (int col=0;col<width;col++){
                 if (col!=3 && col!=4){
                     graph[row][col]=1;
+                    srcRect = {0,0,100,75};
+                    moverRect = {temp,300,100,75};
+                    SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
                 }
+                temp += 100;
             }
+            temp = 0;
             break;
         case(5):
             graph[row][2]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {200,375,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             graph[row][5]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {500,375,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             break;
         case(6):
             graph[row][2]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {200,450,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             graph[row][5]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {500,450,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             break;
         case(7):
             graph[row][2]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {200,525,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             graph[row][5]=1;
+            srcRect = {0,0,100,75};
+            moverRect = {500,525,100,75};
+            SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
             break;
         }
     }
