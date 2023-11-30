@@ -7,99 +7,73 @@
 maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     //overloaded constructor called whenever a new frame is created in main
     //initalizes whole array to 0
-    // for (int row=0;row<width;row++){
-    //     for (int col=0;col<height;col++){
-    //         graph[row][col]=0;
-    //     }
-    // }
+    for (int row=0;row<width;row++){
+        for (int col=0;col<height;col++){
+            graph[row][col]=0;
+        }
+    }
 }
 
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
     std:: vector<Entity> wall;
     // starting postion of the first wall in top left corner.
-    float x =0;
-    float y =0;
-
-    // This is how you will use vector to draw ur mazes Further. Now figure out the math for every maze and make them accordingly.
-    for (int i= 0; x< 1280; i++){
-        wall.push_back(Entity( x, y, ptr));
-        x += 97;
+    float x = 0;
+    float y = 0;
+    
+    int temp = 0;
+    for (int row=0;row<height;row++){ 
+        switch (row){   //hard coded rows to draw the walls
+        //graph[row][col] is set to 1 wherever walls need to be drawn
+        //these coordinates will also be used to check if the player is making a valid move
+        case(0):
+            graph[row][4]=1;
+            wall.push_back(Entity(300,0,ptr));
+            graph[row][6]=1;
+            wall.push_back(Entity(600,0,ptr));
+            break;
+        case(1):
+            for (int col=0;col<width;col++){
+                if (col!=4 && col!=5){
+                    graph[row][col] = 1;
+                    wall.push_back(Entity(x,75,ptr));
+                }
+                x+= 100;
+            }
+            x = 0;
+            break;
+        case(4):
+            for (int col=0;col<width;col++){
+                if (col!=3 && col!=4){
+                    graph[row][col]=1;
+                    wall.push_back(Entity(x,300,ptr));
+                }
+                x += 100;
+            } 
+            x = 0;
+            break;
+        case(5):
+            graph[row][2]=1;
+            wall.push_back(Entity(200,375,ptr));
+            graph[row][5]=1;
+            wall.push_back(Entity(500,375,ptr));
+            break;
+        case(6):
+            graph[row][2]=1;
+            wall.push_back(Entity(200,450,ptr));
+            graph[row][5]=1;
+            wall.push_back(Entity(500,450,ptr));
+            break;
+        case(7):
+            graph[row][2]=1;
+            wall.push_back(Entity(200,525,ptr));
+            graph[row][5]=1;
+            wall.push_back(Entity(500,525,ptr));
+            break;
+        }
     }
-    return wall;
-
-    // int temp = 0;
-    // for (int row=0;row<height;row++){ 
-    //     switch (row){   //hard coded rows to draw the walls
-    //     //graph[row][col] is set to 1 wherever walls need to be drawn
-    //     //these coordinates will also be used to check if the player is making a valid move
-    //     case(0):
-    //         graph[row][4]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {300,0,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         graph[row][6]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {600,0,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         break;
-    //     case(1):
-    //         for (int col=0;col<width;col++){
-    //             if (col!=4 && col!=5){
-    //                 graph[row][col]=1;
-    //                 srcRect = {0,0,100,75};
-    //                 moverRect = {temp,75,100,75};
-    //                 SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //             }
-    //             temp+= 100;
-    //         }
-    //         temp = 0;
-    //         break;
-    //     case(4):
-    //         for (int col=0;col<width;col++){
-    //             if (col!=3 && col!=4){
-    //                 graph[row][col]=1;
-    //                 srcRect = {0,0,100,75};
-    //                 moverRect = {temp,300,100,75};
-    //                 SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //             }
-    //             temp += 100;
-    //         }
-    //         temp = 0;
-    //         break;
-    //     case(5):
-    //         graph[row][2]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {200,375,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         graph[row][5]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {500,375,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         break;
-    //     case(6):
-    //         graph[row][2]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {200,450,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         graph[row][5]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {500,450,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         break;
-    //     case(7):
-    //         graph[row][2]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {200,525,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         graph[row][5]=1;
-    //         srcRect = {0,0,100,75};
-    //         moverRect = {500,525,100,75};
-    //         SDL_RenderCopy(Drawing::gRenderer, Drawing::assets, &srcRect, &moverRect);
-    //         break;
-    //     }
-    // }
     placeObstacles(); //obstacles function is called to place 2 random obstacles in the frame
+    return wall;
 }
 
 //following 3 functions are skeleton, will be implemented later.
