@@ -51,6 +51,7 @@ void RenderWindow::render(Entity &_entity)
     SDL_RenderCopy(renderer, _entity.getTexture(), &src, &dst);
 }
 
+
 void RenderWindow::display()
 {
     SDL_RenderPresent(renderer);

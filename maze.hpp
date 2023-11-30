@@ -11,7 +11,7 @@ class maze: public Entity{
     int frame = 0;
     int obstacles[width][height];
     int obstacleCount=0;
-    SDL_Rect srcRect, moverRect;
+    // SDL_Rect srcRect, moverRect;
     SDL_Texture* ptr;
     public:
     maze(SDL_Texture *ptr);
