@@ -6,8 +6,6 @@ Enemy::Enemy(int mazeSize, maze* mazeObj) : gameMaze(mazeObj), health(100) {
     weaponType = "Sword"; // weapon Sword
 }
 
-// hello
-
 std::pair<int, int> Enemy::getLocation() const {
     return location;
 }
