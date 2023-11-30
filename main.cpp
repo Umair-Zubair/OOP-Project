@@ -132,7 +132,7 @@ int main( int argc, char *argv[] )
     
     SDL_Event windowEvent;
     //SDL_SetRenderDrawColor(renderer,0,255,0,255);
-    RenderWindow window("Test", 800, 600);
+    RenderWindow window("Test", 1200, 675);
     // Load a texture on the screen.
     SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
     SDL_Texture* Tile = window.loadTexture("brownTile.png");

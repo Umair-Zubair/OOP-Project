@@ -6,7 +6,7 @@
 
 class maze: public Entity{
     protected:
-    enum {width = 8, height = 8};
+    enum {width = 16, height = 9};
     int graph[width][height];
     int frame = 0;
     int obstacles[width][height];

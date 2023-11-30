@@ -27,48 +27,48 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
         //graph[row][col] is set to 1 wherever walls need to be drawn
         //these coordinates will also be used to check if the player is making a valid move
         case(0):
-            graph[row][4]=1;
-            wall.push_back(Entity(300,0,ptr));
-            graph[row][6]=1;
+            graph[row][8]=1;
             wall.push_back(Entity(600,0,ptr));
+            graph[row][12]=1;
+            wall.push_back(Entity(900,0,ptr));
             break;
         case(1):
+            graph[row][8]=1;
+            wall.push_back(Entity(600,75,ptr));
+            graph[row][12]=1;
+            wall.push_back(Entity(900,75,ptr));
+            break;
+        case(2):
             for (int col=0;col<width;col++){
-                if (col!=4 && col!=5){
+                if (col!=9 && col!=10 && col!=11){
                     graph[row][col] = 1;
-                    wall.push_back(Entity(x,75,ptr));
+                    wall.push_back(Entity(x,150,ptr));
                 }
-                x+= 100;
+                x+= 75;
             }
             x = 0;
             break;
-        case(4):
+        case(6):
             for (int col=0;col<width;col++){
-                if (col!=3 && col!=4){
+                if (col!=5 && col!=6 && col!=7 && col!=8 && col!=9){
                     graph[row][col]=1;
-                    wall.push_back(Entity(x,300,ptr));
+                    wall.push_back(Entity(x,450,ptr));
                 }
-                x += 100;
+                x += 75;
             } 
             x = 0;
             break;
-        case(5):
-            graph[row][2]=1;
-            wall.push_back(Entity(200,375,ptr));
-            graph[row][5]=1;
-            wall.push_back(Entity(500,375,ptr));
-            break;
-        case(6):
-            graph[row][2]=1;
-            wall.push_back(Entity(200,450,ptr));
-            graph[row][5]=1;
-            wall.push_back(Entity(500,450,ptr));
-            break;
         case(7):
-            graph[row][2]=1;
-            wall.push_back(Entity(200,525,ptr));
-            graph[row][5]=1;
-            wall.push_back(Entity(500,525,ptr));
+            graph[row][4]=1;
+            wall.push_back(Entity(300,525,ptr));
+            graph[row][10]=1;
+            wall.push_back(Entity(750,525,ptr));
+            break;
+        case(8):
+            graph[row][4]=1;
+            wall.push_back(Entity(300,600,ptr));
+            graph[row][10]=1;
+            wall.push_back(Entity(750,600,ptr));
             break;
         }
     }
