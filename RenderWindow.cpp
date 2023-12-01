@@ -1,5 +1,6 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
+#include "player.hpp"
 #include "maze.hpp"
 #include <iostream>
 using namespace std;
@@ -39,9 +40,13 @@ void RenderWindow::render(Entity &_entity)
     // For maze.
     if (static_cast<maze*>(&_entity) != nullptr){
         // need to store width and height of the brownTile.
-        dst.w = 100;
+        dst.w = 75;
         dst.h = 75;
     }
+    // else if (static_cast<Player*>(&_entity) != nullptr){
+    //     dst.w = 80;
+    //     dst.h = 128;
+    // }
     else{
         dst.w = 128;
         dst.h = 128;

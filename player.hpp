@@ -10,14 +10,14 @@ class Player: public Entity, public Health{
     private:
         float speed;
         int player_hp;
-        std::vector<pixelRec> copyVector;
+        // std::vector<pixelRec> copyVector;
     public:
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
         Player(float _x, float _y, SDL_Texture* _ptr);
-        void moveup(std::vector<pixelRec> arr);
-        void movedown();
-        void moveleft();
-        void moveright();
-        void getVector();
+        void moveup(std::vector<Entity> wall);
+        void movedown(std::vector<Entity> wall);
+        void moveleft(std::vector<Entity> wall);
+        void moveright(std::vector<Entity> wall);
+        // void getVector();
 
 };

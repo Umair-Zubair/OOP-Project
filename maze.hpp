@@ -1,3 +1,4 @@
+#pragma once
 #include "drawing.hpp"
 #include <SDL.h>
 #include <SDL_image.h>

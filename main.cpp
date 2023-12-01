@@ -159,19 +159,19 @@ int main( int argc, char *argv[] )
             {
                 case SDLK_w:
                 // up
-                    player1.moveup(maze1.getInvalid());
+                    player1.moveup(wall);
                     break;
                 case SDLK_s:
                 // down
-                    player1.movedown();
+                    player1.movedown(wall);
                     break;
                 case SDLK_a:
                 // left
-                    player1.moveleft();
+                    player1.moveleft(wall);
                     break;
                 case SDLK_d:
                 // right
-                    player1.moveright();
+                    player1.moveright(wall);
                     break;
             }
         }

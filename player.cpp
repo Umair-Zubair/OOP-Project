@@ -5,71 +5,67 @@
 #include "player.hpp"
 #include <iostream>
 
-void Player::getVector(){
-    maze m1;
-    copyVector = m1.getInvalid();
+// void Player::getVector(){
+//     maze m1;
+//     copyVector = m1.getInvalid();
     
-}
+// }
 
 Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr), Health(100){
     speed = 8.0f;
     player_hp = 100;
 }
 
-void Player::moveup(std::vector<pixelRec> arr){
+void Player::moveup(std::vector<Entity> wall){
     y-=speed;
     if (y<=0){
         y=3;
     } 
-    for (int i=0;i<arr.size();i++){
-        //std::cout << arr[i].x_coord << " " << arr[i].y_coord << std::endl;
-        if (arr[i].y_coord==getCurrentLocation().y){ 
-            y = arr[i].y_coord;
-            return;
+    for (int i=0;i<wall.size();i++){
+        if (y < (wall[i].GetY() + 75) && (y + 75) > wall[i].GetY() &&
+            x < (wall[i].getX() + 75) && (x + 75) > wall[i].getX()) {
+            y = wall[i].GetY() + 77;
         }
     } 
-
-    //std::cout <<"Size of copy vector" << arr.size();
-    
 }
 
-void Player::movedown(){
-    for (int i=0;i<copyVector.size();i++){
-        if (copyVector[i].y_coord=y){
-            return;
+void Player::movedown(std::vector<Entity> wall){
+    y += speed;
+    for (int i = 0; i < wall.size(); i++){
+        if (y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75 &&
+            x + 75 > wall[i].getX() && x < wall[i].getX() + 75) {
+            y = wall[i].GetY() - 77;
         }
-    }
-    y+=speed;
-    // need to make base condition.
-    if (y>=620){
-        y = 650;
+    } 
+    if (y >= 620){
+        y = 620;
     }
 }
 
-void Player :: moveright(){
-    for (int i=0;i<copyVector.size();i++){
-        if (copyVector[i].x_coord=x){
-            return;
+void Player::moveright(std::vector<Entity> wall){
+    x += speed;
+    for (int i = 0; i < wall.size(); i++){
+        if (x + 75 > wall[i].getX() && x < wall[i].getX() + 75 &&
+            y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
+            x = wall[i].getX() - 75;
         }
-    }
-    x+= speed;
-    // base condition.
-    if (x>=1120){
+    } 
+    if (x >= 1120){
         x = 1120;
     }
 }
 
-void Player :: moveleft(){
-    for (int i=0;i<copyVector.size();i++){
-        if (copyVector[i].x_coord=x){
-            return;
+void Player::moveleft(std::vector<Entity> wall){
+    x -= speed;
+    for (int i = 0; i < wall.size(); i++){
+        if (x < wall[i].getX() + 75 && x + 75 > wall[i].getX() &&
+            y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
+            x = wall[i].getX() + 75;
         }
-    }
-    x-= speed;
-
-    // base condition.
-    if (x<10){
-        x = 10;
+    } 
+    if (x < 10){
+        x = 1;
     }
 }
+
 
