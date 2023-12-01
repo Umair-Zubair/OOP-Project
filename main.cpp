@@ -5,7 +5,7 @@
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
-#include "maze.hpp"
+//#include "maze.hpp"
 #include "player.hpp"
 #include <vector>
 
@@ -159,7 +159,7 @@ int main( int argc, char *argv[] )
             {
                 case SDLK_w:
                 // up
-                    player1.moveup();
+                    player1.moveup(maze1.getInvalid());
                     break;
                 case SDLK_s:
                 // down

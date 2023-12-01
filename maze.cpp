@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <iostream>
+maze::maze(): ptr(nullptr) , Entity(0,0,nullptr){};
 
 maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     //overloaded constructor called whenever a new frame is created in main
@@ -15,13 +16,16 @@ maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     }
 }
 
+std::vector<pixelRec> maze::getInvalid(){
+    return firstFrameInvalid;
+}
+
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
     std:: vector<Entity> wall;
     // starting postion of the first wall in top left corner.
     float x = 0;
     float y = 0;
-    std::vector<pixelRec> firstFrameInvalid;
     //stores the pixelRect structures for all invalid move pixels in the first frame. 
     //memory will be deallocated as soon as the frame is closed
     int temp = 0;
@@ -111,12 +115,9 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
             break;
         }
     }
-    for (int i=0;i<height;i++){
-        for (int j=0;j<width;j++){
-            std::cout << graph[i][j] << "  " ;
-        }
-        std::cout << std::endl;
-    }
+    // for (int i=0;i<firstFrameInvalid.size();i++){
+    //     std::cout << firstFrameInvalid[i].x_coord << " " << firstFrameInvalid[i].y_coord;
+    // }
     placeObstacles(); //obstacles function is called to place 2 random obstacles in the frame
     return wall;
 }

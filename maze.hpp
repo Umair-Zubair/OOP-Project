@@ -7,7 +7,7 @@
 struct pixelRec{    //this structure is used to define x and y values of pixels the player cant go
     int x_coord;    //each invalid pixel will be stored in a structure and kept in a vector
     int y_coord;    
-}
+};
 
 class maze: public Entity{
     protected:
@@ -16,9 +16,11 @@ class maze: public Entity{
     int frame = 0;
     int obstacles[width][height];
     int obstacleCount=0;
+    std::vector<pixelRec> firstFrameInvalid;
     // SDL_Rect srcRect, moverRect;
     SDL_Texture* ptr;
     public:
+    maze();
     maze(SDL_Texture *ptr);
     void makeGraph();
     std::vector<Entity> firstFrame();
@@ -27,4 +29,5 @@ class maze: public Entity{
     void fourthFrame();
     void placeObstacles();
     bool isValidMove(int x, int y) const;
+    std::vector<pixelRec> getInvalid();
 };
