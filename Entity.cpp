@@ -13,6 +13,13 @@ float Entity::getX(){
     return x;
 }
 
+void Entity::change_src(float _x, float _y, float width, float height){
+    currentLocation.x = _x;
+    currentLocation.y = _y;
+    currentLocation.w = width;
+    currentLocation.h = height;
+}
+
 float Entity::GetY(){
     return y;
 }

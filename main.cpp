@@ -5,7 +5,8 @@
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
-#include "maze.hpp"
+//#include "maze.hpp"
+#include "player.hpp"
 #include <vector>
 
 using namespace std;
@@ -134,10 +135,10 @@ int main( int argc, char *argv[] )
     //SDL_SetRenderDrawColor(renderer,0,255,0,255);
     RenderWindow window("Test", 1200, 675);
     // Load a texture on the screen.
-    SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
-    SDL_Texture* Tile = window.loadTexture("brownTile.png");
+    SDL_Texture* playerModel = window.loadTexture("graphics/player.png");
+    SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     // need to make a loop for game running so that window stays popped up.
-    Entity playerModel1(500,200, playerModel);
+    Player player1(500,600, playerModel);
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
@@ -145,23 +146,47 @@ int main( int argc, char *argv[] )
     SDL_Event event;
     while (gameRunning)
     {
-        if ( SDL_PollEvent( &windowEvent ) )
         while (SDL_PollEvent(&event))
         {
-            if ( SDL_QUIT == windowEvent.type )
-            { break; }
             if (event.type == SDL_QUIT)
             {
                 gameRunning = false;
             }
+            else if (event.type == SDL_KEYDOWN)
+        {
+            // Handle key presses
+            switch (event.key.keysym.sym)
+            {
+                case SDLK_w:
+                // up
+                    player1.moveup(wall);
+                    break;
+                case SDLK_s:
+                // down
+                    player1.movedown(wall);
+                    break;
+                case SDLK_a:
+                // left
+                    player1.moveleft(wall);
+                    break;
+                case SDLK_d:
+                // right
+                    player1.moveright(wall);
+                    break;
+            }
         }
+        }
+        // movement detection and conditions.
+
+
+
         window.clear();
         // this is to render each wall pixel on the screen.
         for(int i =0; i<wall.size(); i++){
             window.render(wall[i]);
         }
 
-        window.render(playerModel1);
+        window.render(player1);
         window.display();
     }
    
