@@ -172,11 +172,33 @@ void maze::placeObstacles(){
     }
 }  
 
+// void maze::placeObstacles() {
+//     // Implementation to randomly place obstacles
+//     std::random_device rd;
+//     std::mt19937 gen(rd());
+//     std::uniform_int_distribution<int> randX(0, width - 1);
+//     std::uniform_int_distribution<int> randY(0, height - 1);
+
+//     // Place 2 obstacles randomly in the maze
+//     for (int i = 0; i < 2; i++) {
+//         int obstacleX = randX(gen);
+//         int obstacleY = randY(gen);
+
+//         // Check if the chosen position is valid, if not, try again
+//         while (graph[obstacleY][obstacleX] != 0) {
+//             obstacleX = randX(gen);
+//             obstacleY = randY(gen);
+//         }
+
+//         // Set the obstacle in the maze
+//         graph[obstacleY][obstacleX] = 1;
+//     }
+// }
+
 bool maze::isValidMove(int x, int y) const {
-    // Check if the coordinates are within the boundaries of the maze
-    if (x >= 0 && x < width && y >= 0 && y < height) {
-        // Check if there is no wall (graph[x][y] != 1) and no obstacle (graph[x][y] != 2)
-        return graph[x][y] != 1 && graph[x][y] != 2;
+    // Check if the move is within the boundaries and not hitting a wall
+    if (x >= 0 && x < width && y >= 0 && y < height && graph[y][x] == 0) {
+        return true;
     }
-    return false; // Coordinates are out of bounds
+    return false;
 }

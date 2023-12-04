@@ -14,19 +14,21 @@ private:
     std::string weaponType; // Using a string to represent the weapon type
     maze* gameMaze; // Reference to the maze object
     Health health;   // Health object
+    float speed;
+    int attackRange, enemy_hp;
 
 public:
     // Constructor
-    Enemy(int mazeSize, maze* mazeObj);
+    Enemy(float _x, float _y, SDL_Texture* _ptr);
 
     // Public member functions
     std::pair<int, int> getLocation() const;
     int getMaxHealth() const;
     int getCurrentHealth() const;
     std::string getWeaponType() const;
-    void moveTowardsPlayer(const std::pair<int, int>& playerLocation);
-    int attackPlayer();
     void decreaseHealth(int amount);
+    void moveTowardsPlayer(const Player& player, const maze& gameMaze);
+    void attackPlayer(Player& player);
 };
 
 #endif // ENEMY_HPP
