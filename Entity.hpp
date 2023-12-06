@@ -14,5 +14,6 @@ class Entity{
         float GetY();
         SDL_Rect getCurrentLocation();
         SDL_Texture* getTexture();
+        void change_src(float x, float y, float width, float height);
         virtual ~Entity(){}
 };

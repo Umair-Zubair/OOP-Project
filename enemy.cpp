@@ -1,12 +1,8 @@
 #include "enemy.hpp"
 
-Enemy::Enemy(int mazeSize, maze* mazeObj) : gameMaze(mazeObj), health(100) {
-    srand(static_cast<unsigned>(time(nullptr)));
-    location = std::make_pair(rand() % mazeSize, rand() % mazeSize);
-    weaponType = "Sword"; // weapon Sword
+Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(3.0f), attackRange(50), enemy_hp(100){
+    
 }
-
-// hello
 
 std::pair<int, int> Enemy::getLocation() const {
     return location;
@@ -24,35 +20,44 @@ std::string Enemy::getWeaponType() const {
     return weaponType;
 }
 
-void Enemy::moveTowardsPlayer(const std::pair<int, int>& playerLocation) {
-    int playerX = playerLocation.first;
-    int playerY = playerLocation.second;
-    int enemyX = location.first;
-    int enemyY = location.second;
+void Enemy::moveTowardsPlayer(const Player& player, const maze& gameMaze) {
+    // Calculate the direction vector from the enemy to the player
+    float dx = player.getX() - x;
+    float dy = player.getY() - y;
+    float distance = std::sqrt(dx * dx + dy * dy);
 
-    // Move one step closer to the player in either x or y direction
-    if (enemyX < playerX && gameMaze->isValidMove(enemyX + 1, enemyY)) {
-        location.first = enemyX + 1;
-    } else if (enemyX > playerX && gameMaze->isValidMove(enemyX - 1, enemyY)) {
-        location.first = enemyX - 1;
-    } else if (enemyY < playerY && gameMaze->isValidMove(enemyX, enemyY + 1)) {
-        location.second = enemyY + 1;
-    } else if (enemyY > playerY && gameMaze->isValidMove(enemyX, enemyY - 1)) {
-        location.second = enemyY - 1;
+    // Normalize the direction vector
+    if (distance != 0) {
+        dx /= distance;
+        dy /= distance;
     }
-}
 
-int Enemy::attackPlayer() {
-    // Damage based on the weapon type
-    int damage = 0;
-    if (weaponType == "Sword") {
-        damage = 15; // Constant damage for the sword
+    // Calculate the next position based on the direction vector and speed
+    float nextX = x + dx * speed;
+    float nextY = y + dy * speed;
+
+    // Check if the next position is a valid move in the maze
+    if (gameMaze.isValidMove(static_cast<int>(nextX), static_cast<int>(nextY))) {
+        x = nextX;
+        y = nextY;
     }
-    // Add conditions for other weapon types if needed in the future
-
-    return damage;
 }
 
 void Enemy::decreaseHealth(int amount) {
     health.decreaseHealth(amount);
+}
+
+void Enemy::attackPlayer(Player& player) {
+    // Calculate the distance to the player
+    float dx = player.getX() - x;
+    float dy = player.getY() - y;
+    float distance = std::sqrt(dx * dx + dy * dy);
+
+    // Check if the player is within the attack range
+    if (distance < attackRange) {
+        // Implement your attack logic here
+        // For example, decrease player health
+        player.decreaseHealth(10); // Adjust the damage value based on your needs
+        std::cout << "Enemy attacks player!" << std::endl;
+    }
 }
