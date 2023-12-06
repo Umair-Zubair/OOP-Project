@@ -136,12 +136,26 @@ int main( int argc, char *argv[] )
     RenderWindow window("Test", 1200, 675);
     // Load a texture on the screen.
     SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
-    SDL_Texture* Tile = window.loadTexture("brownTile.png");
+    SDL_Texture* Tile = window.loadTexture("greyTile.jpg");
+    SDL_Texture* bg = window.loadTexture("bg.png");
     // need to make a loop for game running so that window stays popped up.
     Player player1(500,600, playerModel);
+    
+    //First Frame
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
+
+    //Second frame
+    maze maze2(Tile);
+    vector<Entity> wall2;
+    wall2 = maze2.secondFrame();
+    
+    //Third frame
+    maze maze3(Tile);
+    vector<Entity> wall3;
+    wall3 = maze3.thirdFrame();
+
     bool gameRunning = true;
     SDL_Event event;
     while (gameRunning)
@@ -178,13 +192,26 @@ int main( int argc, char *argv[] )
         }
         // movement detection and conditions.
 
-
-
         window.clear();
+
+        
+        window.render(bg);
+        
+        //RENDERING FIRST WALL
         // this is to render each wall pixel on the screen.
-        for(int i =0; i<wall.size(); i++){
-            window.render(wall[i]);
-        }
+        // for(int i =0; i<wall.size(); i++){
+        //     window.render(wall[i]);
+        // }
+
+        //RENDERING SECOND WALL
+        // for (int i=0;i<wall2.size();i++){
+        //     window.render(wall2[i]);
+        // } 
+
+        //RENDERING THIRD WALL
+        for (int i=0;i<wall3.size();i++){
+            window.render(wall3[i]);
+        } 
 
         window.render(player1);
         window.display();
