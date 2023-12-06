@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <iostream>
+#include "obstacles.hpp"
 maze::maze(): ptr(nullptr) , Entity(0,0,nullptr){};
 
 maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
@@ -122,11 +123,23 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
             }
             break;
         }
+        for (int k=0;k<height;k++){
+            for (int j=0;j<width;j++){
+                if (graph[k][j]==-1){
+                    int x = j*75;
+                    int y = k*75;
+                    wall.push_back(Entity(x,y,ptr));
+                }
+            }
+        }
     }
     // for (int i=0;i<firstFrameInvalid.size();i++){
     //     std::cout << firstFrameInvalid[i].x_coord << " " << firstFrameInvalid[i].y_coord;
     // }
-    placeObstacles(); //obstacles function is called to place 2 random obstacles in the frame
+    coordinates items = generate.getValue(graph); //obstacles function is called to place 2 random obstacles in the frame
+    for (int i=0;i<2;i++){
+        int x = *items[i].x_coord;
+    }
     return wall;
 }
 
@@ -206,7 +219,7 @@ std:: vector<Entity> maze::secondFrame(){    //this function makes the first fra
     } 
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
-            if (graph2[row][col]==1){
+            if (graph2[row][col]==1 || graph2[row][col]==-1){
                 int x = col*75;
                 int y = row*75;
                 secondWall.push_back(Entity(x,y,ptr));
@@ -294,7 +307,7 @@ std::vector<Entity> maze::thirdFrame(){
     }
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
-            if (graph3[row][col]==1){
+            if (graph3[row][col]==1 || graph3[row][col]==-1){
                 int x = col*75;
                 int y = row*75;
                 thirdWall.push_back(Entity(x,y,ptr));
@@ -338,7 +351,7 @@ void maze::placeObstacles(){
             graph[obstacleRow][obstacleCol]=2;  //if there is no wall, an obstacle is placed
             //the coordinate is set to 2, meaning an obstacle is present here and player cant go here
             obstacleCount++;    //obstacle count is increased
-        }
+        } 
         //this loop keeps on generating cols and rows and placing obstacles until 2 obstcales are placed
     }
 }  

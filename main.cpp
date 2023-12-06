@@ -135,8 +135,8 @@ int main( int argc, char *argv[] )
     //SDL_SetRenderDrawColor(renderer,0,255,0,255);
     RenderWindow window("Test", 1200, 675);
     // Load a texture on the screen.
-    SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
-    SDL_Texture* Tile = window.loadTexture("greyTile.jpg");
+    //SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
+    //SDL_Texture* Tile = window.loadTexture("greyTile.jpg");
     SDL_Texture* bg = window.loadTexture("bg.png");
     SDL_Texture* playerModel = window.loadTexture("graphics/player.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
@@ -201,9 +201,9 @@ int main( int argc, char *argv[] )
         
         //RENDERING FIRST WALL
         // this is to render each wall pixel on the screen.
-        // for(int i =0; i<wall.size(); i++){
-        //     window.render(wall[i]);
-        // }
+        for(int i =0; i<wall.size(); i++){
+            window.render(wall[i]);
+        }
 
         //RENDERING SECOND WALL
         // for (int i=0;i<wall2.size();i++){
@@ -211,9 +211,9 @@ int main( int argc, char *argv[] )
         // } 
 
         //RENDERING THIRD WALL
-        for (int i=0;i<wall3.size();i++){
-            window.render(wall3[i]);
-        } 
+        // for (int i=0;i<wall3.size();i++){
+        //     window.render(wall3[i]);
+        // } 
 
         window.render(player1);
         window.display();
