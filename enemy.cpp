@@ -8,6 +8,7 @@
 #include "Entity.hpp"
 
 Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(3.0f), attackRange(50), enemy_hp(100) , Health(){
+    change_src(431, 63, 60, 65);
 }
 
 int Enemy::getCurrentHealth() const {
