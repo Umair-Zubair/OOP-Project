@@ -173,24 +173,21 @@ void maze::placeObstacles(){
 }  
 
 // void maze::placeObstacles() {
-//     // Implementation to randomly place obstacles
+
 //     std::random_device rd;
 //     std::mt19937 gen(rd());
 //     std::uniform_int_distribution<int> randX(0, width - 1);
 //     std::uniform_int_distribution<int> randY(0, height - 1);
 
-//     // Place 2 obstacles randomly in the maze
 //     for (int i = 0; i < 2; i++) {
 //         int obstacleX = randX(gen);
 //         int obstacleY = randY(gen);
 
-//         // Check if the chosen position is valid, if not, try again
 //         while (graph[obstacleY][obstacleX] != 0) {
 //             obstacleX = randX(gen);
 //             obstacleY = randY(gen);
 //         }
 
-//         // Set the obstacle in the maze
 //         graph[obstacleY][obstacleX] = 1;
 //     }
 // }

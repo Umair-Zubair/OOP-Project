@@ -10,10 +10,12 @@ class Entity{
     public:
         Entity(float _x, float _y, SDL_Texture* ptr);
         void init();
-        float getX();
-        float GetY();
+        float GetX() const;
+        float GetY() const;
         SDL_Rect getCurrentLocation();
         SDL_Texture* getTexture();
         void change_src(float x, float y, float width, float height);
         virtual ~Entity(){}
 };
+
+

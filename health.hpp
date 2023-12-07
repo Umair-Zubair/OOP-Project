@@ -8,10 +8,9 @@ private:
 
 public:
     // Constructor
-    Health(int max);
+    Health();
 
     // Public member functions
-    int getMaxHealth() const;
     int getCurrentHealth() const;
     void decreaseHealth(int amount);
     void increaseHealth(int amount);

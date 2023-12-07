@@ -6,7 +6,7 @@
 #include "vector"
 #include "maze.hpp"
 
-class Player: public Entity, public Health{
+class Player : public Entity, public Health{
     private:
         float speed;
         int player_hp;

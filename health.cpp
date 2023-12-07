@@ -1,9 +1,8 @@
 #include "health.hpp"
 
-Health::Health(int max) : maxHealth(max), currentHealth(max) {}
-
-int Health::getMaxHealth() const {
-    return maxHealth;
+Health::Health() {
+    maxHealth = 100;
+    currentHealth = 100;
 }
 
 int Health::getCurrentHealth() const {

@@ -1,15 +1,13 @@
-#include "enemy.hpp"
+// Enemy.cpp
 
-Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(3.0f), attackRange(50), enemy_hp(100){
-    
-}
+#include "Enemy.hpp"
+#include <cmath>
+#include <iostream>
+#include "Player.hpp"
+#include "health.hpp"
+#include "Entity.hpp"
 
-std::pair<int, int> Enemy::getLocation() const {
-    return location;
-}
-
-int Enemy::getMaxHealth() const {
-    return health.getMaxHealth();
+Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(3.0f), attackRange(50), enemy_hp(100) , Health(){
 }
 
 int Enemy::getCurrentHealth() const {
@@ -20,10 +18,10 @@ std::string Enemy::getWeaponType() const {
     return weaponType;
 }
 
-void Enemy::moveTowardsPlayer(const Player& player, const maze& gameMaze) {
+void Enemy::moveAutomaticallyTowardsPlayer(const Entity& playerEntity, const maze& gameMaze) {
     // Calculate the direction vector from the enemy to the player
-    float dx = player.getX() - x;
-    float dy = player.getY() - y;
+    float dx = playerEntity.GetX() - x;
+    float dy = playerEntity.GetY() - y;
     float distance = std::sqrt(dx * dx + dy * dy);
 
     // Normalize the direction vector
@@ -47,17 +45,17 @@ void Enemy::decreaseHealth(int amount) {
     health.decreaseHealth(amount);
 }
 
-void Enemy::attackPlayer(Player& player) {
+void Enemy::attackPlayer(Entity& playerEntity) {
     // Calculate the distance to the player
-    float dx = player.getX() - x;
-    float dy = player.getY() - y;
+    float dx = playerEntity.GetX() - x;
+    float dy = playerEntity.GetY() - y;
     float distance = std::sqrt(dx * dx + dy * dy);
 
     // Check if the player is within the attack range
     if (distance < attackRange) {
         // Implement your attack logic here
         // For example, decrease player health
-        player.decreaseHealth(10); // Adjust the damage value based on your needs
+        health.decreaseHealth(10); // Adjust the damage value based on your needs
         std::cout << "Enemy attacks player!" << std::endl;
     }
 }

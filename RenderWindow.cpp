@@ -34,7 +34,7 @@ void RenderWindow::render(Entity &_entity)
     src.y = _entity.getCurrentLocation().y;
 
     SDL_Rect dst;
-    dst.x = _entity.getX();
+    dst.x = _entity.GetX();
     dst.y = _entity.GetY();
     
     // For maze.
