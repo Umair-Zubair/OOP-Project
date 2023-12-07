@@ -16,6 +16,7 @@ class RenderWindow
         // need to display the texture.
         void clear(); //this is to clear anything old data that renderer has currently.
         void render(Entity &_entity);// render function.
+        void render(SDL_Texture* ptr);
         void display();
 
 };

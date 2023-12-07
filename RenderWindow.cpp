@@ -56,6 +56,16 @@ void RenderWindow::render(Entity &_entity)
     SDL_RenderCopy(renderer, _entity.getTexture(), &src, &dst);
 }
 
+void RenderWindow::render(SDL_Texture* ptr)
+{
+   
+
+    
+
+    SDL_RenderCopy(renderer, ptr, NULL, NULL);
+    // SDL_RenderCopy(renderer, _entity.getTexture(), &src, &dst);
+}
+
 
 void RenderWindow::display()
 {

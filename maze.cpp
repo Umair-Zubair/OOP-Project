@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <iostream>
+#include "obstacles.hpp"
 maze::maze(): ptr(nullptr) , Entity(0,0,nullptr){};
 
 maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
@@ -12,6 +13,8 @@ maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
             graph[row][col]=0;
+            graph2[row][col]=0;
+            graph3[row][col]=0;
         }
     }
 }
@@ -20,9 +23,10 @@ std::vector<pixelRec> maze::getInvalid(){
     return firstFrameInvalid;
 }
 
+
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
-    std:: vector<Entity> wall;
+    std::vector<Entity> wall;
     // starting postion of the first wall in top left corner.
     float x = 0;
     float y = 0;
@@ -37,9 +41,12 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
             for (int col=0;col<width;col++){
                 if (col<8 || col>12){
                     graph[row][col] = -1; //dead box, player cant go there, obstacle and enemy cant spawn there
-                }
+                    deadBoxes.push_back((Entity(x,0,ptr)));
+                    x+=75;
+                } 
                 else if (col==8) {
                     graph[row][8]=1; wall.push_back(Entity(600,0,ptr));
+                    x+=75;
                     //the player cannot go left when the pixels are x=675 and 0>y>75
                     for (int i=0;i<75;i++){
                         pixelRec rec; rec.x_coord = 675 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
@@ -47,11 +54,13 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
                 }
                 else if (col==12) {
                     graph[row][12]=1; wall.push_back(Entity(900,0,ptr));
+                    x+=75;
                     for (int i=0;i<75;i++){
                         pixelRec rec; rec.x_coord = 900 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
                     }
                 }
             }
+            x=0;
             break;
         case(1):
             for (int col=0;col<width;col++){
@@ -114,23 +123,198 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
             }
             break;
         }
+        for (int k=0;k<height;k++){
+            for (int j=0;j<width;j++){
+                if (graph[k][j]==-1){
+                    int x = j*75;
+                    int y = k*75;
+                    wall.push_back(Entity(x,y,ptr));
+                }
+            }
+        }
     }
     // for (int i=0;i<firstFrameInvalid.size();i++){
     //     std::cout << firstFrameInvalid[i].x_coord << " " << firstFrameInvalid[i].y_coord;
     // }
-    placeObstacles(); //obstacles function is called to place 2 random obstacles in the frame
+    coordinates items = generate.getValue(graph); //obstacles function is called to place 2 random obstacles in the frame
+    for (int i=0;i<2;i++){
+        int x = *items[i].x_coord;
+    }
     return wall;
 }
 
 //following 3 functions are skeleton, will be implemented later.
 //they will be exactly like firstFrame(). 
 //Will be used to draw walls on specified coordinates
-void maze::secondFrame(){
-
+std:: vector<Entity> maze::secondFrame(){    //this function makes the first fram of the mazestd::vector<Entity> ::maze::secondFrame(){
+    std::vector<Entity> secondWall;
+    for (int i=0;i<height;i++){
+        switch(i){
+        case(0):
+            for (int j=0;j<width;j++){
+                graph2[i][j]=-1;
+            }
+            break;
+        case(1):
+            for (int j=0;j<width;j++){
+                graph2[i][j] =1;
+            } 
+            break;
+        case(5):
+            for (int j=0;j<width;j++){
+                if (j==0 || j==1 || j==2 || j==6 || j==7 || j==8 || j==9 || j==13 || j==14 || j==15){
+                    graph2[i][j] =1;
+                }
+            }
+            break;
+        case(6):
+            for (int j=0;j<width;j++){
+                if (j==2 || j==6 || j==9 || j==13){
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                }
+                else if (j<2 || j>13){
+                    graph2[i][j]=-1;
+                }
+                else if (j==7 || j==8){
+                    graph2[i][j]=-1;
+                }
+            }
+            break;
+        case(7):
+            for (int j=0;j<width;j++){
+                if (j==2 || j==6 || j==9 || j==13){
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                }
+                else if (j<2 || j>13){
+                    graph2[i][j]=-1;
+                }
+                else if (j==7 || j==8){
+                    graph2[i][j]=-1;
+                }
+            }
+            break;
+        case(8):
+            for (int j=0;j<width;j++){
+                if (j==2 || j==6 || j==9 || j==13){
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                    graph2[i][j] =1;
+                }
+                else if (j<2 || j>13){
+                    graph2[i][j]=-1;
+                }
+                else if (j==7 || j==8){
+                    graph2[i][j]=-1;
+                }
+            }
+            break;
+        }
+    } 
+    for (int row=0;row<height;row++){
+        for (int col=0;col<width;col++){
+            if (graph2[row][col]==1 || graph2[row][col]==-1){
+                int x = col*75;
+                int y = row*75;
+                secondWall.push_back(Entity(x,y,ptr));
+            }
+        }
+    }
+    return secondWall;
 }
 
-void maze::thirdFrame(){
-    
+
+std::vector<Entity> maze::thirdFrame(){
+    std::vector<Entity> thirdWall;
+    for (int i=0;i<height;i++){
+        switch(i){
+            case(0):
+                for (int j=0;j<width;j++){
+                if (j==2 || j==6 || j==9 || j==13){
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                }
+                else if (j<2 || j>13){
+                    graph3[i][j]=-1;
+                }
+                else if (j==7 || j==8){
+                    graph3[i][j]=-1;
+                }
+                }
+                break;
+            case(1):
+            for (int j=0;j<width;j++){
+                if (j==2 || j==6 || j==9 || j==13){
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                    graph3[i][j] =1;
+                }
+                else if (j<2 || j>13){
+                    graph3[i][j]=-1;
+                }
+                else if (j==7 || j==8){
+                    graph3[i][j]=-1;
+                }
+                }
+                break;
+            case(2):
+                for (int j=0;j<width;j++){
+                    if (j==3 || j==4 || j==5 || j==10 || j==11 || j==12){
+                        continue;
+                    }
+                    else{
+                        graph3[i][j]=1;
+                    }
+                }
+                break;
+            case(6):
+                for (int j=0;j<width;j++){
+                    if (j<=3 || j>=12){
+                        graph3[i][j]=1;
+                    }
+                }
+                break;
+            case(7):
+                for (int j=0;j<width;j++){
+                    if (j==3 || j==12){
+                        graph3[i][j]=1;
+                    }
+                    else if (j<3 || j>12){
+                        graph3[i][j]=-1;
+                    }
+                }
+                break;
+            case(8):
+                for (int j=0;j<width;j++){
+                    if (j==3 || j==12){
+                        graph3[i][j]=1;
+                    }
+                    else if (j<3 || j>12){
+                        graph3[i][j]=-1;
+                    }
+                }
+                break;
+        }
+    }
+    for (int row=0;row<height;row++){
+        for (int col=0;col<width;col++){
+            if (graph3[row][col]==1 || graph3[row][col]==-1){
+                int x = col*75;
+                int y = row*75;
+                thirdWall.push_back(Entity(x,y,ptr));
+            }
+        }
+    }
+    return thirdWall;
 }
 
 void maze::fourthFrame(){
@@ -167,7 +351,7 @@ void maze::placeObstacles(){
             graph[obstacleRow][obstacleCol]=2;  //if there is no wall, an obstacle is placed
             //the coordinate is set to 2, meaning an obstacle is present here and player cant go here
             obstacleCount++;    //obstacle count is increased
-        }
+        } 
         //this loop keeps on generating cols and rows and placing obstacles until 2 obstcales are placed
     }
 }  

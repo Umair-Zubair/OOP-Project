@@ -12,7 +12,7 @@
 // }
 
 Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr), Health(){
-    change_src(33, 41, 76, 87);
+    change_src(155, 52, 74, 76);
     speed = 8.0f;
     player_hp = 100;
 }
