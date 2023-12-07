@@ -7,6 +7,7 @@
 #include "Entity.hpp"
 //#include "maze.hpp"
 #include "player.hpp"
+#include "enemy.hpp"
 #include <vector>
 
 using namespace std;
@@ -103,7 +104,6 @@ const int WIDTH = 800, HEIGHT = 600;
 
 int main( int argc, char *argv[] )
 {
-    
    
     // if ( NULL == window )
     // {
@@ -140,9 +140,11 @@ int main( int argc, char *argv[] )
     SDL_Texture* bg = window.loadTexture("bg.png");
     SDL_Texture* playerModel = window.loadTexture("graphics/player.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
+    SDL_Texture* enemyModel = window.loadTexture("graphics/player.png");
     // need to make a loop for game running so that window stays popped up.
-    Player player1(500,600, playerModel);
-    
+    Player player1(500, 600, playerModel);
+    Enemy enemy1(400, 500, enemyModel);
+
     //First Frame
     maze maze1(Tile);
     vector<Entity> wall;
@@ -190,9 +192,17 @@ int main( int argc, char *argv[] )
                     player1.moveright(wall);
                     break;
             }
+
+            enemy1.moveAutomaticallyTowardsPlayer(player1, maze1);
+
+            enemy1.change_src(155, 52, 74, 76);
+
+            // Render the enemy
         }
         }
         // movement detection and conditions.
+
+        
 
         window.clear();
 
@@ -216,6 +226,7 @@ int main( int argc, char *argv[] )
         // } 
 
         window.render(player1);
+        window.render(enemy1);
         window.display();
     }
    
@@ -225,5 +236,3 @@ int main( int argc, char *argv[] )
     // window.cleanUp();
     SDL_Quit();
 }
-
-
