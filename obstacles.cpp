@@ -20,5 +20,5 @@ coordinates obstacles::getValue(int arr[][16]){
         } 
         count++;
     } 
-    return &indexes;
+    return indexes[0];
 }

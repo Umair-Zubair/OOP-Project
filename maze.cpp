@@ -4,7 +4,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <iostream>
-#include "obstacles.hpp"
+
 maze::maze(): ptr(nullptr) , Entity(0,0,nullptr){};
 
 maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
@@ -138,8 +138,9 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
     // }
     coordinates items = generate.getValue(graph); //obstacles function is called to place 2 random obstacles in the frame
     for (int i=0;i<2;i++){
-        int x = *items[i].x_coord;
-    }
+            int x = items.x_coord;
+            int y = items.y_coord;
+        }
     return wall;
 }
 

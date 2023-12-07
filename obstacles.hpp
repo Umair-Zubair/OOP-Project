@@ -5,7 +5,7 @@
 struct coordinates{
     int x_coord;
     int y_coord;
-}
+};
 
 class obstacles : public Entity{ 
     private:
