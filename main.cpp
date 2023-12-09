@@ -141,20 +141,27 @@ int main( int argc, char *argv[] )
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/player.png");
+    SDL_Texture* greenTile = window.loadTexture("greenTile.png");
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
     Enemy enemy1(200, 300, enemyModel);
-
+    
     //First Frame
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
-
-    //Second frame
+    //First frame obstacle
+    vector<Entity> firstObstacles;
+    maze maze1obstacles(maze1,greenTile);
+    firstObstacles = maze1obstacles.placeObstacles();
+    //Second frame 
     maze maze2(Tile);
     vector<Entity> wall2;
     wall2 = maze2.secondFrame();
-    
+    //second frame obstacle
+    vector<Entity> secondObstacles;
+    maze maze2obstacles(maze2,greenTile);
+    secondObstacles = maze2obstacles.placeObstacles();
     //Third frame
     maze maze3(Tile);
     vector<Entity> wall3;
@@ -209,7 +216,6 @@ int main( int argc, char *argv[] )
         // movement detection and conditions.
         enemy1.moveAutomaticallyTowardsPlayer(player1, maze1);
         player1.AttackUpAnimation(attackAnimate, startTime);
-
         
 
         window.clear();
@@ -222,7 +228,9 @@ int main( int argc, char *argv[] )
         for(int i =0; i<wall.size(); i++){
             window.render(wall[i]);
         }
-
+        for (int i=0;i<firstObstacles.size();i++){
+            window.render(firstObstacles[i]);
+        }
         //RENDERING SECOND WALL
         // for (int i=0;i<wall2.size();i++){
         //     window.render(wall2[i]);

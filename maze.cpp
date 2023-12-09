@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <iostream>
+#include "obstacles.hpp"
 
 maze::maze(): ptr(nullptr) , Entity(0,0,nullptr){};
 
@@ -19,9 +20,6 @@ maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     }
 }
 
-std::vector<pixelRec> maze::getInvalid(){
-    return firstFrameInvalid;
-}
 
 
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
@@ -48,16 +46,10 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
                     graph[row][8]=1; wall.push_back(Entity(600,0,ptr));
                     x+=75;
                     //the player cannot go left when the pixels are x=675 and 0>y>75
-                    for (int i=0;i<75;i++){
-                        pixelRec rec; rec.x_coord = 675 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
-                    }
                 }
                 else if (col==12) {
                     graph[row][12]=1; wall.push_back(Entity(900,0,ptr));
                     x+=75;
-                    for (int i=0;i<75;i++){
-                        pixelRec rec; rec.x_coord = 900 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
-                    }
                 }
             }
             x=0;
@@ -69,15 +61,9 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
                 }
                 else if (col==8){
                     graph[row][8]=1;wall.push_back(Entity(600,75,ptr));
-                    for (int i=0;i<75;i++){
-                        pixelRec rec; rec.x_coord = 675 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
-                    }
                 }
                 else if (col==12){
                     graph[row][12]=1;wall.push_back(Entity(900,75,ptr));
-                    for (int i=0;i<75;i++){
-                        pixelRec rec; rec.x_coord = 900 ; rec.y_coord = i; firstFrameInvalid.push_back(rec);
-                    }
                 }
             }
             break;
@@ -86,9 +72,6 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
                 if (col!=9 && col!=10 && col!=11){
                     graph[row][col] = 1;
                     wall.push_back(Entity(x,150,ptr));
-                    for (int i=0;i<75;i++){
-                        pixelRec rec; rec.x_coord = x+i ; rec.y_coord = 225; firstFrameInvalid.push_back(rec);
-                    }
                 }
                 x+= 75;
             } 
@@ -136,11 +119,7 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
     // for (int i=0;i<firstFrameInvalid.size();i++){
     //     std::cout << firstFrameInvalid[i].x_coord << " " << firstFrameInvalid[i].y_coord;
     // }
-    coordinates items = generate.getValue(graph); //obstacles function is called to place 2 random obstacles in the frame
-    for (int i=0;i<2;i++){
-            int x = items.x_coord;
-            int y = items.y_coord;
-        }
+    
     return wall;
 }
 
@@ -149,6 +128,11 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
 //Will be used to draw walls on specified coordinates
 std:: vector<Entity> maze::secondFrame(){    //this function makes the first fram of the mazestd::vector<Entity> ::maze::secondFrame(){
     std::vector<Entity> secondWall;
+    for (int row=0;row<height;row++){
+        for (int col=0;col<width;col++){
+            graph2[row][col]=0;
+        }
+    }
     for (int i=0;i<height;i++){
         switch(i){
         case(0):
@@ -341,41 +325,75 @@ void maze::makeGraph(){
     }
 }
 
-void maze::placeObstacles(){
+maze::maze(const maze &m, SDL_Texture *_ptr):ptr(_ptr), Entity(0,0, nullptr){
+    for (int row=0;row<height;row++){
+        for (int col=0;col<width;col++){
+            graph[row][col]=0;
+            graph2[row][col]=0;
+            graph3[row][col]=0;
+        }
+    }
+    if (frame==0){
+        for (int i=0;i<height;i++){
+            for (int j=0;j<width;j++){
+                graph[i][j] = m.graph[i][j];
+            }
+        }
+    }
+    else if (frame==1){
+        for (int i=0;i<height;i++){
+            for (int j=0;j<width;j++){
+                graph2[i][j] = m.graph2[i][j];
+            }
+        }
+    }
+    else if (frame==2){
+        for (int i=0;i<height;i++){
+            for (int j=0;j<width;j++){
+                graph3[i][j] = m.graph3[i][j];
+            }
+        }
+    }
+}
+
+std::vector<Entity> maze::placeObstacles(){
     //there will be 2 random obstacles placed in the map
     //if the player goes on that coordinate, they lose
-    int obstacleRow=0,obstacleCol=0; 
-    while (obstacleCount!=2){   //this loop ensures not more than 2 obstacles are placed
-        obstacleRow = rand() % 8;   //random generation of row
-        obstacleCol = rand() % 8;   //random generation of col
-        if (graph[obstacleRow][obstacleCount]!=1){  //condition ensures a wall is not at this coordinate
-            graph[obstacleRow][obstacleCol]=2;  //if there is no wall, an obstacle is placed
-            //the coordinate is set to 2, meaning an obstacle is present here and player cant go here
-            obstacleCount++;    //obstacle count is increased
-        } 
-        //this loop keeps on generating cols and rows and placing obstacles until 2 obstcales are placed
+    std::vector<Entity> FrameObstacles;
+    obstacles generate;
+    coordinates point;
+    while (obstacleCount!=2){
+        point = generate.getValue();
+        if (frame==0){
+            if (graph[point.y_coord][point.x_coord]==0){
+                graph[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        }
+        else if (frame==1){
+            if (graph2[point.y_coord][point.x_coord]==0){
+                graph2[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        }
+        else if (frame==2){
+            if (graph3[point.y_coord][point.x_coord]==0){
+                graph3[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        }
     }
-}  
-
-// void maze::placeObstacles() {
-
-//     std::random_device rd;
-//     std::mt19937 gen(rd());
-//     std::uniform_int_distribution<int> randX(0, width - 1);
-//     std::uniform_int_distribution<int> randY(0, height - 1);
-
-//     for (int i = 0; i < 2; i++) {
-//         int obstacleX = randX(gen);
-//         int obstacleY = randY(gen);
-
-//         while (graph[obstacleY][obstacleX] != 0) {
-//             obstacleX = randX(gen);
-//             obstacleY = randY(gen);
-//         }
-
-//         graph[obstacleY][obstacleX] = 1;
-//     }
-// }
+    return FrameObstacles;
+}
 
 bool maze::isValidMove(int x, int y) const {
     // Check if the move is within the boundaries and not hitting a wall

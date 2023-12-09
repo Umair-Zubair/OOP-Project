@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include "Entity.hpp"
 #include <vector>
-#include "obstacles.hpp"
+
 
 struct pixelRec{    //this structure is used to define x and y values of pixels the player cant go
     int x_coord;    //each invalid pixel will be stored in a structure and kept in a vector
@@ -19,20 +19,18 @@ class maze: public Entity{
     int graph3[height][width];
     int frame = 0;
     int obstacleCount=0;
-    std::vector<pixelRec> firstFrameInvalid;
     // SDL_Rect srcRect, moverRect;
     SDL_Texture* ptr;
-    obstacles generate;
     public:
     maze();
+    maze(const maze &m, SDL_Texture *ptr);
     maze(SDL_Texture *ptr);
     void makeGraph();
     std::vector<Entity> firstFrame();
     std::vector<Entity> secondFrame();
     std::vector<Entity> thirdFrame();
     void fourthFrame();
-    void placeObstacles();
+    std::vector<Entity> placeObstacles();
     bool isValidMove(int x, int y) const;
-    std::vector<pixelRec> getInvalid();
     std::vector<Entity> deadBoxes;
 };
