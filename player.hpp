@@ -5,12 +5,14 @@
 #include "health.hpp"
 #include "vector"
 #include "maze.hpp"
-#include "enemy.hpp"
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-class Player : public Entity, public Health{
+class Player : public Entity{
     private:
         float speed;
         int player_hp;
+        Health playerHealth;
         int currentFrameUpIndex = 0;
         int currentFrameDownIndex = 0;
         int currentFrameLeftIndex = 0;
@@ -20,7 +22,9 @@ class Player : public Entity, public Health{
     public:
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
         Player(float _x, float _y, SDL_Texture* _ptr);
-        void moveup(std::vector<Entity> wall, Enemy& enemy);
+        int getCurrentHealth() ;
+        void decreasePlayerHealth() ;
+        void moveup(std::vector<Entity> wall);
         void movedown(std::vector<Entity> wall);
         void moveleft(std::vector<Entity> wall);
         void moveright(std::vector<Entity> wall);
@@ -30,9 +34,10 @@ class Player : public Entity, public Health{
         void updateDownAnimation(int currentFrameIndex);
         void AttackUp();
         void AttackUpAnimation(bool& animate, int startTime);
-        void AttackLeftAnimation();
-        void AttackRightAnimation();
-        void AttackDownAnimation(int currentFrameIndex);
+        void AttackLeftAnimation(bool& animate, int startTime);
+        void AttackRightAnimation(bool& animate, int startTime);
+        void AttackDownAnimation(bool& animate, int startTime);
         // void getVector();
-
 };
+
+#endif 

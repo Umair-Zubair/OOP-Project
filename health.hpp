@@ -12,7 +12,7 @@ public:
 
     // Public member functions
     int getCurrentHealth() const;
-    void decreaseHealth(int amount);
+    void decreaseHealth();
     void increaseHealth(int amount);
 };
 

@@ -43,10 +43,10 @@ void RenderWindow::render(Entity &_entity)
         dst.w = 75;
         dst.h = 75;
     }
-    else if (dynamic_cast<Player*>(&_entity) != nullptr || dynamic_cast<Enemy*>(&_entity) != nullptr){
-        dst.w = 100;
-        dst.h = 100;
-    }
+    // else if (static_cast<Player*>(&_entity) != nullptr){
+    //     dst.w = 80;
+    //     dst.h = 128;
+    // }
     else{
         dst.w = 128;
         dst.h = 128;

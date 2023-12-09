@@ -39,31 +39,31 @@
 
 
 // Enemy.hpp
-#pragma once
+
+#ifndef ENEMY_HPP
+#define ENEMY_HPP
 
 #include "Entity.hpp"
 #include "maze.hpp"
 #include "health.hpp"
 #include <string>
+#include "Player.hpp"
 using namespace std;
 
-class Enemy : public Entity, public Health{
+class Enemy : public Entity{
 private:
-    std::pair<int, int> location;
     string weaponType;
-    maze* gameMaze;
-    Health health;
+    Health enemyHealth;
     float speed;
     int attackRange, enemy_hp;
-
 public:
     Enemy(float _x, float _y, SDL_Texture* _ptr);
-    std::pair<int, int> getLocation() const;
     int getMaxHealth() const;
-    int getCurrentHealth() const;
+    int getCurrentHealth();
+    void decreaseEnemyHealth();
     string getWeaponType() const;
-    void decreaseHealth(int amount);
-    void moveAutomaticallyTowardsPlayer(const Entity& playerEntity, const maze& gameMaze);
+    void moveTowardsPlayer(Player& player, maze& gameMaze);
     void attackPlayer(Entity& playerEntity);
 };
 
+#endif // ENEMY_HPP

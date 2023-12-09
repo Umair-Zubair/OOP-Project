@@ -2,8 +2,9 @@
 #include <SDL.h>
 #include <SDL_Image.h>
 #include "Entity.hpp"
-#include "player.hpp"
+#include "Player.hpp"
 #include <iostream>
+using namespace std;
 
 // void Player::getVector(){
 //     maze m1;
@@ -11,13 +12,22 @@
     
 // }
 
-Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr), Health(){
+Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr){
     change_src(13,7,22,32);
     speed = 8.0f;
     player_hp = 100;
 }
 
-void Player::moveup(std::vector<Entity> wall, Enemy& enemy){
+int Player::getCurrentHealth() {
+    cout << playerHealth.getCurrentHealth();
+    return playerHealth.getCurrentHealth();
+}
+
+void Player::decreasePlayerHealth() {
+    playerHealth.decreaseHealth();
+}
+
+void Player::moveup(std::vector<Entity> wall){
     y-=speed;
     updateUpAnimation(currentFrameUpIndex);
     currentFrameUpIndex = (currentFrameUpIndex + 1) % 8;
@@ -29,13 +39,7 @@ void Player::moveup(std::vector<Entity> wall, Enemy& enemy){
             x < (wall[i].GetX() + 75) && (x + 75) > wall[i].GetX()) {
             y = wall[i].GetY() + 77;
         }
-    }
-    std::cout<< checkCollision(enemy);
-    if (checkCollision(enemy)) {
-        // Adjust the position to avoid overlap
-        std::cout << "Hello!";
-        y = enemy.GetY() + enemy.getCurrentLocation().h;
-    }
+    } 
 }
 
 void Player::movedown(std::vector<Entity> wall){
@@ -83,12 +87,6 @@ void Player::moveleft(std::vector<Entity> wall){
     }
 }
 
-void Player::AttackUp(){
-    for (int i = 0; i<6; i++){
-        AttackDownAnimation(AttackUpFrame);
-        AttackUpFrame = (AttackUpFrame + 1) % 5;
-    }
-}
 
 // All WALKING ANIMATIONS.
 
@@ -236,59 +234,186 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
 }
 
 
-void Player::AttackLeftAnimation() {
-    // Update animation frame
-    for (int currentFrameIndex = 0; currentFrameIndex<6;currentFrameIndex++){
-        if (currentFrameIndex == 0) {
-            change_src(15,252,20,31);
-        } else if (currentFrameIndex == 1) {
-            change_src(63,253,20,30);
-        } else if(currentFrameIndex == 2) {
-            change_src(96,248,44,40);
-        } else if (currentFrameIndex == 3) {
-            change_src(145,254,31,34);
-        } else if (currentFrameIndex == 4) {
-            change_src(193,254,31,34);
-        } else {
-            change_src(255,252,20,31);
+void Player::AttackLeftAnimation(bool& animate, int startTime) {
+    static int currentFrameIndex = 0;
+    if (animate)
+    {
+        // std::cout<<currentFrameIndex<<"\n";
+        switch(currentFrameIndex)
+        {
+            case 0:  
+                if (startTime + 116 <= SDL_GetTicks())
+                {
+                    change_src(15,252,20,31);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 1:
+                if (startTime + 232 <= SDL_GetTicks())
+                {
+                    change_src(63,253,20,30);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 2:
+                if (startTime + 348 <= SDL_GetTicks())
+                {
+                    change_src(96,248,44,40);
+                    currentFrameIndex++;
+                }
+                break;
+            case 3:
+                if (startTime + 464 <= SDL_GetTicks())
+                {
+                    change_src(145,254,31,34);
+                    currentFrameIndex++;
+                }
+                break;
+            case 4:
+                
+                if (startTime + 580 <= SDL_GetTicks())
+                {
+                    change_src(193,254,31,34);
+                    currentFrameIndex++;
+                }
+                break;
+            case 5:
+                
+                if (startTime + 700 <= SDL_GetTicks())
+                {
+                    change_src(255,252,20,31);
+                    currentFrameIndex = 0;
+                    animate = false;
+                    std::cout << "animated\n";
+                }
+                break;
+            
         }
     }
 }
 
-void Player::AttackRightAnimation() {
+void Player::AttackRightAnimation(bool& animate, int startTime) {
     // Update animation frame
-    for (int currentFrameIndex = 0; currentFrameIndex<6;currentFrameIndex++){
-        if (currentFrameIndex == 0) {
-            change_src(12,299,20,31);
-        } else if (currentFrameIndex == 1) {
-            change_src(60,298,20,32);
-        } else if(currentFrameIndex == 2) {
-            change_src(100,295,44,40);
-        } else if (currentFrameIndex == 3) {
-            change_src(161,295,30,36);
-        } else if (currentFrameIndex == 4) {
-            change_src(209,295,30,36);
-        } else {
-            change_src(252,299,20,31);
+    static int currentFrameIndex = 0;
+    if (animate)
+    {
+        // std::cout<<currentFrameIndex<<"\n";
+        switch(currentFrameIndex)
+        {
+            case 0:  
+                if (startTime + 116 <= SDL_GetTicks())
+                {
+                    change_src(12,299,20,31);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 1:
+                if (startTime + 232 <= SDL_GetTicks())
+                {
+                    change_src(60,298,20,32);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 2:
+                if (startTime + 348 <= SDL_GetTicks())
+                {
+                    change_src(100,295,44,40);
+                    currentFrameIndex++;
+                }
+                break;
+            case 3:
+                if (startTime + 464 <= SDL_GetTicks())
+                {
+                    change_src(161,295,30,36);
+                    currentFrameIndex++;
+                }
+                break;
+            case 4:
+                
+                if (startTime + 580 <= SDL_GetTicks())
+                {
+                    change_src(209,295,30,36);
+                    currentFrameIndex++;
+                }
+                break;
+            case 5:
+                
+                if (startTime + 700 <= SDL_GetTicks())
+                {
+                    change_src(252,299,20,31);
+                    currentFrameIndex = 0;
+                    animate = false;
+                    std::cout << "animated\n";
+                }
+                break;
+            
         }
     }
 }
 
-void Player::AttackDownAnimation(int currentFrameIndex) {
+void Player::AttackDownAnimation(bool& animate, int startTime) {
     // Update animation frame
-        if (currentFrameIndex == 0) {
-            change_src(15, 341, 20, 30);
-        } else if (currentFrameIndex == 1) {
-            change_src(63,340,20,31);
-        } else if(currentFrameIndex == 2) {
-            change_src(97,340,39,44);
-        } else if (currentFrameIndex == 3) {
-            change_src(161,348,21,34);
-        } else if (currentFrameIndex == 4) {
-            change_src(209,348,21,34);
-        } else {
-            change_src(255,341,20,30);
+    static int currentFrameIndex = 0;
+    if (animate)
+    {
+        // std::cout<<currentFrameIndex<<"\n";
+        switch(currentFrameIndex)
+        {
+            case 0:  
+                if (startTime + 116 <= SDL_GetTicks())
+                {
+                    change_src(15, 341, 20, 30);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 1:
+                if (startTime + 232 <= SDL_GetTicks())
+                {
+                    change_src(63,340,20,31);
+                    currentFrameIndex++;
+                }
+                break;
+
+            case 2:
+                if (startTime + 348 <= SDL_GetTicks())
+                {
+                    change_src(97,340,39,44);
+                    currentFrameIndex++;
+                }
+                break;
+            case 3:
+                if (startTime + 464 <= SDL_GetTicks())
+                {
+                    change_src(161,348,21,34);
+                    currentFrameIndex++;
+                }
+                break;
+            case 4:
+                
+                if (startTime + 580 <= SDL_GetTicks())
+                {
+                    change_src(209,348,21,34);
+                    currentFrameIndex++;
+                }
+                break;
+            case 5:
+                
+                if (startTime + 700 <= SDL_GetTicks())
+                {
+                    change_src(255,341,20,30);
+                    currentFrameIndex = 0;
+                    animate = false;
+                    std::cout << "animated\n";
+                }
+                break;
+            
         }
+    }
 }
 
 
