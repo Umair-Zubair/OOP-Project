@@ -14,6 +14,7 @@ class Player : public Entity, public Health{
         int currentFrameDownIndex = 0;
         int currentFrameLeftIndex = 0;
         int currentFrameRightIndex = 0;
+        int AttackUpFrame = 0;
         // std::vector<pixelRec> copyVector;
     public:
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
@@ -26,6 +27,11 @@ class Player : public Entity, public Health{
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
         void updateDownAnimation(int currentFrameIndex);
+        void AttackUp();
+        void AttackUpAnimation(bool& animate, int startTime);
+        void AttackLeftAnimation();
+        void AttackRightAnimation();
+        void AttackDownAnimation(int currentFrameIndex);
         // void getVector();
 
 };

@@ -161,6 +161,8 @@ int main( int argc, char *argv[] )
     wall3 = maze3.thirdFrame();
 
     bool gameRunning = true;
+    bool attackAnimate = false;
+    int startTime = SDL_GetTicks();
     SDL_Event event;
     while (gameRunning)
     {
@@ -178,6 +180,7 @@ int main( int argc, char *argv[] )
                 case SDLK_w:
                 // up
                     player1.moveup(wall);
+
                     break;
                 case SDLK_s:
                 // down
@@ -191,15 +194,21 @@ int main( int argc, char *argv[] )
                 // right
                     player1.moveright(wall);
                     break;
+                case SDLK_k:
+                    attackAnimate = true;
+                    startTime = SDL_GetTicks();
+                    // player1.AttackUp();
+                    break;
             }
 
-            enemy1.moveAutomaticallyTowardsPlayer(player1, maze1);
 
 
             // Render the enemy
         }
         }
         // movement detection and conditions.
+        enemy1.moveAutomaticallyTowardsPlayer(player1, maze1);
+        player1.AttackUpAnimation(attackAnimate, startTime);
 
         
 
