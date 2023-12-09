@@ -15,7 +15,7 @@ RenderWindow:: RenderWindow(const char* title, int width, int height):  window(N
     }
 
     // if not we create a window.
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 }
 
