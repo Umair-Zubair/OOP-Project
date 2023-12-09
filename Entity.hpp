@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <iostream>
 
 class Entity{
     protected:
@@ -15,6 +16,7 @@ class Entity{
         SDL_Rect getCurrentLocation();
         SDL_Texture* getTexture();
         void change_src(float x, float y, float width, float height);
+        bool checkCollision(const Entity& other) const; //Enemy and player colision.
         virtual ~Entity(){}
 };
 

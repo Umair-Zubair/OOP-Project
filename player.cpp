@@ -17,7 +17,7 @@ Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr), Hea
     player_hp = 100;
 }
 
-void Player::moveup(std::vector<Entity> wall){
+void Player::moveup(std::vector<Entity> wall, Enemy& enemy){
     y-=speed;
     updateUpAnimation(currentFrameUpIndex);
     currentFrameUpIndex = (currentFrameUpIndex + 1) % 8;
@@ -29,7 +29,13 @@ void Player::moveup(std::vector<Entity> wall){
             x < (wall[i].GetX() + 75) && (x + 75) > wall[i].GetX()) {
             y = wall[i].GetY() + 77;
         }
-    } 
+    }
+    std::cout<< checkCollision(enemy);
+    if (checkCollision(enemy)) {
+        // Adjust the position to avoid overlap
+        std::cout << "Hello!";
+        y = enemy.GetY() + enemy.getCurrentLocation().h;
+    }
 }
 
 void Player::movedown(std::vector<Entity> wall){

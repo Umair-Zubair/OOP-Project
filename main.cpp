@@ -140,10 +140,10 @@ int main( int argc, char *argv[] )
     SDL_Texture* bg = window.loadTexture("bg.png");
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
-    SDL_Texture* enemyModel = window.loadTexture("graphics/player1.png");
+    SDL_Texture* enemyModel = window.loadTexture("graphics/player.png");
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
-    Enemy enemy1(0, 300, enemyModel);
+    Enemy enemy1(200, 300, enemyModel);
 
     //First Frame
     maze maze1(Tile);
@@ -179,7 +179,7 @@ int main( int argc, char *argv[] )
             {
                 case SDLK_w:
                 // up
-                    player1.moveup(wall);
+                    player1.moveup(wall, enemy1);
 
                     break;
                 case SDLK_s:

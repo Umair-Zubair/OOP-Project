@@ -64,3 +64,13 @@ void Entity::change_src(float _x, float _y, float width, float height) {
     currentLocation.w = width;
     currentLocation.h = height;
 }
+
+bool Entity::checkCollision(const Entity& other) const {
+    // Check for collision based on bounding boxes
+    const float epsilon = 10.0f;
+    return (GetX() < other.GetX() + other.currentLocation.w &&
+            GetX() + currentLocation.w > other.GetX()-25.0f&&
+            GetY() < other.GetY() + other.currentLocation.h&&
+            GetY() + currentLocation.h > other.GetY());
+}
+

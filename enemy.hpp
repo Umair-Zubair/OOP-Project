@@ -39,9 +39,7 @@
 
 
 // Enemy.hpp
-
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#pragma once
 
 #include "Entity.hpp"
 #include "maze.hpp"
@@ -69,4 +67,3 @@ public:
     void attackPlayer(Entity& playerEntity);
 };
 
-#endif // ENEMY_HPP

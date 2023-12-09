@@ -5,6 +5,7 @@
 #include "health.hpp"
 #include "vector"
 #include "maze.hpp"
+#include "enemy.hpp"
 
 class Player : public Entity, public Health{
     private:
@@ -19,7 +20,7 @@ class Player : public Entity, public Health{
     public:
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
         Player(float _x, float _y, SDL_Texture* _ptr);
-        void moveup(std::vector<Entity> wall);
+        void moveup(std::vector<Entity> wall, Enemy& enemy);
         void movedown(std::vector<Entity> wall);
         void moveleft(std::vector<Entity> wall);
         void moveright(std::vector<Entity> wall);
