@@ -119,7 +119,6 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
     // for (int i=0;i<firstFrameInvalid.size();i++){
     //     std::cout << firstFrameInvalid[i].x_coord << " " << firstFrameInvalid[i].y_coord;
     // }
-    
     return wall;
 }
 

@@ -142,6 +142,7 @@ int main( int argc, char *argv[] )
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/player.png");
+    SDL_Texture* greenTile = window.loadTexture("greenTile.png");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
@@ -153,11 +154,19 @@ int main( int argc, char *argv[] )
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
+    //First frame obstacle
+    vector<Entity> firstObstacles;
+    maze maze1obstacles(maze1,greenTile);
+    firstObstacles = maze1obstacles.placeObstacles();
 
     //Second frame
     maze maze2(Tile);
     vector<Entity> wall2;
     wall2 = maze2.secondFrame();
+    //second frame obstacle
+    vector<Entity> secondObstacles;
+    maze maze2obstacles(maze2,greenTile);
+    secondObstacles = maze2obstacles.placeObstacles();
     
     //Third frame
     maze maze3(Tile);
@@ -223,6 +232,9 @@ int main( int argc, char *argv[] )
         // this is to render each wall pixel on the screen.
         for(int i =0; i<wall.size(); i++){
             window.render(wall[i]);
+        }
+        for (int i=0;i<firstObstacles.size();i++){
+            window.render(firstObstacles[i]);
         }
 
         //RENDERING SECOND WALL
