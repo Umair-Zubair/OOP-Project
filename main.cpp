@@ -5,8 +5,8 @@
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
-//#include "maze.hpp"
-#include "Player.hpp"
+#include "maze.hpp"
+#include "player.hpp"
 #include "enemy.hpp"
 #include <vector>
 #include <string>
@@ -125,7 +125,7 @@ int main( int argc, char *argv[] )
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
-    Enemy enemy1(0, 300, enemyModel);
+    Enemy enemy1(100, 300, enemyModel);
 
     enemies.push_back(enemy1);
 
@@ -173,7 +173,7 @@ int main( int argc, char *argv[] )
                 {
                 case SDLK_w:
                 // up
-                    player1.moveup(wall);
+                    player1.moveup(wall, enemy1);
                     direction = "Up";
                     break;
                 case SDLK_s:
@@ -203,6 +203,18 @@ int main( int argc, char *argv[] )
         for (auto& enemy1 : enemies) 
         {
         enemy1.moveTowardsPlayer(player1, maze1);
+        }
+        if (direction == "Up"){
+            player1.AttackUpAnimation(attackAnimate, startTime);
+        }
+        else if (direction == "Left"){
+            player1.AttackLeftAnimation(attackAnimate, startTime);
+        }
+        else if (direction == "Right"){
+            player1.AttackRightAnimation(attackAnimate, startTime);
+        }
+        else {
+            player1.AttackDownAnimation(attackAnimate, startTime);
         }
 
         window.clear();

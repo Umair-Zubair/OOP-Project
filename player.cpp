@@ -27,7 +27,7 @@ void Player::decreasePlayerHealth() {
     playerHealth.decreaseHealth();
 }
 
-void Player::moveup(std::vector<Entity> wall){
+void Player::moveup(std::vector<Entity> wall, Enemy& enemy){
     y-=speed;
     updateUpAnimation(currentFrameUpIndex);
     currentFrameUpIndex = (currentFrameUpIndex + 1) % 8;
@@ -40,6 +40,11 @@ void Player::moveup(std::vector<Entity> wall){
             y = wall[i].GetY() + 77;
         }
     } 
+    std::cout << checkCollision(enemy);
+    if (checkCollision(enemy)) {
+
+        y = enemy.GetY() + enemy.getCurrentLocation().h + 10.0f;
+    }
 }
 
 void Player::movedown(std::vector<Entity> wall){
@@ -226,7 +231,7 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
                     change_src(253,204,22,29);
                     currentFrameIndex = 0;
                     animate = false;
-                    std::cout << "animated\n";
+                    // std::cout << "animated\n";
                 }
                 break;
         }
@@ -286,7 +291,6 @@ void Player::AttackLeftAnimation(bool& animate, int startTime) {
                     change_src(255,252,20,31);
                     currentFrameIndex = 0;
                     animate = false;
-                    std::cout << "animated\n";
                 }
                 break;
             
@@ -347,7 +351,6 @@ void Player::AttackRightAnimation(bool& animate, int startTime) {
                     change_src(252,299,20,31);
                     currentFrameIndex = 0;
                     animate = false;
-                    std::cout << "animated\n";
                 }
                 break;
             
@@ -408,7 +411,6 @@ void Player::AttackDownAnimation(bool& animate, int startTime) {
                     change_src(255,341,20,30);
                     currentFrameIndex = 0;
                     animate = false;
-                    std::cout << "animated\n";
                 }
                 break;
             

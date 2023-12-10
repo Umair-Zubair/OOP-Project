@@ -1,12 +1,15 @@
-//#pragma once
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Entity.hpp"
 #include "health.hpp"
 #include "vector"
 #include "maze.hpp"
-#ifndef PLAYER_HPP
-#define PLAYER_HPP
+#include "enemy.hpp"
+
+
+class Enemy;
+
 
 class Player : public Entity{
     private:
@@ -24,7 +27,7 @@ class Player : public Entity{
         Player(float _x, float _y, SDL_Texture* _ptr);
         int getCurrentHealth() ;
         void decreasePlayerHealth() ;
-        void moveup(std::vector<Entity> wall);
+        void moveup(std::vector<Entity> wall, Enemy& enemy);
         void movedown(std::vector<Entity> wall);
         void moveleft(std::vector<Entity> wall);
         void moveright(std::vector<Entity> wall);
@@ -32,12 +35,9 @@ class Player : public Entity{
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
         void updateDownAnimation(int currentFrameIndex);
-        void AttackUp();
         void AttackUpAnimation(bool& animate, int startTime);
         void AttackLeftAnimation(bool& animate, int startTime);
         void AttackRightAnimation(bool& animate, int startTime);
         void AttackDownAnimation(bool& animate, int startTime);
         // void getVector();
 };
-
-#endif 

@@ -47,8 +47,11 @@
 #include "maze.hpp"
 #include "health.hpp"
 #include <string>
-#include "Player.hpp"
+#include "player.hpp"
 using namespace std;
+
+
+class Player;
 
 class Enemy : public Entity{
 private:
