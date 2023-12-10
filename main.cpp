@@ -120,7 +120,7 @@ int main( int argc, char *argv[] )
     SDL_Texture* bg = window.loadTexture("bg.png");
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
-    SDL_Texture* enemyModel = window.loadTexture("graphics/player.png");
+    SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
     SDL_Texture* greenTile = window.loadTexture("greenTile.png");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
@@ -200,10 +200,6 @@ int main( int argc, char *argv[] )
             }
         }
 
-        for (auto& enemy1 : enemies) 
-        {
-        enemy1.moveTowardsPlayer(player1, maze1);
-        }
         if (direction == "Up"){
             player1.AttackUpAnimation(attackAnimate, startTime);
         }
@@ -239,9 +235,9 @@ int main( int argc, char *argv[] )
         //     window.render(wall3[i]);
         // } 
 
-        for (auto& enemy : enemies)
-        {
-        window.render(enemy);
+        for (auto& enemy : enemies) {
+            enemy.moveTowardsPlayer(player1, maze1);
+            window.render(enemy);
         }
 
         window.render(player1);

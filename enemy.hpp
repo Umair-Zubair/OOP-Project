@@ -54,19 +54,28 @@ using namespace std;
 class Player;
 
 class Enemy : public Entity{
-private:
-    string weaponType;
-    Health enemyHealth;
-    float speed;
-    int attackRange, enemy_hp;
-public:
-    Enemy(float _x, float _y, SDL_Texture* _ptr);
-    int getMaxHealth() const;
-    int getCurrentHealth();
-    void decreaseEnemyHealth();
-    string getWeaponType() const;
-    void moveTowardsPlayer(Player& player, maze& gameMaze);
-    void attackPlayer(Entity& playerEntity);
+    private:
+        string weaponType, currentDirection;
+        Health enemyHealth;
+        float speed;
+        int attackRange, enemy_hp, frameWidth, frameHeight, animationSpeed, animationStartTime;
+        int currentFrameUpIndex = 0;
+        int currentFrameDownIndex = 0;
+        int currentFrameLeftIndex = 0;
+        int currentFrameRightIndex = 0;
+        
+    public:
+        Enemy(float _x, float _y, SDL_Texture* _ptr);
+        int getMaxHealth() const;
+        int getCurrentHealth();
+        void decreaseEnemyHealth();
+        string getWeaponType() const;
+        void moveTowardsPlayer(Player& player, maze& gameMaze);
+        void attackPlayer(Entity& playerEntity);
+        void updateUpAnimation(int currentFrameIndex);
+        void updateDownAnimation(int currentFrameIndex);
+        void updateLeftAnimation(int currentFrameIndex);
+        void updateRightAnimation(int currentFrameIndex);
 };
 
 #endif // ENEMY_HPP

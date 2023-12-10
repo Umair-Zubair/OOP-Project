@@ -413,9 +413,6 @@ void Player::AttackDownAnimation(bool& animate, int startTime) {
                     animate = false;
                 }
                 break;
-            
         }
     }
 }
-
-

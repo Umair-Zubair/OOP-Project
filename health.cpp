@@ -10,7 +10,7 @@ int Health::getCurrentHealth() const {
 }
 
 void Health::decreaseHealth() {
-    currentHealth -= 10;
+    currentHealth -= 1;
 
     // Ensure currentHealth doesn't go below 0
     if (currentHealth < 0) {
