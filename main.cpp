@@ -10,13 +10,14 @@
 #include "enemy.hpp"
 #include <vector>
 #include <string>
+#include "gameState.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
 // Please look at command for mingw and sdl installation locaton.(For group members.)
 // command for compilation.
 
-const int WIDTH = 800, HEIGHT = 600;
+const int WIDTH = 1200, HEIGHT = 675;
 
 /*void renderBrownTile(SDL_Renderer* renderer, int x, int y, int tileWidth, int tileHeight) {
     SDL_Surface* surface = SDL_LoadBMP("brownTile.bmp"); // Load brownTile.bmp (assuming it's a BMP file)
@@ -106,28 +107,6 @@ const int WIDTH = 800, HEIGHT = 600;
 int main( int argc, char *argv[] )
 {
    
-    // if ( NULL == window )
-    // {
-    //     std::cout << "Could not create window: " << SDL_GetError( ) << std::endl;
-    //     return 1;
-    // }
-    // SDL_Event windowEvent;
-    // //SDL_SetRenderDrawColor(renderer,0,255,0,255);
-    // while ( true )
-    // {
-    //     if ( SDL_PollEvent( &windowEvent ) )
-    //     {
-    //         if ( SDL_QUIT == windowEvent.type )
-    //         { break; }
-    //     }
-    // }
-    // SDL_DestroyWindow( window );
-    // SDL_Quit( );
-    // return EXIT_SUCCESS;
-    // // Rough to see how to display a window in SDL.
-    // // Need to run SDL renderer and SDL rect for sprites.
-    // // need to wrok on the mazes and then display them.
-    // NEED TO GIVE ERROR IF PNG LOADS OR NOT.
     if (!(IMG_INIT_PNG)){
         cout << "IMG_init has failed. Error: " << SDL_GetError() << endl;
     }
@@ -151,6 +130,7 @@ int main( int argc, char *argv[] )
     enemies.push_back(enemy1);
 
     //First Frame
+    //gameState game(Tile,window);
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
@@ -229,7 +209,7 @@ int main( int argc, char *argv[] )
         window.render(bg);
         
         //RENDERING FIRST WALL
-        // this is to render each wall pixel on the screen.
+        //this is to render each wall pixel on the screen.
         for(int i =0; i<wall.size(); i++){
             window.render(wall[i]);
         }
