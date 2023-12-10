@@ -3,20 +3,22 @@
 #include <SDL_image.h>
 #include <iostream>
 
+class Enemy;
+
 class Entity{
     protected:
         float x, y;
         SDL_Rect currentLocation;
         SDL_Texture* ptr;
+        SDL_Rect dstRect;
     public:
         Entity(float _x, float _y, SDL_Texture* ptr);
-        void init();
         float GetX() const;
         float GetY() const;
-        SDL_Rect getCurrentLocation();
+        SDL_Rect getCurrentLocation() const;
         SDL_Texture* getTexture();
         void change_src(float x, float y, float width, float height);
-        bool checkCollision(const Entity& other) const; //Enemy and player colision.
+        bool checkCollision(const Entity& other); //Enemy and player colision.
         virtual ~Entity(){}
 };
 

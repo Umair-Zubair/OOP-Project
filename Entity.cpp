@@ -50,7 +50,7 @@ float Entity::GetY() const{
     return y;
 }
 
-SDL_Rect Entity::getCurrentLocation() {
+SDL_Rect Entity::getCurrentLocation() const{
     return currentLocation;
 }
 
@@ -66,11 +66,11 @@ void Entity::change_src(float _x, float _y, float width, float height) {
 }
 
 // code for collision.
-bool Entity::checkCollision(const Entity& other) const {
+bool Entity::checkCollision(const Entity& enemy) {
+    const float collisionOffset = 25.0f;
 
-    return (GetX() < other.GetX() + other.currentLocation.w &&
-            GetX() + currentLocation.w > other.GetX()-30.0f&&
-            GetY() < other.GetY() + other.currentLocation.h + 10.0f&&
-            GetY() + currentLocation.h > other.GetY());
+    return (y + getCurrentLocation().h > enemy.GetY() - collisionOffset &&
+            y < enemy.GetY() + enemy.getCurrentLocation().h + collisionOffset &&
+            x + getCurrentLocation().w > enemy.GetX() - collisionOffset &&
+            x < enemy.GetX() + enemy.getCurrentLocation().w + collisionOffset);
 }
-

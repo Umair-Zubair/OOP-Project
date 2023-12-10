@@ -40,57 +40,82 @@ void Player::moveup(std::vector<Entity> wall, Enemy& enemy){
             y = wall[i].GetY() + 77;
         }
     } 
-    std::cout << checkCollision(enemy);
+    // std::cout << checkCollision(enemy);
     if (checkCollision(enemy)) {
 
-        y = enemy.GetY() + enemy.getCurrentLocation().h + 10.0f;
+        y = enemy.GetY() + enemy.getCurrentLocation().h + 30.0f;
     }
 }
 
-void Player::movedown(std::vector<Entity> wall){
+void Player::movedown(std::vector<Entity> wall, Entity& enemy) {
     y += speed;
     updateDownAnimation(currentFrameDownIndex);
     currentFrameDownIndex = (currentFrameDownIndex + 1) % 8;
-    for (int i = 0; i < wall.size(); i++){
+
+    // Check collision with walls
+    for (int i = 0; i < wall.size(); i++) {
         if (y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75 &&
             x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75) {
             y = wall[i].GetY() - 77;
         }
-    } 
-    if (y >= 620){
+    }
+
+    // Check collision with enemy
+    if (checkCollision(enemy)) {
+        y = enemy.GetY() - getCurrentLocation().h - 30.0f;
+    }
+
+    if (y >= 620) {
         y = 620;
     }
 }
 
-void Player::moveright(std::vector<Entity> wall){
+void Player::moveright(std::vector<Entity> wall, Entity& enemy) {
     x += speed;
     updateRightAnimation(currentFrameRightIndex);
     currentFrameRightIndex = (currentFrameRightIndex + 1) % 8;
-    for (int i = 0; i < wall.size(); i++){
+
+    // Check collision with walls
+    for (int i = 0; i < wall.size(); i++) {
         if (x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75 &&
             y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
             x = wall[i].GetX() - 75;
         }
-    } 
-    if (x >= 1120){
+    }
+
+    // Check collision with enemy
+    if (checkCollision(enemy)) {
+        x = enemy.GetX() - getCurrentLocation().w - 30.0f;
+    }
+
+    if (x >= 1120) {
         x = 1120;
     }
 }
 
-void Player::moveleft(std::vector<Entity> wall){
+void Player::moveleft(std::vector<Entity> wall, Entity& enemy) {
     x -= speed;
     updateLeftAnimation(currentFrameLeftIndex);
     currentFrameLeftIndex = (currentFrameLeftIndex + 1) % 8;
-    for (int i = 0; i < wall.size(); i++){
+
+    // Check collision with walls
+    for (int i = 0; i < wall.size(); i++) {
         if (x < wall[i].GetX() + 75 && x + 75 > wall[i].GetX() &&
             y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
             x = wall[i].GetX() + 75;
         }
-    } 
-    if (x < 10){
+    }
+
+    // Check collision with enemy
+    if (checkCollision(enemy)) {
+        x = enemy.GetX() + enemy.getCurrentLocation().w + 30.0f;
+    }
+
+    if (x < 10) {
         x = 1;
     }
 }
+
 
 
 // All WALKING ANIMATIONS.
@@ -416,3 +441,4 @@ void Player::AttackDownAnimation(bool& animate, int startTime) {
         }
     }
 }
+

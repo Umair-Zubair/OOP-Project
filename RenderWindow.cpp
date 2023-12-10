@@ -27,13 +27,16 @@ void RenderWindow::render(Entity &_entity)
 {
     // width height of player 64 pix (rn testing it. If needed change later.).
     // 112 by 185.
+    SDL_Rect dst;
     SDL_Rect src;
+
+    
     src.w = _entity.getCurrentLocation().w;
     src.h = _entity.getCurrentLocation().h;
     src.x = _entity.getCurrentLocation().x;
     src.y = _entity.getCurrentLocation().y;
 
-    SDL_Rect dst;
+
     dst.x = _entity.GetX();
     dst.y = _entity.GetY();
     
@@ -43,10 +46,10 @@ void RenderWindow::render(Entity &_entity)
         dst.w = 75;
         dst.h = 75;
     }
-    // else if (static_cast<Player*>(&_entity) != nullptr){
-    //     dst.w = 80;
-    //     dst.h = 128;
-    // }
+    else if (dynamic_cast<Player*>(&_entity) != nullptr || dynamic_cast<Enemy*>(&_entity)!=nullptr){
+        dst.w = 100;
+        dst.h = 100;
+    }
     else{
         dst.w = 128;
         dst.h = 128;

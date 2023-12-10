@@ -28,9 +28,9 @@ class Player : public Entity{
         int getCurrentHealth() ;
         void decreasePlayerHealth() ;
         void moveup(std::vector<Entity> wall, Enemy& enemy);
-        void movedown(std::vector<Entity> wall);
-        void moveleft(std::vector<Entity> wall);
-        void moveright(std::vector<Entity> wall);
+        void movedown(std::vector<Entity> wall, Entity& enemy);
+        void moveleft(std::vector<Entity> wall, Entity& enemy);
+        void moveright(std::vector<Entity> wall, Entity& enemy);
         void updateUpAnimation(int currentFrameIndex);
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
@@ -39,5 +39,6 @@ class Player : public Entity{
         void AttackLeftAnimation(bool& animate, int startTime);
         void AttackRightAnimation(bool& animate, int startTime);
         void AttackDownAnimation(bool& animate, int startTime);
+
         // void getVector();
 };

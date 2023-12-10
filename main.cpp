@@ -178,17 +178,17 @@ int main( int argc, char *argv[] )
                     break;
                 case SDLK_s:
                 // down
-                    player1.movedown(wall);
+                    player1.movedown(wall, enemy1);
                     direction = "Down";
                     break;
                 case SDLK_a:
                 // left
-                    player1.moveleft(wall);
+                    player1.moveleft(wall, enemy1);
                     direction = "Left";
                     break;
                 case SDLK_d:
                 // right
-                    player1.moveright(wall);
+                    player1.moveright(wall, enemy1);
                     direction = "Right";
                     break;
                 case SDLK_k:
@@ -236,7 +236,7 @@ int main( int argc, char *argv[] )
         // } 
 
         for (auto& enemy : enemies) {
-            enemy.moveTowardsPlayer(player1, maze1);
+            // enemy.moveTowardsPlayer(player1, maze1);
             window.render(enemy);
         }
 
