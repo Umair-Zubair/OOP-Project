@@ -63,6 +63,8 @@ class Enemy : public Entity{
         int currentFrameDownIndex = 0;
         int currentFrameLeftIndex = 0;
         int currentFrameRightIndex = 0;
+        int lastAnimationTime;
+        int animationDelay;
         
     public:
         Enemy(float _x, float _y, SDL_Texture* _ptr);

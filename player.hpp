@@ -35,10 +35,10 @@ class Player : public Entity{
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
         void updateDownAnimation(int currentFrameIndex);
-        void AttackUpAnimation(bool& animate, int startTime);
-        void AttackLeftAnimation(bool& animate, int startTime);
-        void AttackRightAnimation(bool& animate, int startTime);
-        void AttackDownAnimation(bool& animate, int startTime);
+        void AttackUpAnimation(bool& animate, int startTime, Enemy& enemy);
+        void AttackLeftAnimation(bool& animate, int startTime, Enemy& enemy);
+        void AttackRightAnimation(bool& animate, int startTime, Enemy& enemy);
+        void AttackDownAnimation(bool& animate, int startTime, Enemy& enemy);
 
         // void getVector();
 };

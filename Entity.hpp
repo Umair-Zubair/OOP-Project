@@ -19,6 +19,7 @@ class Entity{
         SDL_Texture* getTexture();
         void change_src(float x, float y, float width, float height);
         bool checkCollision(const Entity& other); //Enemy and player colision.
+        bool AttackCollision(const Entity& enemy);
         virtual ~Entity(){}
 };
 

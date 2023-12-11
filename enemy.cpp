@@ -6,8 +6,9 @@
 #include "health.hpp"
 #include "Entity.hpp"
 
-Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(1.0f), attackRange(10), enemy_hp(100){
+Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(1.0f), attackRange(10), enemy_hp(100), lastAnimationTime(SDL_GetTicks()){
     change_src(16, 12, 24, 29);
+    animationDelay = 100;
     currentDirection = "Up";
 }
 
@@ -36,15 +37,45 @@ void Enemy::moveTowardsPlayer(Player& player, maze& gameMaze) {
     if (std::abs(dx) > std::abs(dy)) {
         currentDirection = (dx > 0) ? "Right" : "Left";
     } else {
-        currentDirection = (dy > 0) ? "Down" : "Up";
+        if (!checkCollision(player)) {
+            currentDirection = (dy > 0) ? "Down" : "Up";
+        }
     }
 
     float nextX = x + dx * speed;
     float nextY = y + dy * speed;
 
     if (gameMaze.isValidMove(nextX, nextY)) {
-        x = nextX;
-        y = nextY;
+        if (!checkCollision(player)) {
+            x = nextX;
+        }
+        if (!checkCollision(player)) {
+            y = nextY;
+        }
+    }
+
+    // Check if enough time has passed for the next animation frame
+    int currentTime = SDL_GetTicks();
+    int deltaTime = currentTime - lastAnimationTime;
+
+    if (deltaTime >= animationDelay) {
+        // Update animations based on the current direction
+        if (currentDirection == "Up") {
+            updateUpAnimation(currentFrameUpIndex);
+            currentFrameUpIndex = (currentFrameUpIndex + 1) % 6;
+        } else if (currentDirection == "Down") {
+            updateDownAnimation(currentFrameDownIndex);
+            currentFrameDownIndex = (currentFrameDownIndex + 1) % 6;
+        } else if (currentDirection == "Left") {
+            updateLeftAnimation(currentFrameLeftIndex);
+            currentFrameLeftIndex = (currentFrameLeftIndex + 1) % 6;
+        } else if (currentDirection == "Right") {
+            updateRightAnimation(currentFrameRightIndex);
+            currentFrameRightIndex = (currentFrameRightIndex + 1) % 6;
+        }
+
+        // Update the animation timer
+        lastAnimationTime = currentTime;
     }
 
     if (distance < attackRange) {
@@ -52,27 +83,6 @@ void Enemy::moveTowardsPlayer(Player& player, maze& gameMaze) {
             player.decreasePlayerHealth();
         }
     }
-
-    if (currentDirection == "Up"){
-        updateUpAnimation(currentFrameUpIndex);              
-        currentFrameUpIndex = (currentFrameUpIndex + 1) % 6;
-    }
-
-    else if (currentDirection == "Down"){
-        updateDownAnimation(currentFrameDownIndex);            
-        currentFrameDownIndex = (currentFrameDownIndex + 1) % 6;
-    }
-
-    else if (currentDirection == "Left"){
-        updateLeftAnimation(currentFrameLeftIndex);           
-        currentFrameLeftIndex = (currentFrameLeftIndex + 1) % 6;
-    }
-
-    else if (currentDirection == "Right"){
-        updateRightAnimation(currentFrameRightIndex);      
-        currentFrameRightIndex = (currentFrameRightIndex + 1) % 6;
-    }
-
 }
 
 void Enemy::updateUpAnimation(int currentFrameIndex) {

@@ -208,7 +208,7 @@ void Player::updateDownAnimation(int currentFrameIndex) {
 }
 // ALL ATTACK ANIMATIONS NOW.
 
-void Player::AttackUpAnimation(bool& animate, int startTime) {
+void Player::AttackUpAnimation(bool& animate, int startTime, Enemy& enemy) {
     static int currentFrameIndex = 0;
     if (animate)
     {
@@ -220,6 +220,7 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
                 {
                     change_src(13,204,22,29);
                     currentFrameIndex++;
+  
                 }
                 break;
             case 1:
@@ -241,6 +242,7 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
                 {
                     change_src(152,194,23,34);
                     currentFrameIndex++;
+
                 }
                 break;
             case 4:
@@ -248,6 +250,7 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
                 {
                     change_src(200,194,23,34);
                     currentFrameIndex++;
+
                 }
                 break;
             case 5:
@@ -257,6 +260,11 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
                     currentFrameIndex = 0;
                     animate = false;
                     // std::cout << "animated\n";
+                    if (AttackCollision(enemy)) {
+                        std::cout << "Player hit the enemy!" << std::endl;
+                        // enemy.decreaseHealth();
+                    }
+
                 }
                 break;
         }
@@ -264,7 +272,7 @@ void Player::AttackUpAnimation(bool& animate, int startTime) {
 }
 
 
-void Player::AttackLeftAnimation(bool& animate, int startTime) {
+void Player::AttackLeftAnimation(bool& animate, int startTime, Enemy& enemy) {
     static int currentFrameIndex = 0;
     if (animate)
     {
@@ -316,6 +324,10 @@ void Player::AttackLeftAnimation(bool& animate, int startTime) {
                     change_src(255,252,20,31);
                     currentFrameIndex = 0;
                     animate = false;
+                    if (AttackCollision(enemy)) {
+                        std::cout << "Player hit the enemy!" << std::endl;
+                        // enemy.decreaseHealth();
+                    }
                 }
                 break;
             
@@ -323,7 +335,7 @@ void Player::AttackLeftAnimation(bool& animate, int startTime) {
     }
 }
 
-void Player::AttackRightAnimation(bool& animate, int startTime) {
+void Player::AttackRightAnimation(bool& animate, int startTime, Enemy& enemy) {
     // Update animation frame
     static int currentFrameIndex = 0;
     if (animate)
@@ -376,6 +388,10 @@ void Player::AttackRightAnimation(bool& animate, int startTime) {
                     change_src(252,299,20,31);
                     currentFrameIndex = 0;
                     animate = false;
+                    if (AttackCollision(enemy)) {
+                        std::cout << "Player hit the enemy!" << std::endl;
+                        // enemy.decreaseHealth();
+                    }
                 }
                 break;
             
@@ -383,7 +399,7 @@ void Player::AttackRightAnimation(bool& animate, int startTime) {
     }
 }
 
-void Player::AttackDownAnimation(bool& animate, int startTime) {
+void Player::AttackDownAnimation(bool& animate, int startTime, Enemy& enemy) {
     // Update animation frame
     static int currentFrameIndex = 0;
     if (animate)
@@ -436,9 +452,24 @@ void Player::AttackDownAnimation(bool& animate, int startTime) {
                     change_src(255,341,20,30);
                     currentFrameIndex = 0;
                     animate = false;
+                    if (AttackCollision(enemy)) {
+                        std::cout << "Player hit the enemy!" << std::endl;
+                        // enemy.decreaseHealth();
+                    }
                 }
                 break;
         }
     }
 }
+
+// void Player::attack(std::vector<Enemy>& enemies) {
+//     // Check for collision with enemies during attack
+    
+//     for (auto& enemy : enemies) {
+//         if (checkCollision(enemy)) {
+//             std::cout << "Player hit the enemy!" << std::endl;
+//             // enemy.decreaseHealth();
+//         }
+//     }
+// }
 

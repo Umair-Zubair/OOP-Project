@@ -194,6 +194,7 @@ int main( int argc, char *argv[] )
                 case SDLK_k:
                     attackAnimate = true;
                     startTime = SDL_GetTicks();
+                    
                     // player1.AttackUp();
                     break;
                 }  
@@ -201,17 +202,20 @@ int main( int argc, char *argv[] )
         }
 
         if (direction == "Up"){
-            player1.AttackUpAnimation(attackAnimate, startTime);
+            player1.AttackUpAnimation(attackAnimate, startTime, enemy1);
         }
         else if (direction == "Left"){
-            player1.AttackLeftAnimation(attackAnimate, startTime);
+            player1.AttackLeftAnimation(attackAnimate, startTime, enemy1);
+
         }
         else if (direction == "Right"){
-            player1.AttackRightAnimation(attackAnimate, startTime);
+            player1.AttackRightAnimation(attackAnimate, startTime, enemy1);
         }
         else {
-            player1.AttackDownAnimation(attackAnimate, startTime);
+            player1.AttackDownAnimation(attackAnimate, startTime, enemy1);
+
         }
+        
 
         window.clear();
         window.render(bg);
@@ -235,11 +239,11 @@ int main( int argc, char *argv[] )
         //     window.render(wall3[i]);
         // } 
 
-        for (auto& enemy : enemies) {
-            // enemy.moveTowardsPlayer(player1, maze1);
-            window.render(enemy);
-        }
-
+        // for (auto& enemy : enemies) {
+        enemy1.moveTowardsPlayer(player1, maze1);
+            
+        
+        window.render(enemy1);
         window.render(player1);
         window.display();
     }

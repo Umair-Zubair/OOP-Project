@@ -74,3 +74,12 @@ bool Entity::checkCollision(const Entity& enemy) {
             x + getCurrentLocation().w > enemy.GetX() - collisionOffset &&
             x < enemy.GetX() + enemy.getCurrentLocation().w + collisionOffset);
 }
+
+bool Entity::AttackCollision(const Entity& enemy) {
+    const float collisionOffset = 35.0f;
+
+    return (y + getCurrentLocation().h > enemy.GetY() - collisionOffset &&
+            y < enemy.GetY() + enemy.getCurrentLocation().h + collisionOffset &&
+            x + getCurrentLocation().w > enemy.GetX() - collisionOffset &&
+            x < enemy.GetX() + enemy.getCurrentLocation().w + collisionOffset);
+}
