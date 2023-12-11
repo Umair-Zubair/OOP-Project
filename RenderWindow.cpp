@@ -1,8 +1,5 @@
 #include "RenderWindow.hpp"
-#include "Entity.hpp"
-#include "player.hpp"
-#include "maze.hpp"
-#include <iostream>
+
 using namespace std;
 
 RenderWindow:: RenderWindow(const char* title, int width, int height):  window(NULL), renderer(NULL)
@@ -49,10 +46,14 @@ void RenderWindow::render(Entity &_entity)
     else if (dynamic_cast<Player*>(&_entity) != nullptr || dynamic_cast<Enemy*>(&_entity)!=nullptr){
         dst.w = 100;
         dst.h = 100;
+    } 
+    else if (dynamic_cast<showHealth*>(&_entity) != nullptr) {
+        dst.w = 75; // Adjust the width as needed
+        dst.h = 75; // Adjust the height as needed
     }
     else{
-        dst.w = 128;
-        dst.h = 128;
+        dst.w = 49;
+        dst.h = 12;
     }
 
     // SDL_RenderCopy(renderer, _texture, NULL, NULL);

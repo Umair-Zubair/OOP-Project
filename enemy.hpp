@@ -70,7 +70,7 @@ class Enemy : public Entity{
         Enemy(float _x, float _y, SDL_Texture* _ptr);
         int getMaxHealth() const;
         int getCurrentHealth();
-        void decreaseEnemyHealth();
+        void decreaseHealth();
         string getWeaponType() const;
         void moveTowardsPlayer(Player& player, maze& gameMaze);
         void attackPlayer(Entity& playerEntity);

@@ -1,7 +1,7 @@
 #ifndef HEALTH_HPP
 #define HEALTH_HPP
-
-class Health {
+#include <iostream>
+class Health{
 private:
     int maxHealth;
     int currentHealth;
@@ -12,7 +12,7 @@ public:
 
     // Public member functions
     int getCurrentHealth() const;
-    void decreaseHealth();
+    void decreaseEnemyHealth();
     void increaseHealth(int amount);
 };
 

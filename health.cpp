@@ -6,12 +6,12 @@ Health::Health() {
 }
 
 int Health::getCurrentHealth() const {
+
     return currentHealth;
 }
 
-void Health::decreaseHealth() {
-    currentHealth -= 1;
-
+void Health::decreaseEnemyHealth() {
+    currentHealth -= 25;
     // Ensure currentHealth doesn't go below 0
     if (currentHealth < 0) {
         currentHealth = 0;

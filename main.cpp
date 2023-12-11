@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "gameState.hpp"
+#include "showHealth.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -122,10 +123,13 @@ int main( int argc, char *argv[] )
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
     SDL_Texture* greenTile = window.loadTexture("greenTile.png");
+    SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
     Enemy enemy1(100, 300, enemyModel);
+    showHealth health(1105,30,EnemyHealth);
+
 
     enemies.push_back(enemy1);
 
@@ -215,8 +219,8 @@ int main( int argc, char *argv[] )
             player1.AttackDownAnimation(attackAnimate, startTime, enemy1);
 
         }
-        
-
+        health.changeHealth(enemy1.getCurrentHealth());
+    
         window.clear();
         window.render(bg);
         
@@ -241,9 +245,14 @@ int main( int argc, char *argv[] )
 
         // for (auto& enemy : enemies) {
         enemy1.moveTowardsPlayer(player1, maze1);
-            
+        if (enemy1.getCurrentHealth() > 0){
+            window.render(health);
+            window.render(enemy1);
+        }
+        // else{
+        //     delete enemy1;
+        // }
         
-        window.render(enemy1);
         window.render(player1);
         window.display();
     }

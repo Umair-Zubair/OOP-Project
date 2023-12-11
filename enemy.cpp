@@ -16,8 +16,8 @@ int Enemy::getCurrentHealth() {
     return enemyHealth.getCurrentHealth();
 }
 
-void Enemy::decreaseEnemyHealth() {
-    enemyHealth.decreaseHealth();
+void Enemy::decreaseHealth() {
+    enemyHealth.decreaseEnemyHealth();
 }
 
 std::string Enemy::getWeaponType() const {

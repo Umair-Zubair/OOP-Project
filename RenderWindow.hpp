@@ -2,6 +2,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Entity.hpp"
+#include <iostream>
+#include "Entity.hpp"
+#include "player.hpp"
+#include "maze.hpp"
+#include "showHealth.hpp"
 
 class RenderWindow
 {
