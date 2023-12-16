@@ -78,6 +78,10 @@ class Enemy : public Entity{
         void updateDownAnimation(int currentFrameIndex);
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
+        void AttackUpAnimation(int currentFrameUpIndex, Player& player);
+        void AttackDownAnimation(int currentFrameDownIndex, Player& player);
+        void AttackLeftAnimation(int currentFrameLeftIndex, Player& player);
+        void AttackRightAnimation(int currentFrameRightIndex, Player& player);
 };
 
 #endif // ENEMY_HPP

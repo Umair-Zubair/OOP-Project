@@ -24,7 +24,7 @@ int Player::getCurrentHealth() {
 }
 
 void Player::decreasePlayerHealth() {
-    // playerHealth.decreaseHealth();
+    playerHealth.decreasePlayerHealth();
 }
 
 void Player::moveup(std::vector<Entity> wall, Enemy& enemy){

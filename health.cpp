@@ -18,6 +18,14 @@ void Health::decreaseEnemyHealth() {
     }
 }
 
+void Health::decreasePlayerHealth() {
+    currentHealth -= 15;
+    // Ensure currentHealth doesn't go below 0
+    if (currentHealth < 0) {
+        currentHealth = 0;
+    }
+}
+
 void Health::increaseHealth(int amount) {
     currentHealth += amount;
 

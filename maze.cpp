@@ -394,13 +394,26 @@ std::vector<Entity> maze::placeObstacles(){
     return FrameObstacles;
 }
 
-bool maze::isValidMove(int x, int y) const {
-    // Check if the move is within the boundaries
-    if (x >= 0 && x < 800 && y >= 0 && y < 600) {
+// bool maze::isValidMove(int x, int y) const {
+//     // Check if the move is within the boundaries
+//     if (x >= 0 && x < 800 && y >= 0 && y < 600) {
 
-        if (graph[y / 75][x / 75] != 1 && graph[y / 75][x / 75] != 2) {
-            return true;
-        }
+//         if (graph[y / 75][x / 75] != 1 && graph[y / 75][x / 75] != 2) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+bool maze::isValidMove(int x, int y) const {
+    
+    if (x < 0 || y < 0 || x >= width * 75 || y >= height * 75) {
+        return false;
     }
+
+    if (graph[y / 75][x / 75] == 0) {
+        return true;  
+    }
+
     return false;
 }

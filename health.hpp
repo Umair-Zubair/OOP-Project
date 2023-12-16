@@ -13,6 +13,7 @@ public:
     // Public member functions
     int getCurrentHealth() const;
     void decreaseEnemyHealth();
+    void decreasePlayerHealth();
     void increaseHealth(int amount);
 };
 
