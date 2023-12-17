@@ -20,7 +20,9 @@ maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     }
 }
 
+void maze::changeFrame(int x){
 
+}
 
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
@@ -79,7 +81,7 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
             break;
         case(6):
             for (int col=0;col<width;col++){
-                if (col!=5 && col!=6 && col!=7 && col!=8 && col!=9){
+                if (col<5 || col>9){
                     graph[row][col]=1;
                     wall.push_back(Entity(x,450,ptr));
                 }

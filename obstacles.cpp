@@ -11,8 +11,8 @@ obstacles::obstacles(SDL_Texture* _ptr):ptr(_ptr),count(0),Entity(0,0,nullptr){}
 
 coordinates obstacles::getValue(){
     coordinates point;
-    int randomCol = rand() % 16;
-    int randomRow = rand() % 9;    
+    int randomCol = rand() % 7 + 4; 
+    int randomRow = rand() % 6 + 2; 
     point.x_coord = randomCol;
     point.y_coord = randomRow;
     return point;

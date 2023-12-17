@@ -30,6 +30,7 @@ class maze: public Entity{
     std::vector<Entity> secondFrame();
     std::vector<Entity> thirdFrame();
     void fourthFrame();
+    void changeFrame(int x);
     std::vector<Entity> placeObstacles();
     bool isValidMove(int x, int y) const;
     std::vector<Entity> deadBoxes;

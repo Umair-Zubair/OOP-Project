@@ -21,16 +21,17 @@ class Player : public Entity{
         int currentFrameLeftIndex = 0;
         int currentFrameRightIndex = 0;
         int AttackUpFrame = 0;
+        bool obstacleCollided = false;
         // std::vector<pixelRec> copyVector;
     public:
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
         Player(float _x, float _y, SDL_Texture* _ptr);
         int getCurrentHealth() ;
         void decreasePlayerHealth() ;
-        void moveup(std::vector<Entity> wall, Enemy& enemy);
-        void movedown(std::vector<Entity> wall, Entity& enemy);
-        void moveleft(std::vector<Entity> wall, Entity& enemy);
-        void moveright(std::vector<Entity> wall, Entity& enemy);
+        void moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Enemy& enemy);
+        void movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Entity& enemy);
+        void moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Entity& enemy);
+        void moveright(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Entity& enemy);
         void updateUpAnimation(int currentFrameIndex);
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
@@ -39,6 +40,6 @@ class Player : public Entity{
         void AttackLeftAnimation(bool& animate, int startTime, Enemy& enemy);
         void AttackRightAnimation(bool& animate, int startTime, Enemy& enemy);
         void AttackDownAnimation(bool& animate, int startTime, Enemy& enemy);
-
+        bool obstacleCollision();
         // void getVector();
 };

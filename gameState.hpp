@@ -11,4 +11,4 @@ class gameState{
     public:
     gameState(SDL_Texture* _ptr,RenderWindow _window);
     void changeFrame(maze m1);
-};
+}; 
