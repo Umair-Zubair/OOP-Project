@@ -19,11 +19,11 @@ Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr){
 }
 
 int Player::getCurrentHealth() {
-    cout << playerHealth.getCurrentHealth();
+    // cout << playerHealth.getCurrentHealth();
     return playerHealth.getCurrentHealth();
 }
 
-void Player::decreasePlayerHealth() {
+void Player::decreaseHealth() {
     playerHealth.decreasePlayerHealth();
 }
 
@@ -39,7 +39,7 @@ void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstables,
             x < (wall[i].GetX() + 75) && (x + 75) > wall[i].GetX()) {
             y = wall[i].GetY() + 77;
         }
-    } 
+    }
     for (int i=0;i<checkObstables.size();i++){
         if (y < (checkObstables[i].GetY() + 75) && (y + 75) > checkObstables[i].GetY() &&
             x < (checkObstables[i].GetX() + 75) && (x + 75) > checkObstables[i].GetX()) {

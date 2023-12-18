@@ -179,13 +179,13 @@ int main( int argc, char *argv[] )
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
-    SDL_Texture* greenTile = window.loadTexture("fire .png");
+    SDL_Texture* greenTile = window.loadTexture("greenTile.png");
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
-    Enemy enemy1(100, 300, enemyModel);
+    Enemy enemy1(900, 300, enemyModel);
     showHealth health(1105,30,EnemyHealth);
 
 
@@ -308,7 +308,7 @@ int main( int argc, char *argv[] )
             // } 
 
             // for (auto& enemy : enemies) {
-            enemy1.moveTowardsPlayer(player1, maze1);
+            enemy1.moveTowardsPlayer(player1, maze1, wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){
                 window.render(health);
                 window.render(enemy1);

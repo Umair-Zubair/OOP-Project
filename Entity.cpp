@@ -50,6 +50,14 @@ float Entity::GetY() const{
     return y;
 }
 
+float Entity::GetWidth() const{
+    return currentLocation.w;
+}
+
+float Entity::GetHeight() const{
+    return currentLocation.h;
+}
+
 SDL_Rect Entity::getCurrentLocation() const{
     return currentLocation;
 }

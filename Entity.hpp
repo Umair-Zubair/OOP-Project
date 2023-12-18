@@ -15,6 +15,8 @@ class Entity{
         Entity(float _x, float _y, SDL_Texture* ptr);
         float GetX() const;
         float GetY() const;
+        float GetWidth() const;
+        float GetHeight() const;
         SDL_Rect getCurrentLocation() const;
         SDL_Texture* getTexture();
         void change_src(float x, float y, float width, float height);

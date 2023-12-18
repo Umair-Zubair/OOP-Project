@@ -409,13 +409,24 @@ std::vector<Entity> maze::placeObstacles(){
 
 bool maze::isValidMove(int x, int y) const {
     
-    if (x < 0 || y < 0 || x >= width * 75 || y >= height * 75) {
-        return false;
-    }
+    // if (x < 0 || y < 0 ) {
+    //     return false;
+    // }
 
-    if (graph[y / 75][x / 75] == 0) {
-        return true;  
-    }
+    // if (x >= 0 && x < 1200 && y >= 0 && y < 675) {
 
-    return false;
+    //     if (graph[y / 75][x / 75] == 0) {
+    //         return true;
+    //     }
+    // }
+    // return false;
+
+
+    // for (int i=0;i<height;i++){
+    //     for(int j = 0 ; j < width ; j++){
+    //         if (graph[i][j] == 0){
+    //             return true;
+    //         }
+    //     }
+    // }
 }

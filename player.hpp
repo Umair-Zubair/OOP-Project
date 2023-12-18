@@ -27,7 +27,7 @@ class Player : public Entity{
         // will hard code hp here in the constructor as it is a constant value that I decide(programmer).
         Player(float _x, float _y, SDL_Texture* _ptr);
         int getCurrentHealth() ;
-        void decreasePlayerHealth() ;
+        void decreaseHealth() ;
         void moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Enemy& enemy);
         void movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Entity& enemy);
         void moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Entity& enemy);

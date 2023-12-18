@@ -72,16 +72,16 @@ class Enemy : public Entity{
         int getCurrentHealth();
         void decreaseHealth();
         string getWeaponType() const;
-        void moveTowardsPlayer(Player& player, maze& gameMaze);
+        void moveTowardsPlayer(Player& player, maze& gameMaze, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles);
         void attackPlayer(Entity& playerEntity);
         void updateUpAnimation(int currentFrameIndex);
         void updateDownAnimation(int currentFrameIndex);
         void updateLeftAnimation(int currentFrameIndex);
         void updateRightAnimation(int currentFrameIndex);
-        void AttackUpAnimation(int currentFrameUpIndex, Player& player);
-        void AttackDownAnimation(int currentFrameDownIndex, Player& player);
-        void AttackLeftAnimation(int currentFrameLeftIndex, Player& player);
-        void AttackRightAnimation(int currentFrameRightIndex, Player& player);
+        void AttackUpAnimation(Player& player);
+        void AttackDownAnimation(Player& player);
+        void AttackLeftAnimation(Player& player);
+        void AttackRightAnimation(Player& player);
 };
 
 #endif // ENEMY_HPP
