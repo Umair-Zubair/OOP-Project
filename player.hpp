@@ -41,5 +41,7 @@ class Player : public Entity{
         void AttackRightAnimation(bool& animate, int startTime, Enemy& enemy);
         void AttackDownAnimation(bool& animate, int startTime, Enemy& enemy);
         bool obstacleCollision();
+        int getX(); // to get the x Coordinate of player for frame change.
+        int getY(); // to get the y Coordinate of player for frame change.
         // void getVector();
 };

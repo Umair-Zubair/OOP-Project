@@ -15,7 +15,6 @@ using namespace std;
 Player::Player(float _x, float _y, SDL_Texture* _ptr): Entity(_x, _y, _ptr){
     change_src(13,7,22,32);
     speed = 8.0f;
-    player_hp = 100;
 }
 
 int Player::getCurrentHealth() {
@@ -487,13 +486,12 @@ void Player::AttackDownAnimation(bool& animate, int startTime, Enemy& enemy) {
     }
 }
 
-// void Player::attack(std::vector<Enemy>& enemies) {
-//     // Check for collision with enemies during attack
-    
-//     for (auto& enemy : enemies) {
-//         if (checkCollision(enemy)) {
-//             std::cout << "Player hit the enemy!" << std::endl;
-//             // enemy.decreaseHealth();
-//         }
-//     }
-// }
+int Player::getX(){
+    std::cout << x;
+    return x;
+}
+
+int Player::getY(){
+    return y;
+}
+
