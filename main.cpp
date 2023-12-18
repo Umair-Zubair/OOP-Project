@@ -181,7 +181,7 @@ int main( int argc, char *argv[] )
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
-    SDL_Texture* greenTile = window.loadTexture("greenTile.png");
+    SDL_Texture* greenTile = window.loadTexture("obstacle.png");
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
     std::vector<Enemy> enemies;
@@ -308,6 +308,7 @@ int main( int argc, char *argv[] )
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
+                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
             } 
             //RENDERING SECOND WALL
@@ -319,6 +320,7 @@ int main( int argc, char *argv[] )
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
+                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
             }    
             else if (frame==2){
@@ -330,6 +332,7 @@ int main( int argc, char *argv[] )
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
+                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
             } 
             // for (auto& enemy : enemies) {

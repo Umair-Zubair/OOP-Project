@@ -327,14 +327,14 @@ void maze::makeGraph(){
 
 
 //copy constructor for obstacles
-maze::maze(const maze &m, SDL_Texture *_ptr):ptr(_ptr), Entity(0,0, nullptr){
+maze::maze(const maze &m, SDL_Texture *_ptr,int frame):ptr(_ptr), Entity(0,0, nullptr){
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
             graph[row][col]=0;
             graph2[row][col]=0;
             graph3[row][col]=0;
         }
-    }
+    } 
     if (frame==0){
         for (int i=0;i<height;i++){
             for (int j=0;j<width;j++){
@@ -374,7 +374,7 @@ std::vector<Entity> maze::placeObstacles(int frame){
                 FrameObstacles.push_back(Entity(x,y,ptr));
                 obstacleCount++;
             } 
-        }
+        } 
         else if (frame==1){
             if (graph2[point.y_coord][point.x_coord]==0){
                 graph2[point.y_coord][point.x_coord]=2;

@@ -49,7 +49,7 @@ void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::v
                 if (x < wall[i].GetX() + 75 && x + 75 > wall[i].GetX() &&
                     y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
                     nextY = y;
-                    cout << "left enter";
+                    //cout << "left enter";
                 }
             }
             for (int i = 0; i < checkObstacles.size(); i++) {
@@ -67,7 +67,7 @@ void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::v
                 if (x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75 &&
                     y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
                     nextY = y;
-                    cout << "Right enter";
+                    //cout << "Right enter";
                 }
             }
 
@@ -87,7 +87,7 @@ void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::v
                 if (y < (wall[i].GetY() + 75) && (y + 75) > wall[i].GetY() &&
                     x < (wall[i].GetX() + 75) && (x + 75) > wall[i].GetX()) {
                     nextX = x;
-                    cout << "Up enter";
+                    //cout << "Up enter";
                 }
             }
             for (int i=0;i<checkObstacles.size();i++){
@@ -106,8 +106,8 @@ void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::v
                 if (y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75 &&
                     x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75) {
                     nextX = x;
-                    cout << "Down enter";
-                    cout << x << " " << y << endl;
+                    //cout << "Down enter";
+                    //cout << x << " " << y << endl;
                 }
             }
 
@@ -128,22 +128,22 @@ void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::v
             if (currentDirection == "Up") {
                 AttackUpAnimation(player);
                 currentFrameUpIndex = (currentFrameUpIndex + 1) % 6;
-                cout << "in Up attack!";
+                //cout << "in Up attack!";
             } 
             else if (currentDirection == "Down") {
                 AttackDownAnimation(player);
                 currentFrameDownIndex = (currentFrameDownIndex + 1) % 6;
-                cout << "in Down attack!";
+                //cout << "in Down attack!";
             } 
             else if (currentDirection == "Left") {
                 AttackLeftAnimation(player);
                 currentFrameLeftIndex = (currentFrameLeftIndex + 1) % 6;
-                cout << "in Left attack!";
+                //cout << "in Left attack!";
             } 
             else if (currentDirection == "Right") {
                 AttackRightAnimation(player);
                 currentFrameRightIndex = (currentFrameRightIndex + 1) % 6;
-                cout << "in right attack!";
+                //cout << "in right attack!";
             }
         }
     }

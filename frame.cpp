@@ -17,15 +17,15 @@ std::vector<std::vector<Entity>> Frame::renderFrame(){
     maze m3(wall_ptr);
     std::vector<Entity> thirdFrame = m3.thirdFrame();
 
-    maze maze1obstacle(m1,obstacle_ptr);
+    maze maze1obstacle(m1,obstacle_ptr,0);
     std::vector<Entity> firstObstacles;
     firstObstacles = maze1obstacle.placeObstacles(0);
 
-    maze maze2obstacles(m2,obstacle_ptr);
+    maze maze2obstacles(m2,obstacle_ptr,1);
     std::vector<Entity> secondObstacles;
     secondObstacles = maze2obstacles.placeObstacles(1);
 
-    maze maze3obstacles(m3,obstacle_ptr);
+    maze maze3obstacles(m3,obstacle_ptr,2);
     std::vector<Entity> thirdObstacles;
     thirdObstacles = maze3obstacles.placeObstacles(2);
     //pushing them into allFrames vector according to index

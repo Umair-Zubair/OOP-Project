@@ -2,7 +2,7 @@
 #include "Entity.hpp"
 #include "maze.hpp"
 
-class Frame{
+class Frame : public maze{
     private:
     int frameNum;
     std::vector<std::vector<Entity>> allFrames;

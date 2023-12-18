@@ -24,7 +24,7 @@ class maze: public Entity{
     SDL_Texture* ptr;
     public:
     maze();
-    maze(const maze &m, SDL_Texture *ptr);
+    maze(const maze &m, SDL_Texture *ptr,int frame);
     maze(SDL_Texture *ptr);
     void makeGraph();
     std::vector<Entity> firstFrame();
