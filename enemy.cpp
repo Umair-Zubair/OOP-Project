@@ -24,7 +24,7 @@ std::string Enemy::getWeaponType() const {
     return weaponType;
 }
 
-void Enemy:: moveTowardsPlayer(Player& player, maze& gameMaze, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles) {
+void Enemy:: moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles) {
     float dx = player.GetX() - x;
     float dy = player.GetY() - y;
     float distance = std::sqrt(dx * dx + dy * dy);

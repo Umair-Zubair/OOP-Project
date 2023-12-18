@@ -13,6 +13,7 @@
 #include "gameState.hpp"
 #include "showHealth.hpp"
 #include "music.hpp"
+#include "frame.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -188,39 +189,44 @@ int main( int argc, char *argv[] )
     Player player1(500, 600, playerModel);
     Enemy enemy1(900, 300, enemyModel);
     showHealth health(1105,30,EnemyHealth);
-    vector<Entity> allFrames;
+    
+    Frame generate(Tile,greenTile);
+    vector<vector<Entity>> allFrames = generate.renderFrame();
+    vector<Entity> wall = allFrames[0];
+    vector<Entity> wall2 = allFrames[2];
+    vector<Entity> wall3 = allFrames[4];
+    vector<Entity> firstObstacles = allFrames[1];
+    vector<Entity> secondObstacles = allFrames[3];
+    vector<Entity> thirdObstacles = allFrames[5];
 
     enemies.push_back(enemy1);
-    int frame = 0;
+    
     //First Frame
     //gameState game(Tile,window);
-    maze maze1(Tile);
-    vector<Entity> wall;
-    wall = maze1.firstFrame();
-
-    vector<Entity> firstObstacles;
-    maze maze1obstacles(maze1,greenTile);
-    firstObstacles = maze1obstacles.placeObstacles(frame);
+    //maze maze1(Tile);
+    //vector<Entity> wall;
+    //wall = maze1.firstFrame();
 
     //Second frame
-    maze maze2(Tile);
-    vector<Entity> wall2;
-    wall2 = maze2.secondFrame();
+    //maze maze2(Tile);
+    //vector<Entity> wall2;
+    //wall2 = maze2.secondFrame();
     
     //Third frame
-    maze maze3(Tile);
-    vector<Entity> wall3;
-    wall3 = maze3.thirdFrame();
+    //maze maze3(Tile);
+    //vector<Entity> wall3;
+    //wall3 = maze3.thirdFrame();
 
     vector<Entity> maze_frame = wall;
-    vector<Entity> maze_obstacles;
+    vector<Entity> maze_obstacles = firstObstacles;
     vector<Entity> maze_enemies;
     
     bool gameRunning = true;
     bool attackAnimate = false;
     int startTime = SDL_GetTicks();
     string direction = "Up";
-    
+    int frame = 0;
+
     SDL_Event event;
     if (startGame){
         BackgroundMusic music("bgMusic.mp3");
@@ -297,59 +303,37 @@ int main( int argc, char *argv[] )
             //RENDERING FIRST WALL
             //this is to render each wall pixel on the screen.
             if(frame == 0){
-                for(int i =0; i<wall.size(); i++){
-                    window.render(wall[i]);
-                }
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
+                } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
                 }
             } 
             //RENDERING SECOND WALL
             else if(frame == 1){
-                static int count = 0;
-                if (count==0){
-                    vector<Entity> secondObstacles;
-                    maze maze2obstacles(maze2,greenTile);
-                    secondObstacles = maze2obstacles.placeObstacles(frame);
-                    
-                    vector<Entity> secondEnemyLocations;
-                    maze maze2enemies(maze2,enemyModel);
-                    secondEnemyLocations = maze2enemies.placeEnemies(frame);
-
-                    maze_obstacles = secondObstacles;
-                    maze_enemies = secondEnemyLocations;
-                    count++;
-                }
-                for (int i=0;i<wall2.size();i++){
-                    window.render(wall2[i]);
-                    maze_frame = wall2;
-                }
+                maze_frame = wall2;
+                maze_obstacles = secondObstacles;
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
+                } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
-                    window.render(maze_enemies[i]);
                 }
-
             }    
             else if (frame==2){
             //RENDERING THIRD WALL
-                static int count = 0;
-                if (count==0){
-                    vector<Entity> thirdObstacles;
-                    maze maze3obstacles(maze3,greenTile);
-                    thirdObstacles = maze3obstacles.placeObstacles(frame);
-                    maze_obstacles = thirdObstacles;
-                    count++;
-                }
-                for (int i=0;i<wall3.size();i++){
-                    window.render(wall3[i]);
-                    maze_frame = wall3;
+                maze_frame = wall3;
+                maze_obstacles = thirdObstacles;
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
                 }
             } 
             // for (auto& enemy : enemies) {
-            enemy1.moveTowardsPlayer(player1, maze1, wall, firstObstacles);
+            enemy1.moveTowardsPlayer(player1, wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){
                 window.render(health);
                 window.render(enemy1);
