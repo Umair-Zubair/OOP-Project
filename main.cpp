@@ -15,6 +15,7 @@
 #include "showHealth.hpp"
 #include "music.hpp"
 #include "frame.hpp"
+#include "obstacles.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -194,6 +195,7 @@ int main( int argc, char *argv[] )
     showHealth player_Health(50,30,PlayerHealth);
     
     Frame generate(Tile,greenTile);
+    
     vector<vector<Entity>> allFrames = generate.renderFrame();
     vector<Entity> wall = allFrames[0];
     vector<Entity> wall2 = allFrames[2];
