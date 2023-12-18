@@ -17,13 +17,11 @@ class maze: public Entity{
     int frame = 0;
     int obstacleCount=0;
     int enemyCount = 0;
-    // SDL_Rect srcRect, moverRect;
     SDL_Texture* ptr;
     public:
     maze();
     maze(const maze &m, SDL_Texture *ptr,int frame);
     maze(SDL_Texture *ptr);
-    void makeGraph();
     std::vector<Entity> firstFrame();
     std::vector<Entity> secondFrame();
     std::vector<Entity> thirdFrame();

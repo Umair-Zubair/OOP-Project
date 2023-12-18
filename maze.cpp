@@ -20,9 +20,6 @@ maze::maze(SDL_Texture *_ptr): ptr(_ptr), Entity(0,0, nullptr){
     }
 }
 
-void maze::changeFrame(int x){
-
-}
 
 std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram of the maze
 //for now we will build on this frame only, once it is perfected we will proceed with other frames
@@ -304,29 +301,6 @@ std::vector<Entity> maze::thirdFrame(){
     return thirdWall;
 }
 
-void maze::fourthFrame(){
-    
-}
-
-void maze::makeGraph(){
-    if (frame==0){ // first frame 
-        frame++; //incremented to ensure next time the same frame isnt drawn
-        firstFrame(); // function to draw the walls of first frame is called
-    }
-    else if (frame==1){
-        frame++;
-        secondFrame();  //function to draw walls of second frame
-    }
-    else if (frame==2){
-        frame++;
-        thirdFrame();   //function to draw walls of third frame
-    }
-    else if (frame==3){
-        frame++;
-        fourthFrame();  //function to draw walls of fourth frame
-    }
-}
-
 
 //copy constructor for obstacles
 maze::maze(const maze &m, SDL_Texture *_ptr,int frame):ptr(_ptr), Entity(0,0, nullptr){
@@ -360,54 +334,55 @@ maze::maze(const maze &m, SDL_Texture *_ptr,int frame):ptr(_ptr), Entity(0,0, nu
     }
 }
 
-int(*maze::getGraph(int x))[height][width] {
-    switch (x) {
-        case 0:
-            return &graph;
-        case 1:
-            return &graph2;
-        case 2:
-            return &graph3;
-        default:
-            return nullptr;
+vector<int> maze::placeObstacles(int frame){
+    //there will be 2 random obstacles placed in the map
+    //if the player goes on that coordinate, they lose
+    std::vector<Entity> FrameObstacles;
+    obstacles generate;
+    coordinates point;
+    while (obstacleCount!=2){
+        point = generate.getValue();
+        if (frame==0){
+            if (graph[point.y_coord][point.x_coord]==0){
+                graph[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        } 
+        else if (frame==1){
+            if (graph2[point.y_coord][point.x_coord]==0){
+                graph2[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        }
+        else if (frame==2){
+            if (graph3[point.y_coord][point.x_coord]==0){
+                graph3[point.y_coord][point.x_coord]=2;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                FrameObstacles.push_back(Entity(x,y,ptr));
+                obstacleCount++;
+            } 
+        }
+    }
+    return FrameObstacles;
+}
+
+std::vector<int> getGraph(int x) {
+    if(x == 0){
+        return myGraph;
+    }
+
+    else if(x == 1){
+        return myGraph2;
+    }
+
+    else if(x == 2){
+        return myGraph3;
     }
 }
-// vector<Entity> maze::placeObstacles(int frame){
-//     //there will be 2 random obstacles placed in the map
-//     //if the player goes on that coordinate, they lose
-//     std::vector<Entity> FrameObstacles;
-//     obstacles generate;
-//     coordinates point;
-//     while (obstacleCount!=2){
-//         point = generate.getValue();
-//         if (frame==0){
-//             if (graph[point.y_coord][point.x_coord]==0){
-//                 graph[point.y_coord][point.x_coord]=2;
-//                 int x = point.x_coord * 75;
-//                 int y = point.y_coord * 75;
-//                 FrameObstacles.push_back(Entity(x,y,ptr));
-//                 obstacleCount++;
-//             } 
-//         } 
-//         else if (frame==1){
-//             if (graph2[point.y_coord][point.x_coord]==0){
-//                 graph2[point.y_coord][point.x_coord]=2;
-//                 int x = point.x_coord * 75;
-//                 int y = point.y_coord * 75;
-//                 FrameObstacles.push_back(Entity(x,y,ptr));
-//                 obstacleCount++;
-//             } 
-//         }
-//         else if (frame==2){
-//             if (graph3[point.y_coord][point.x_coord]==0){
-//                 graph3[point.y_coord][point.x_coord]=2;
-//                 int x = point.x_coord * 75;
-//                 int y = point.y_coord * 75;
-//                 FrameObstacles.push_back(Entity(x,y,ptr));
-//                 obstacleCount++;
-//             } 
-//         }
-//     }
-//     return FrameObstacles;
-// }
-

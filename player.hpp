@@ -41,5 +41,4 @@ class Player : public Entity{
         void AttackRightAnimation(bool& animate, int startTime, Enemy& enemy);
         void AttackDownAnimation(bool& animate, int startTime, Enemy& enemy);
         bool obstacleCollision();
-        // void getVector();
 };
