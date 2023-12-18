@@ -19,6 +19,7 @@ class maze: public Entity{
     int graph3[height][width];
     int frame = 0;
     int obstacleCount=0;
+    int enemyCount = 0;
     // SDL_Rect srcRect, moverRect;
     SDL_Texture* ptr;
     public:
@@ -31,7 +32,8 @@ class maze: public Entity{
     std::vector<Entity> thirdFrame();
     void fourthFrame();
     void changeFrame(int x);
-    std::vector<Entity> placeObstacles();
+    std::vector<Entity> placeObstacles(int place);
+    std::vector<Entity> placeEnemies(int x);
     bool isValidMove(int x, int y) const;
     std::vector<Entity> deadBoxes;
 };

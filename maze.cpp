@@ -215,7 +215,6 @@ std:: vector<Entity> maze::secondFrame(){    //this function makes the first fra
     return secondWall;
 }
 
-
 std::vector<Entity> maze::thirdFrame(){
     std::vector<Entity> thirdWall;
     for (int i=0;i<height;i++){
@@ -326,6 +325,8 @@ void maze::makeGraph(){
     }
 }
 
+
+//copy constructor for obstacles
 maze::maze(const maze &m, SDL_Texture *_ptr):ptr(_ptr), Entity(0,0, nullptr){
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
@@ -357,7 +358,7 @@ maze::maze(const maze &m, SDL_Texture *_ptr):ptr(_ptr), Entity(0,0, nullptr){
     }
 }
 
-std::vector<Entity> maze::placeObstacles(){
+std::vector<Entity> maze::placeObstacles(int frame){
     //there will be 2 random obstacles placed in the map
     //if the player goes on that coordinate, they lose
     std::vector<Entity> FrameObstacles;
@@ -396,6 +397,42 @@ std::vector<Entity> maze::placeObstacles(){
     return FrameObstacles;
 }
 
+std::vector<Entity> maze::placeEnemies(int frame){
+    std::vector<Entity> enemyLoc;
+    obstacles generate;
+    coordinates point;
+    while (enemyCount!=2){
+        point = generate.getValue();
+        if (frame==0){
+            if (graph[point.y_coord][point.x_coord]==0){
+                graph[point.y_coord][point.x_coord]=3;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                enemyLoc.push_back(Entity(x,y,ptr));
+                enemyCount++;
+            } 
+        }
+        else if (frame==1){
+            if (graph2[point.y_coord][point.x_coord]==0){
+                graph2[point.y_coord][point.x_coord]=3;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                enemyLoc.push_back(Entity(x,y,ptr));
+                enemyCount++;
+            } 
+        }
+        else if (frame==2){
+            if (graph3[point.y_coord][point.x_coord]==0){
+                graph3[point.y_coord][point.x_coord]=3;
+                int x = point.x_coord * 75;
+                int y = point.y_coord * 75;
+                enemyLoc.push_back(Entity(x,y,ptr));
+                enemyCount++;
+            } 
+        }
+    }
+    return enemyLoc;
+}
 // bool maze::isValidMove(int x, int y) const {
 //     // Check if the move is within the boundaries
 //     if (x >= 0 && x < 800 && y >= 0 && y < 600) {

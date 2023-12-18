@@ -196,29 +196,30 @@ int main( int argc, char *argv[] )
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
-    //First frame obstacle
-    vector<Entity> firstObstacles;
-    maze maze1obstacles(maze1,greenTile);
-    firstObstacles = maze1obstacles.placeObstacles();
 
     //Second frame
     maze maze2(Tile);
     vector<Entity> wall2;
     wall2 = maze2.secondFrame();
-    //second frame obstacle
-    vector<Entity> secondObstacles;
-    maze maze2obstacles(maze2,greenTile);
-    secondObstacles = maze2obstacles.placeObstacles();
     
     //Third frame
     maze maze3(Tile);
     vector<Entity> wall3;
     wall3 = maze3.thirdFrame();
 
+    vector<Entity> maze_frame = wall;
+    vector<Entity> maze_obstacles;
+    vector<Entity> maze_enemies;
+    
     bool gameRunning = true;
     bool attackAnimate = false;
     int startTime = SDL_GetTicks();
     string direction = "Up";
+    int frame = 0;
+    vector<Entity> firstObstacles;
+    maze maze1obstacles(maze1,greenTile);
+    firstObstacles = maze1obstacles.placeObstacles(frame);
+    maze_obstacles = firstObstacles;
     SDL_Event event;
     if (startGame){
         while (gameRunning)
@@ -241,22 +242,22 @@ int main( int argc, char *argv[] )
                     {
                     case SDLK_w:
                     // up
-                        player1.moveup(wall,firstObstacles, enemy1);
+                        player1.moveup(maze_frame,maze_obstacles, enemy1);
                         direction = "Up";
                         break;
                     case SDLK_s:
                     // down
-                        player1.movedown(wall,firstObstacles, enemy1);
+                        player1.movedown(maze_frame,maze_obstacles, enemy1);
                         direction = "Down";
                         break;
                     case SDLK_a:
                     // left
-                        player1.moveleft(wall,firstObstacles, enemy1);
+                        player1.moveleft(maze_frame,maze_obstacles, enemy1);
                         direction = "Left";
                         break;
                     case SDLK_d:
                     // right
-                        player1.moveright(wall,firstObstacles, enemy1);
+                        player1.moveright(maze_frame,maze_obstacles, enemy1);
                         direction = "Right";
                         break;
                     case SDLK_k:
@@ -265,6 +266,8 @@ int main( int argc, char *argv[] )
                         
                         // player1.AttackUp();
                         break;
+                    case SDLK_f:
+                        frame++;
                     }  
                 }
             }
@@ -290,23 +293,58 @@ int main( int argc, char *argv[] )
             
             //RENDERING FIRST WALL
             //this is to render each wall pixel on the screen.
-            for(int i =0; i<wall.size(); i++){
-                window.render(wall[i]);
-            }
-            for (int i=0;i<firstObstacles.size();i++){
-                window.render(firstObstacles[i]);
-            }
-
+            if(frame == 0){
+                for(int i =0; i<wall.size(); i++){
+                    window.render(wall[i]);
+                }
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                }
+            } 
             //RENDERING SECOND WALL
-            // for (int i=0;i<wall2.size();i++){
-            //     window.render(wall2[i]);
-            // } 
+            else if(frame == 1){
+                static int count = 0;
+                if (count==0){
+                    vector<Entity> secondObstacles;
+                    maze maze2obstacles(maze2,greenTile);
+                    secondObstacles = maze2obstacles.placeObstacles(frame);
 
+                    vector<Entity> secondEnemyLocations;
+                    maze maze2enemies(maze2,enemyModel);
+                    secondEnemyLocations = maze2enemies.placeEnemies(frame);
+
+                    maze_obstacles = secondObstacles;
+                    maze_enemies = secondEnemyLocations;
+                    count++;
+                }
+                for (int i=0;i<wall2.size();i++){
+                    window.render(wall2[i]);
+                    maze_frame = wall2;
+                }
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                    window.render(maze_enemies[i]);
+                }
+
+            }    
+            else if (frame==2){
             //RENDERING THIRD WALL
-            // for (int i=0;i<wall3.size();i++){
-            //     window.render(wall3[i]);
-            // } 
-
+                static int count = 0;
+                if (count==0){
+                    vector<Entity> thirdObstacles;
+                    maze maze3obstacles(maze3,greenTile);
+                    thirdObstacles = maze3obstacles.placeObstacles(frame);
+                    maze_obstacles = thirdObstacles;
+                    count++;
+                }
+                for (int i=0;i<wall3.size();i++){
+                    window.render(wall3[i]);
+                    maze_frame = wall3;
+                } 
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                }
+            } 
             // for (auto& enemy : enemies) {
             enemy1.moveTowardsPlayer(player1, maze1, wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){
