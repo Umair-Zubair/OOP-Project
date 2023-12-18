@@ -42,12 +42,6 @@ void RenderWindow::render(Entity &_entity)
         // need to store width and height of the brownTile.
         dst.w = 75;
         dst.h = 75;
-        //std::cout << "maze checked" <<std::endl;
-    } 
-    else if (static_cast<obstacles*>(&_entity)!=nullptr){
-        dst.w = 50;
-        dst.h = 50;
-        std::cout << "obstacle checked" <<std::endl;
     }
     else if (dynamic_cast<Player*>(&_entity) != nullptr || dynamic_cast<Enemy*>(&_entity)!=nullptr){
         dst.w = 100;
