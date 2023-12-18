@@ -27,7 +27,7 @@ void Player::decreaseHealth() {
     playerHealth.decreasePlayerHealth();
 }
 
-void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstables, Enemy& enemy){
+void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles, Enemy& enemy){
     y-=speed;
     updateUpAnimation(currentFrameUpIndex);
     currentFrameUpIndex = (currentFrameUpIndex + 1) % 8;
@@ -40,11 +40,10 @@ void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstables,
             y = wall[i].GetY() + 77;
         }
     }
-    for (int i=0;i<checkObstables.size();i++){
-        if (y < (checkObstables[i].GetY() + 75) && (y + 75) > checkObstables[i].GetY() &&
-            x < (checkObstables[i].GetX() + 75) && (x + 75) > checkObstables[i].GetX()) {
-            y = checkObstables[i].GetY() + 77;
-            obstacleCollided = true;
+    for (int i=0;i<checkObstacles.size();i++){
+        if (checkCollision(checkObstacles[i])) {
+            std::cout << "Wah yaar" << endl;
+            // obstacleCollided = true;
         }
     } 
     // std::cout << checkCollision(enemy);
@@ -67,10 +66,9 @@ void Player::movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacle
         }
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
-        if (y + 75 > checkObstacles[i].GetY() && y < checkObstacles[i].GetY() + 75 &&
-            x + 75 > checkObstacles[i].GetX() && x < checkObstacles[i].GetX() + 75) {
-            y = checkObstacles[i].GetY() - 77;
-            obstacleCollided = true;
+        if (checkCollision(checkObstacles[i])) {
+            std::cout << "Wah yaar" << endl;
+            // obstacleCollided = true;
         }
     }
 
@@ -97,10 +95,9 @@ void Player::moveright(std::vector<Entity> wall,std::vector<Entity> checkObstacl
         }
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
-        if (x + 75 > checkObstacles[i].GetX() && x < checkObstacles[i].GetX() + 75 &&
-            y + 75 > checkObstacles[i].GetY() && y < checkObstacles[i].GetY() + 75) {
-            x = checkObstacles[i].GetX() - 75;
-            obstacleCollided = true;
+        if (checkCollision(checkObstacles[i])) {
+            std::cout << "Wah yaar" << endl;
+            // obstacleCollided = true;
         }
     }
     // Check collision with enemy
@@ -126,10 +123,9 @@ void Player::moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacle
         }
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
-        if (x < checkObstacles[i].GetX() + 75 && x + 75 > checkObstacles[i].GetX() &&
-            y + 75 > checkObstacles[i].GetY() && y < checkObstacles[i].GetY() + 75) {
-            x = checkObstacles[i].GetX() + 75;
-            obstacleCollided = true;
+        if (checkCollision(checkObstacles[i])) {
+            std::cout << "Wah yaar" << endl;
+            // obstacleCollided = true;
         }
     }
     // Check collision with enemy

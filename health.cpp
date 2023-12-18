@@ -19,7 +19,7 @@ void Health::decreaseEnemyHealth() {
 }
 
 void Health::decreasePlayerHealth() {
-    currentHealth -= 15;
+    currentHealth -= 20;
     // Ensure currentHealth doesn't go below 0
     if (currentHealth < 0) {
         currentHealth = 0;

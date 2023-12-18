@@ -48,8 +48,8 @@ void RenderWindow::render(Entity &_entity)
         dst.h = 100;
     } 
     else if (dynamic_cast<showHealth*>(&_entity) != nullptr) {
-        dst.w = 75; // Adjust the width as needed
-        dst.h = 75; // Adjust the height as needed
+        dst.w = 75; 
+        dst.h = 75; 
     }
     else{
         dst.w = 49;
