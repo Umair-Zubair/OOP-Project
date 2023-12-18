@@ -48,6 +48,7 @@
 #include "health.hpp"
 #include <string>
 #include "player.hpp"
+#include "showHealth.hpp"
 using namespace std;
 
 
@@ -72,7 +73,7 @@ class Enemy : public Entity{
         int getCurrentHealth();
         void decreaseHealth();
         string getWeaponType() const;
-        void moveTowardsPlayer(Player& player, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles);
+        void moveTowardsPlayer(Player& player, showHealth& playerHealth, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles);
         void attackPlayer(Entity& playerEntity);
         void updateUpAnimation(int currentFrameIndex);
         void updateDownAnimation(int currentFrameIndex);

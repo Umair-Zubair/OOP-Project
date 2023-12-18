@@ -14,9 +14,7 @@ struct pixelRec{    //this structure is used to define x and y values of pixels 
 class maze: public Entity{
     protected:
     enum {width = 16, height = 9};
-    int graph[height][width];
-    int graph2[height][width];
-    int graph3[height][width];
+    int graph[height][width], graph2[height][width], graph3[height][width], myGraph[height][width], myGraph2[height][width], myGraph3[height][width];
     int frame = 0;
     int obstacleCount=0;
     int enemyCount = 0;
@@ -24,7 +22,7 @@ class maze: public Entity{
     SDL_Texture* ptr;
     public:
     maze();
-    maze(const maze &m, SDL_Texture *ptr);
+    maze(const maze &m, SDL_Texture *ptr,int frame);
     maze(SDL_Texture *ptr);
     void makeGraph();
     std::vector<Entity> firstFrame();
@@ -33,7 +31,8 @@ class maze: public Entity{
     void fourthFrame();
     void changeFrame(int x);
     std::vector<Entity> placeObstacles(int place);
-    std::vector<Entity> placeEnemies(int x);
+    std::vector<int> getGraph(int x);
     bool isValidMove(int x, int y) const;
     std::vector<Entity> deadBoxes;
+    
 };

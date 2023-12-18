@@ -182,14 +182,15 @@ int main( int argc, char *argv[] )
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
     SDL_Texture* greenTile = window.loadTexture("greenTile.png");
+    SDL_Texture* PlayerHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
+
     std::vector<Enemy> enemies;
-    // need to make a loop for game running so that window stays popped up.
+
     Player player1(500, 600, playerModel);
-    Enemy enemy1(900, 300, enemyModel);
-    showHealth health(1105,30,EnemyHealth);
-    
+    showHealth playerHealth(1105,30,PlayerHealth);
+    showHealth enemyHealth(15,30,EnemyHealth);
     Frame generate(Tile,greenTile);
     vector<vector<Entity>> allFrames = generate.renderFrame();
     vector<Entity> wall = allFrames[0];
@@ -198,8 +199,6 @@ int main( int argc, char *argv[] )
     vector<Entity> firstObstacles = allFrames[1];
     vector<Entity> secondObstacles = allFrames[3];
     vector<Entity> thirdObstacles = allFrames[5];
-
-    enemies.push_back(enemy1);
     
     //First Frame
     //gameState game(Tile,window);
@@ -233,6 +232,51 @@ int main( int argc, char *argv[] )
         music.play(-1);
         while (gameRunning)
         {
+            if(frame == 0){
+                // vector<Entity> graph = generate.getMaze(0).getGraph(0);
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
+                } 
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                }
+            } 
+
+            else if(frame == 1){
+                vector<Entity> graph = generate.getMaze(1).getGraph(1);
+                maze_frame = wall2;
+                maze_obstacles = secondObstacles;
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
+                } 
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                }
+            }    
+            else if (frame==2){
+
+                vector<Entity> graph = generate.getMaze(2).getGraph(2);
+                maze_frame = wall3;
+                maze_obstacles = thirdObstacles;
+                for(int i =0; i<maze_frame.size(); i++){
+                    window.render(maze_frame[i]);
+                } 
+                for (int i = 0;i<maze_obstacles.size();i++){
+                    window.render(maze_obstacles[i]);
+                }
+            }
+
+            int randomX = rand() % 16;
+            int randomY = rand() % 9;
+
+            while(graph[randomX][randomY] != 0){
+                randomX = rand() % 16;
+                randomY = rand() % 9;
+            }
+
+            Enemy enemy1(randomX*75, randomY*75, enemyModel);
+            maze_enemies.push_back(enemy1);
+
             while (SDL_PollEvent(&event))
             {
                 if (event.type == SDL_QUIT)
@@ -295,60 +339,23 @@ int main( int argc, char *argv[] )
                 player1.AttackDownAnimation(attackAnimate, startTime, enemy1);
 
             }
-            health.changeHealth(enemy1.getCurrentHealth());
+            
+            enemyHealth.changeHealth(enemy1.getCurrentHealth());
         
             window.clear();
             window.render(bg);
-            
-            //RENDERING FIRST WALL
-            //this is to render each wall pixel on the screen.
-            if(frame == 0){
-                for(int i =0; i<maze_frame.size(); i++){
-                    window.render(maze_frame[i]);
-                } 
-                for (int i = 0;i<maze_obstacles.size();i++){
-                    window.render(maze_obstacles[i]);
-                }
-            } 
-            //RENDERING SECOND WALL
-            else if(frame == 1){
-                maze_frame = wall2;
-                maze_obstacles = secondObstacles;
-                for(int i =0; i<maze_frame.size(); i++){
-                    window.render(maze_frame[i]);
-                } 
-                for (int i = 0;i<maze_obstacles.size();i++){
-                    window.render(maze_obstacles[i]);
-                }
-            }    
-            else if (frame==2){
-            //RENDERING THIRD WALL
-                maze_frame = wall3;
-                maze_obstacles = thirdObstacles;
-                for(int i =0; i<maze_frame.size(); i++){
-                    window.render(maze_frame[i]);
-                } 
-                for (int i = 0;i<maze_obstacles.size();i++){
-                    window.render(maze_obstacles[i]);
-                }
-            } 
-            // for (auto& enemy : enemies) {
-            enemy1.moveTowardsPlayer(player1, wall, firstObstacles);
+
+            enemy1.moveTowardsPlayer(player1, playerHealth, wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){
-                window.render(health);
                 window.render(enemy1);
+                window.render(enemyHealth);
             }
-            // else{
-            //     delete enemy1;
-            // }
-            
+
             window.render(player1);
+            window.render(playerHealth);
             window.display();
         }
     }    
-    // Rough to see how to display a window in SDL.
-    // Need to run SDL renderer and SDL rect for sprites.
-    // need to wrok on the mazes and then display them.
-    // window.cleanUp();
+
     SDL_Quit();
 }
