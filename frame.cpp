@@ -10,27 +10,22 @@ std::vector<std::vector<Entity>> Frame::renderFrame(){
     //generating first maze
     maze m1(wall_ptr);
     std::vector<Entity> firstFrame = m1.firstFrame();
-    myMaze1 = m1;
     //generating second maze
     maze m2(wall_ptr);
     std::vector<Entity> secondFrame = m2.secondFrame();
-    myMaze1 = m1;
     //generating third maze
     maze m3(wall_ptr);    
     std::vector<Entity> thirdFrame = m3.thirdFrame();
-    myMaze1 = m1;
 
-    maze maze1obstacle(m1,obstacle_ptr,0);
-    std::vector<Entity> firstObstacles;
-    firstObstacles = maze1obstacle.placeObstacles(0);
+    obstacles generate1(obstacle_ptr,0);
+    std::vector<Entity> firstObstacles = generate1.getObstacles(m1,0);
 
-    maze maze2obstacles(m2,obstacle_ptr,1);
-    std::vector<Entity> secondObstacles;
-    secondObstacles = maze2obstacles.placeObstacles(1);
+    obstacles generate2(obstacle_ptr,1);
+    std::vector<Entity> secondObstacles = generate2.getObstacles(m2,1);
 
-    maze maze3obstacles(m3,obstacle_ptr,2);
-    std::vector<Entity> thirdObstacles;
-    thirdObstacles = maze3obstacles.placeObstacles(2);
+    obstacles generate3(obstacle_ptr,2);
+    std::vector<Entity> thirdObstacles = generate3.getObstacles(m3,2);
+
     //pushing them into allFrames vector according to index
     allFrames.push_back(firstFrame);
     allFrames.push_back(firstObstacles);

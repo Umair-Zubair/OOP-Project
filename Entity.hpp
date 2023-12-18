@@ -3,8 +3,6 @@
 #include <SDL_image.h>
 #include <iostream>
 
-class Enemy;
-
 class Entity{
     protected:
         float x, y;

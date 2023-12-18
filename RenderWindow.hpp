@@ -7,6 +7,8 @@
 #include "player.hpp"
 #include "maze.hpp"
 #include "showHealth.hpp"
+#include "obstacles.hpp"
+
 
 class RenderWindow
 {

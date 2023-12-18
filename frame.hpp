@@ -1,6 +1,6 @@
 #include <vector>
-#include "Entity.hpp"
 #include "maze.hpp"
+#include "obstacles.hpp"
 
 class Frame : public maze{
     private:
