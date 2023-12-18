@@ -128,7 +128,7 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
         int currentTime = SDL_GetTicks();
         int deltaTime = currentTime - lastAnimationTime;
 
-        if (deltaTime >= animationDelay) {
+        if (deltaTime >= animationDelay + 50) {
 
             if (player.getCurrentHealth() > 0) {
                 if (currentDirection == "Up") {
@@ -151,7 +151,7 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
                     currentFrameRightIndex = (currentFrameRightIndex + 1) % 6;
                     cout << "in right attack!";
                 }
-                playerHealth.changeHealth(player.getCurrentHealth());
+                playerHealth.changePlayerHealth(player.getCurrentHealth());
             }
 
             lastAnimationTime = currentTime;

@@ -14,7 +14,6 @@
 #include "gameState.hpp"
 #include "showHealth.hpp"
 #include "music.hpp"
-#include "frame.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -184,14 +183,14 @@ int main( int argc, char *argv[] )
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
     SDL_Texture* greenTile = window.loadTexture("obstacle.png");
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
-    SDL_Texture* PlayerHealth = window.loadTexture("graphics/Health.png");
+    SDL_Texture* PlayerHealth = window.loadTexture("graphics/playerHealth.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
     Enemy enemy1(900, 300, enemyModel);
     showHealth health(1105,30,EnemyHealth);
-    showHealth player_Health(50,30,PlayerHealth);
+    showHealth player_Health(20,30,PlayerHealth);
     
     Frame generate(Tile,greenTile);
     vector<vector<Entity>> allFrames = generate.renderFrame();
@@ -344,13 +343,18 @@ int main( int argc, char *argv[] )
                 window.render(health);
                 window.render(enemy1);
             }
-            // else{
-            //     delete enemy1;
-            // }
+
+            if(player1.getCurrentHealth() > 0){
+                window.render(player1);
+                window.render(player_Health);
+                window.display();
+            }
+            else{
+                gameRunning = false;
+                showGameOverScreen(window,gameOver,gameRunning);
+            }
             
-            window.render(player1);
-            window.render(player_Health);
-            window.display();
+
         }
     }    
     // Rough to see how to display a window in SDL.

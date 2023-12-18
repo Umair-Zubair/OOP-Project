@@ -16,3 +16,18 @@ void showHealth::changeHealth(int health){
         change_src(240,31,75,75);
     }
 }
+
+void showHealth::changePlayerHealth(int health){
+    if (health == 80){
+        change_src(80,31,75,75);
+    }
+    else if (health == 60){
+        change_src(160,31,75,75);
+    }
+    else if (health == 40){
+        change_src(240,31,75,75);
+    }
+    else if (health == 20){
+        change_src(323,31,75,75);
+    }
+}
