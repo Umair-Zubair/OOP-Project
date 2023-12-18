@@ -12,6 +12,7 @@
 #include <string>
 #include "gameState.hpp"
 #include "showHealth.hpp"
+#include "music.hpp"
 
 using namespace std;
 // g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -o main
@@ -187,15 +188,19 @@ int main( int argc, char *argv[] )
     Player player1(500, 600, playerModel);
     Enemy enemy1(900, 300, enemyModel);
     showHealth health(1105,30,EnemyHealth);
-
+    vector<Entity> allFrames;
 
     enemies.push_back(enemy1);
-    
+    int frame = 0;
     //First Frame
     //gameState game(Tile,window);
     maze maze1(Tile);
     vector<Entity> wall;
     wall = maze1.firstFrame();
+
+    vector<Entity> firstObstacles;
+    maze maze1obstacles(maze1,greenTile);
+    firstObstacles = maze1obstacles.placeObstacles(frame);
 
     //Second frame
     maze maze2(Tile);
@@ -215,13 +220,11 @@ int main( int argc, char *argv[] )
     bool attackAnimate = false;
     int startTime = SDL_GetTicks();
     string direction = "Up";
-    int frame = 0;
-    vector<Entity> firstObstacles;
-    maze maze1obstacles(maze1,greenTile);
-    firstObstacles = maze1obstacles.placeObstacles(frame);
-    maze_obstacles = firstObstacles;
+    
     SDL_Event event;
     if (startGame){
+        BackgroundMusic music("bgMusic.mp3");
+        music.play(-1);
         while (gameRunning)
         {
             while (SDL_PollEvent(&event))
@@ -308,7 +311,7 @@ int main( int argc, char *argv[] )
                     vector<Entity> secondObstacles;
                     maze maze2obstacles(maze2,greenTile);
                     secondObstacles = maze2obstacles.placeObstacles(frame);
-
+                    
                     vector<Entity> secondEnemyLocations;
                     maze maze2enemies(maze2,enemyModel);
                     secondEnemyLocations = maze2enemies.placeEnemies(frame);
