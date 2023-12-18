@@ -83,6 +83,7 @@ bool Entity::checkCollision(const Entity& enemy) {
             x < enemy.GetX() + enemy.getCurrentLocation().w + collisionOffset);
 }
 
+
 bool Entity::AttackCollision(const Entity& enemy) {
     const float collisionOffset = 35.0f;
 

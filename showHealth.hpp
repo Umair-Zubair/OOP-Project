@@ -9,4 +9,5 @@ class showHealth: public Entity{
     public:
         showHealth(float _x, float _y, SDL_Texture* _ptr);
         void changeHealth(int health);
+        void changePlayerHealth(int health);
 };
