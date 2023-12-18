@@ -41,17 +41,3 @@ std::vector<std::vector<Entity>> Frame::renderFrame(){
 
     return allFrames;
 }
-
-maze Frame::getMaze(int x){
-    if(x == 0){
-        return myMaze1;
-    }
-
-    else if(x == 1){
-        return myMaze2;
-    }
-
-    else if(x == 2){
-        return myMaze3;
-    }
-}

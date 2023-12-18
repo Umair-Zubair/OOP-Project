@@ -497,4 +497,3 @@ void Player::AttackDownAnimation(bool& animate, int startTime, Enemy& enemy) {
 //         }
 //     }
 // }
-

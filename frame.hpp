@@ -13,6 +13,5 @@ class Frame : public maze{
     Frame(SDL_Texture* _ptr1,SDL_Texture* _ptr2);
     std::vector<std::vector<Entity>> renderFrame();
     std::vector<std::vector<Entity>> renderObstacles();
-    maze getMaze(int x);
     void changeFrameNum();
 }; 

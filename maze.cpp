@@ -119,11 +119,6 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
         }
     }
 
-    for (int row=0;row<height;row++){
-        for (int col=0;col<width;col++){
-            myGraph[row][col] = graph[row][col];
-        }
-    }
     
     return wall;
 }
@@ -217,11 +212,6 @@ std:: vector<Entity> maze::secondFrame(){    //this function makes the first fra
         }
     }
 
-    for (int row=0;row<height;row++){
-        for (int col=0;col<width;col++){
-            myGraph2[row][col] = graph2[row][col];
-        }
-    }
 
     return secondWall;
 }
@@ -311,12 +301,6 @@ std::vector<Entity> maze::thirdFrame(){
         }
     }
 
-    for (int row=0;row<height;row++){
-        for (int col=0;col<width;col++){
-            myGraph3[row][col] = graph3[row][col];
-        }
-    }
-
     return thirdWall;
 }
 
@@ -376,7 +360,7 @@ maze::maze(const maze &m, SDL_Texture *_ptr,int frame):ptr(_ptr), Entity(0,0, nu
     }
 }
 
-vector<int> maze::placeObstacles(int frame){
+vector<Entity> maze::placeObstacles(int frame){
     //there will be 2 random obstacles placed in the map
     //if the player goes on that coordinate, they lose
     std::vector<Entity> FrameObstacles;
@@ -415,16 +399,3 @@ vector<int> maze::placeObstacles(int frame){
     return FrameObstacles;
 }
 
-std::vector<int> getGraph(int x) {
-    if(x == 0){
-        return myGraph;
-    }
-
-    else if(x == 1){
-        return myGraph2;
-    }
-
-    else if(x == 2){
-        return myGraph3;
-    }
-}
