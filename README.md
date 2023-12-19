@@ -43,3 +43,9 @@
 6. **Ending the Game:**
    - Receive win or lose messages based on game outcomes.
    - Restart the game or return to the main menu.
+  
+## References
+1. https://foozlecc.itch.io/lucifer-skeleton-grunt-enemy
+2. https://www.youtube.com/watch?v=WK_ojz7TOdM&list=PL2RPjWnJduNmXHRYwdtublIPdlqocBoLS&index=6
+3. https://foozlecc.itch.io/lucifer-warrior
+
