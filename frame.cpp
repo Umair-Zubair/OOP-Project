@@ -1,8 +1,4 @@
 #include "frame.hpp"
-void Frame::changeFrameNum(){
-    frameNum++;
-    renderFrame();
-}
 
 Frame::Frame(SDL_Texture* _ptr1,SDL_Texture* _ptr2):frameNum(0),wall_ptr(_ptr1),obstacle_ptr(_ptr2){};
 

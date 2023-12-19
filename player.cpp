@@ -41,7 +41,7 @@ void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles,
     }
     for (int i=0;i<checkObstacles.size();i++){
         if (checkCollision(checkObstacles[i])) {
-            // obstacleCollided = true;
+            obstacleCollided = true;
             y = checkObstacles[i].GetY() + 77;
         }
     } 
@@ -67,7 +67,7 @@ void Player::movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
             
-            // obstacleCollided = true;
+            obstacleCollided = true;
             y = checkObstacles[i].GetY() - 77;
         }
     }
@@ -96,7 +96,7 @@ void Player::moveright(std::vector<Entity> wall,std::vector<Entity> checkObstacl
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            // obstacleCollided = true;
+            obstacleCollided = true;
             x = checkObstacles[i].GetX() - 75;
         }
     }
@@ -125,7 +125,7 @@ void Player::moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
             x = checkObstacles[i].GetX() + 75;
-            // obstacleCollided = true;
+            obstacleCollided = true;
         }
     }
     // Check collision with enemy
