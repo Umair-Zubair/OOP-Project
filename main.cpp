@@ -156,7 +156,7 @@ int main( int argc, char *argv[] )
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
     SDL_Texture* enemyModel = window.loadTexture("graphics/SkeletonSpriteSheet.png");
-    SDL_Texture* greenTile = window.loadTexture("obstacle.png");
+    SDL_Texture* greenTile = window.loadTexture("brownTIle.png");
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* PlayerHealth = window.loadTexture("graphics/playerHealth.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
@@ -347,8 +347,22 @@ int main( int argc, char *argv[] )
                 showGameOverScreen(window,gameOver,gameRunning);
             }
         }
-    }    
-
+    }
+    //Memory cleanup
+    for (int i=0;i<wall.size();i++){
+        wall.pop_back();
+    }
+    for (int i=0;i<wall2.size();i++){
+        wall2.pop_back();
+    }
+    for (int i=0;i<wall3.size();i++){
+        wall3.pop_back();
+    }
+    for (int i=0;i<firstObstacles.size();i++){
+        firstObstacles.pop_back();
+        secondObstacles.pop_back();
+        thirdObstacles.pop_back();
+    }
     // Quit SDL
     SDL_Quit();
 

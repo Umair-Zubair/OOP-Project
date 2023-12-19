@@ -18,7 +18,7 @@ std::vector<Entity> obstacles::getObstacles( maze& m,int x){
     //if the player goes on that coordinate, they lose
     std::vector<Entity> FrameObstacles;
     coordinates point;
-    while (obstacleCount != 2){
+    while (obstacleCount != 1){
         point = getValue();
         int (*graph)[9][16] = m.getGraph(x); // Access the graph array from the maze class
         if (graph != nullptr && (*graph)[point.y_coord][point.x_coord] == 0) {
