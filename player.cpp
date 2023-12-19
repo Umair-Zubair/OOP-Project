@@ -41,8 +41,8 @@ void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles,
     }
     for (int i=0;i<checkObstacles.size();i++){
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
             // obstacleCollided = true;
+            y = checkObstacles[i].GetY() + 77;
         }
     } 
     // std::cout << checkCollision(enemy);
@@ -66,8 +66,9 @@ void Player::movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
+            
             // obstacleCollided = true;
+            y = checkObstacles[i].GetY() - 77;
         }
     }
 
@@ -95,8 +96,8 @@ void Player::moveright(std::vector<Entity> wall,std::vector<Entity> checkObstacl
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
             // obstacleCollided = true;
+            x = checkObstacles[i].GetX() - 75;
         }
     }
     // Check collision with enemy
@@ -118,12 +119,12 @@ void Player::moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     for (int i = 0; i < wall.size(); i++) {
         if (x < wall[i].GetX() + 75 && x + 75 > wall[i].GetX() &&
             y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
-            x = wall[i].GetX() + 75;
+            
         }
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
+            x = checkObstacles[i].GetX() + 75;
             // obstacleCollided = true;
         }
     }
@@ -487,11 +488,18 @@ void Player::AttackDownAnimation(bool& animate, int startTime, Enemy& enemy) {
 }
 
 int Player::getX(){
-    std::cout << x;
     return x;
 }
 
 int Player::getY(){
     return y;
+}
+
+int Player::setX(int _x){
+    x = _x;
+}
+
+int Player::setY(int _y){
+    y= _y;
 }
 

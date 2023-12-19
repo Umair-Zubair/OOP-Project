@@ -3,7 +3,6 @@
 //#include<SDL2/SDL.h>
 #include <SDL.h>
 #include <SDL_image.h>
-
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "maze.hpp"
@@ -81,6 +80,46 @@ void showGameOverScreen(RenderWindow &window, SDL_Texture *gameOverTexture, bool
 }
 
 
+void showGameWonScreen(RenderWindow &window, SDL_Texture *gameWonTexture, bool &gameWon) {
+    SDL_Event event;
+    bool showScreen = true;
+
+    while (showScreen) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                showScreen = false;
+                gameWon = true; 
+            }
+            else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    showScreen = false; 
+                    gameWon = true; 
+                }
+            }
+        }
+
+        window.clear();
+        window.render(gameWonTexture);
+        window.display();
+    }
+}
+// need to make a check if the user is selecting the correct path to go to the next frame.
+bool FrameChecker(int frameNo, Player player){
+    if (frameNo == 0 && player.getX() >=1120 && (player.getY() >=225 || player.getY() <=975)){
+        return true;
+    }
+
+    else if (frameNo == 1 && player.getY() >=620 ){
+        return true;
+    }
+    else if (frameNo == 2 && player.getX()>= 1120 && (player.getY() >=225 || player.getY() <=975)){
+        return true;
+    }
+    else{return false;}
+    
+}
+
+
 int main( int argc, char *argv[] )
 {
    
@@ -103,6 +142,7 @@ int main( int argc, char *argv[] )
     SDL_Texture* EnemyHealth = window.loadTexture("graphics/Health.png");
     SDL_Texture* PlayerHealth = window.loadTexture("graphics/playerHealth.png");
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
+    SDL_Texture* gameWon = window.loadTexture("graphics/GameWon.jpeg");
     std::vector<Enemy> enemies;
     // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
@@ -221,7 +261,41 @@ int main( int argc, char *argv[] )
             
             //RENDERING FIRST WALL
             //this is to render each wall pixel on the screen.
-            std::cout << player1.getX() << std::endl;
+            // std::cout << player1.getX() << std::endl;
+            // if(frame == 0){
+            //     for(int i =0; i<maze_frame.size(); i++){
+            //         window.render(maze_frame[i]);
+            //     } 
+            //     for (int i = 0;i<maze_obstacles.size();i++){
+            //         window.render(maze_obstacles[i]);
+            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
+            //     }
+            // } 
+            // //RENDERING SECOND WALL
+            // else if(player1.getX() >=1120){
+            //     maze_frame = wall2;
+            //     maze_obstacles = secondObstacles;
+            //     for(int i =0; i<maze_frame.size(); i++){
+            //         window.render(maze_frame[i]);
+            //     } 
+            //     for (int i = 0;i<maze_obstacles.size();i++){
+            //         window.render(maze_obstacles[i]);
+            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
+            //     }
+            // }    
+            // if (player1.getX()>=1120){
+            // //RENDERING THIRD WALL
+            //     maze_frame = wall3;
+            //     maze_obstacles = thirdObstacles;
+            //     for(int i =0; i<maze_frame.size(); i++){
+            //         window.render(maze_frame[i]);
+            //     } 
+            //     for (int i = 0;i<maze_obstacles.size();i++){
+            //         window.render(maze_obstacles[i]);
+            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
+            //     }
+            // } 
+
             if(frame == 0){
                 for(int i =0; i<maze_frame.size(); i++){
                     window.render(maze_frame[i]);
@@ -230,9 +304,14 @@ int main( int argc, char *argv[] )
                     window.render(maze_obstacles[i]);
                     //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
+                if (FrameChecker(frame, player1)){
+                    player1.setX(5);
+                    player1.setY(300);
+                    frame +=1;
+                }
             } 
             //RENDERING SECOND WALL
-            else if(player1.getX() >=1120){
+            else if(frame == 1){
                 maze_frame = wall2;
                 maze_obstacles = secondObstacles;
                 for(int i =0; i<maze_frame.size(); i++){
@@ -242,8 +321,21 @@ int main( int argc, char *argv[] )
                     window.render(maze_obstacles[i]);
                     //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
+                if (FrameChecker(frame, player1)){
+                    // need to check player location and update his values accordingly.
+                    if (player1.getX() >= 230 && player1.getX() <= 450){
+                        player1.setX(300);
+                        player1.setY(20);
+                    }
+                    else{
+                        player1.setX(825);
+                        player1.setY(20);
+                    }
+                    frame +=1;
+                }
+                
             }    
-            if (player1.getX()>=1120){
+            else if (frame == 2){
             //RENDERING THIRD WALL
                 maze_frame = wall3;
                 maze_obstacles = thirdObstacles;
@@ -254,7 +346,14 @@ int main( int argc, char *argv[] )
                     window.render(maze_obstacles[i]);
                     //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
+                if (FrameChecker(frame, player1)){
+                    showGameWonScreen(window,gameWon,gameRunning);
+                    gameRunning = false;
+                    
+                }
             } 
+
+
             // for (auto& enemy : enemies) {
             enemy1.moveTowardsPlayer(player1, player_Health , wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){

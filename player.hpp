@@ -43,5 +43,7 @@ class Player : public Entity{
         bool obstacleCollision();
         int getX(); // to get the x Coordinate of player for frame change.
         int getY(); // to get the y Coordinate of player for frame change.
+        int setX(int _x); // need to set the location of the player according to frame change.
+        int setY(int _y); // need to set the location of the player according to frame change.
         // void getVector();
 };
