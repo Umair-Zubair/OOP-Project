@@ -6,50 +6,58 @@
 #include "health.hpp"
 #include "Entity.hpp"
 
-Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(1.0f), attackRange(50), enemy_hp(100), lastAnimationTime(SDL_GetTicks()){
-    change_src(16, 12, 24, 29);
-    animationDelay = 100;
-    currentDirection = "Up";
+// Constructor for the Enemy class, initializing attributes and setting the initial direction
+Enemy::Enemy(float _x, float _y, SDL_Texture* _ptr) : Entity(_x, _y, _ptr), speed(1.0f), attackRange(100), enemy_hp(100), lastAnimationTime(SDL_GetTicks()){
+    change_src(16, 12, 24, 29); // Set the source rectangle for rendering the enemy sprite
+    animationDelay = 100; // Set the delay between animation frames
+    currentDirection = "Up"; // Set the initial direction of the enemy
 }
 
+// Get the current health of the enemy
 int Enemy::getCurrentHealth() {
     return enemyHealth.getCurrentHealth();
 }
 
+// Decrease the health of the enemy
 void Enemy::decreaseHealth() {
     enemyHealth.decreaseEnemyHealth();
 }
 
+// Get the type of weapon the enemy uses
 std::string Enemy::getWeaponType() const {
     return weaponType;
 }
 
-void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles) {
-    float dx = player.GetX() - x;
-    float dy = player.GetY() - y;
-    float distance = std::sqrt(dx * dx + dy * dy);
+// Move the enemy towards the player while avoiding obstacles
+void Enemy::moveTowardsPlayer(Player& player, showHealth& playerHealth, std::vector<Entity>& wall, std::vector<Entity>& checkObstacles) {
+    float dx = player.GetX() - x; // Calculate the horizontal distance to the player
+    float dy = player.GetY() - y; // Calculate the vertical distance to the player
+    float distance = std::sqrt(dx * dx + dy * dy); // Calculate the Euclidean distance to the player
 
+    // Normalize the direction vector
     if (distance != 0) {
         dx /= distance;
         dy /= distance;
     }
 
+    // Determine the current direction based on the normalized vector
     if (std::abs(dx) > std::abs(dy)) {
         currentDirection = (dx > 0) ? "Right" : "Left";
     } else {
         currentDirection = (dy > 0) ? "Down" : "Up";
     }
 
-    float nextX = x + dx * speed;
-    float nextY = y + dy * speed;
+    float nextX = x + dx * speed; // Calculate the next horizontal position
+    float nextY = y + dy * speed; // Calculate the next vertical position
 
+    // Check for collisions with walls and obstacles to avoid
     if (!checkCollision(player)) {
         if (currentDirection == "Left") {
+            // Adjust the position if there is a collision with a wall or obstacle on the left
             for (int i = 0; i < wall.size(); i++) {
                 if (x < wall[i].GetX() + 75 && x + 75 > wall[i].GetX() &&
                     y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
                     nextY = y;
-                    //cout << "left enter";
                 }
             }
             for (int i = 0; i < checkObstacles.size(); i++) {
@@ -62,12 +70,12 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
             y = nextY;
         }
 
+        // Similar checks for other directions: "Right", "Up", "Down"
         else if (currentDirection == "Right"){
             for (int i = 0; i < wall.size(); i++) {
                 if (x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75 &&
                     y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75) {
                     nextY = y;
-                    //cout << "Right enter";
                 }
             }
 
@@ -87,7 +95,6 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
                 if (y < (wall[i].GetY() + 75) && (y + 75) > wall[i].GetY() &&
                     x < (wall[i].GetX() + 75) && (x + 75) > wall[i].GetX()) {
                     nextX = x;
-                    //cout << "Up enter";
                 }
             }
             for (int i=0;i<checkObstacles.size();i++){
@@ -106,8 +113,6 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
                 if (y + 75 > wall[i].GetY() && y < wall[i].GetY() + 75 &&
                     x + 75 > wall[i].GetX() && x < wall[i].GetX() + 75) {
                     nextX = x;
-                    //cout << "Down enter";
-                    //cout << x << " " << y << endl;
                 }
             }
 
@@ -123,13 +128,14 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
         }
     }
 
+    // If the distance to the player is within attack range, perform attack animation
     if (distance < attackRange) {
-
+        // Calculate animation timing
         int currentTime = SDL_GetTicks();
         int deltaTime = currentTime - lastAnimationTime;
 
+        // Perform attack animation based on the current direction
         if (deltaTime >= animationDelay + 50) {
-
             if (player.getCurrentHealth() > 0) {
                 if (currentDirection == "Up") {
                     AttackUpAnimation(player);
@@ -154,14 +160,15 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
                 playerHealth.changePlayerHealth(player.getCurrentHealth());
             }
 
+            // Update the last animation time
             lastAnimationTime = currentTime;
         }
-    }
-
-    else{
+    } else {
+        // If the player is not within attack range, perform movement animation
         int currentTime = SDL_GetTicks();
         int deltaTime = currentTime - lastAnimationTime;
 
+        // Perform movement animation based on the current direction
         if (deltaTime >= animationDelay) {
             if (currentDirection == "Up") {
                 updateUpAnimation(currentFrameUpIndex);
@@ -177,6 +184,7 @@ void Enemy:: moveTowardsPlayer(Player& player, showHealth& playerHealth, std::ve
                 currentFrameRightIndex = (currentFrameRightIndex + 1) % 6;
             }
 
+            // Update the last animation time
             lastAnimationTime = currentTime;
         }
     }

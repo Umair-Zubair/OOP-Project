@@ -120,10 +120,10 @@ std:: vector<Entity> maze::firstFrame(){    //this function makes the first fram
     return wall;
 }
 
-//following 3 functions are skeleton, will be implemented later.
-//they will be exactly like firstFrame(). 
+//following 3 functions are exactly like firstFrame()
 //Will be used to draw walls on specified coordinates
-std:: vector<Entity> maze::secondFrame(){    //this function makes the first fram of the mazestd::vector<Entity> ::maze::secondFrame(){
+
+std:: vector<Entity> maze::secondFrame(){ 
     std::vector<Entity> secondWall;
     for (int row=0;row<height;row++){
         for (int col=0;col<width;col++){
