@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-//#include<SDL2/SDL.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "RenderWindow.hpp"
@@ -20,23 +19,33 @@ using namespace std;
 // Please look at command for mingw and sdl installation locaton.(For group members.)
 // command for compilation.
 
+// Define the dimensions of the game window
 const int WIDTH = 1200, HEIGHT = 675;
 
-
+// Function to display the welcome screen and wait for user input
 bool showWelcomeScreen(RenderWindow& window) {
+    // Load the texture for the welcome screen
     SDL_Texture* welcomeImage = window.loadTexture("welcome.jpg");
 
+    // Set up variables for the welcome screen loop
     bool welcomeScreenRunning = true;
     SDL_Event welcomeEvent;
-    
+
+    // Loop until user input is received
     while (welcomeScreenRunning) {
+        // Handle SDL events
         while (SDL_PollEvent(&welcomeEvent)) {
+            // Quit the game if the window is closed
             if (welcomeEvent.type == SDL_QUIT) {
                 return false; 
-            } else if (welcomeEvent.type == SDL_KEYDOWN) {
+            } 
+            // Check for key presses
+            else if (welcomeEvent.type == SDL_KEYDOWN) {
                 switch (welcomeEvent.key.keysym.sym) {
+                    // If Enter is pressed, start the game
                     case SDLK_RETURN:
                         return true; 
+                    // If Escape is pressed, quit the game
                     case SDLK_ESCAPE:
                         return false; 
                     default:
@@ -45,27 +54,34 @@ bool showWelcomeScreen(RenderWindow& window) {
             }
         }
 
+        // Clear the window, render the welcome image, and display the window
         window.clear();
         window.render(welcomeImage);
         window.display();
     }
 
-
-
+    // This return statement is not reached, but included for completeness
     return true;
 }
 
+// Function to display the game over screen and handle user input
 void showGameOverScreen(RenderWindow &window, SDL_Texture *gameOverTexture, bool &gameOver) {
+    // Set up variables for the game over screen loop
     SDL_Event event;
     bool showScreen = true;
 
+    // Loop until user input is received
     while (showScreen) {
+        // Handle SDL events
         while (SDL_PollEvent(&event)) {
+            // Quit the game if the window is closed
             if (event.type == SDL_QUIT) {
                 showScreen = false;
                 gameOver = true; 
             }
+            // Check for key presses
             else if (event.type == SDL_KEYDOWN) {
+                // If Escape is pressed, quit the game
                 if (event.key.keysym.sym == SDLK_ESCAPE) {
                     showScreen = false; 
                     gameOver = true; 
@@ -73,6 +89,7 @@ void showGameOverScreen(RenderWindow &window, SDL_Texture *gameOverTexture, bool
             }
         }
 
+        // Clear the window, render the game over image, and display the window
         window.clear();
         window.render(gameOverTexture);
         window.display();
@@ -122,18 +139,19 @@ bool FrameChecker(int frameNo, Player player){
 
 int main( int argc, char *argv[] )
 {
-   
+    // Initialize SDL image loading
     if (!(IMG_INIT_PNG)){
         cout << "IMG_init has failed. Error: " << SDL_GetError() << endl;
     }
-    
+
+    // Set up SDL event handling and create the game window
     SDL_Event windowEvent;
-    //SDL_SetRenderDrawColor(renderer,0,255,0,255);
     RenderWindow window("Test", 1200, 675);
+
+    // Display the welcome screen and start the game if user presses Enter
     bool startGame = showWelcomeScreen(window);
-    // Load a texture on the screen.
-    //SDL_Texture* playerModel = window.loadTexture("graphics/idle_model_1.png");
-    //SDL_Texture* Tile = window.loadTexture("greyTile.jpg");
+
+    // Load textures for various game elements
     SDL_Texture* bg = window.loadTexture("greenBG.jpg");
     SDL_Texture* playerModel = window.loadTexture("graphics/WarriorSpriteSheet.png");
     SDL_Texture* Tile = window.loadTexture("graphics/Wall.png");
@@ -144,12 +162,12 @@ int main( int argc, char *argv[] )
     SDL_Texture* gameOver = window.loadTexture("gameOverScreen.jpg");
     SDL_Texture* gameWon = window.loadTexture("graphics/GameWon.jpeg");
     std::vector<Enemy> enemies;
-    // need to make a loop for game running so that window stays popped up.
     Player player1(500, 600, playerModel);
     Enemy enemy1(900, 300, enemyModel);
     showHealth health(1105,30,EnemyHealth);
     showHealth player_Health(20,30,PlayerHealth);
     
+    // Create the maze frame and obstacles
     Frame generate(Tile,greenTile);
     vector<vector<Entity>> allFrames = generate.renderFrame();
     vector<Entity> wall = allFrames[0];
@@ -159,29 +177,15 @@ int main( int argc, char *argv[] )
     vector<Entity> secondObstacles = allFrames[3];
     vector<Entity> thirdObstacles = allFrames[5];
 
+    // Add an enemy to the vector
     enemies.push_back(enemy1);
-    
-    //First Frame
-    //gameState game(Tile,window);
-    //maze maze1(Tile);
-    //vector<Entity> wall;
-    //wall = maze1.firstFrame();
 
-    //Second frame
-    //maze maze2(Tile);
-    //vector<Entity> wall2;
-    //wall2 = maze2.secondFrame();
-    
-    //Third frame
-    //maze maze3(Tile);
-    //vector<Entity> wall3;
-    //wall3 = maze3.thirdFrame();
-
-
+    // Initialize vectors for maze elements
     vector<Entity> maze_frame = wall;
     vector<Entity> maze_obstacles = firstObstacles;
     vector<Entity> maze_enemies;
     
+    // Set up game loop variables
     bool gameRunning = true;
     bool attackAnimate = false;
     int startTime = SDL_GetTicks();
@@ -189,120 +193,93 @@ int main( int argc, char *argv[] )
     int frame = 0;
 
     SDL_Event event;
+
+    // If the game is started from the welcome screen
     if (startGame){
+        // Play background music
         BackgroundMusic music("bgMusic.mp3");
         music.play(-1);
+
+        // Main game loop
         while (gameRunning)
         {
+            // Handle SDL events
             while (SDL_PollEvent(&event))
             {
+                // Quit the game if the window is closed
                 if (event.type == SDL_QUIT)
                 {
                     gameRunning = false;
                 }
+                // Handle key presses
                 else if (event.type == SDL_KEYDOWN)
                 {
-                // Handle key presses
-                if (player1.obstacleCollision()==true){
-                    gameRunning = false;
-                    showGameOverScreen(window,gameOver,gameRunning);
-                    return 0;
-                }
-                switch (event.key.keysym.sym)
+                    // Check for obstacle collision, end the game if true
+                    if (player1.obstacleCollision()==true){
+                        gameRunning = false;
+                        showGameOverScreen(window,gameOver,gameRunning);
+                        return 0;
+                    }
+                    
+                    // Handle player movement and attack events
+                    switch (event.key.keysym.sym)
                     {
-                    case SDLK_w:
-                    // up
-                        player1.moveup(maze_frame,maze_obstacles, enemy1);
-                        direction = "Up";
-                        break;
-                    case SDLK_s:
-                    // down
-                        player1.movedown(maze_frame,maze_obstacles, enemy1);
-                        direction = "Down";
-                        break;
-                    case SDLK_a:
-                    // left
-                        player1.moveleft(maze_frame,maze_obstacles, enemy1);
-                        direction = "Left";
-                        break;
-                    case SDLK_d:
-                    // right
-                        player1.moveright(maze_frame,maze_obstacles, enemy1);
-                        direction = "Right";
-                        break;
-                    case SDLK_k:
-                        attackAnimate = true;
-                        startTime = SDL_GetTicks();
-                        
-                        // player1.AttackUp();
-                        break;
+                        case SDLK_w:
+                            // Move up
+                            player1.moveup(maze_frame,maze_obstacles, enemy1);
+                            direction = "Up";
+                            break;
+                        case SDLK_s:
+                            // Move down
+                            player1.movedown(maze_frame,maze_obstacles, enemy1);
+                            direction = "Down";
+                            break;
+                        case SDLK_a:
+                            // Move left
+                            player1.moveleft(maze_frame,maze_obstacles, enemy1);
+                            direction = "Left";
+                            break;
+                        case SDLK_d:
+                            // Move right
+                            player1.moveright(maze_frame,maze_obstacles, enemy1);
+                            direction = "Right";
+                            break;
+                        case SDLK_k:
+                            // Initiate attack animation
+                            attackAnimate = true;
+                            startTime = SDL_GetTicks();
+                            break;
                     }  
                 }
             }
 
+            // Perform attack animation based on player direction
             if (direction == "Up"){
                 player1.AttackUpAnimation(attackAnimate, startTime, enemy1);
             }
             else if (direction == "Left"){
                 player1.AttackLeftAnimation(attackAnimate, startTime, enemy1);
-
             }
             else if (direction == "Right"){
                 player1.AttackRightAnimation(attackAnimate, startTime, enemy1);
             }
             else {
                 player1.AttackDownAnimation(attackAnimate, startTime, enemy1);
-
             }
+
+            // Update enemy health display
             health.changeHealth(enemy1.getCurrentHealth());
         
+            // Clear the window and render the background
             window.clear();
             window.render(bg);
-            
-            //RENDERING FIRST WALL
-            //this is to render each wall pixel on the screen.
-            // std::cout << player1.getX() << std::endl;
-            // if(frame == 0){
-            //     for(int i =0; i<maze_frame.size(); i++){
-            //         window.render(maze_frame[i]);
-            //     } 
-            //     for (int i = 0;i<maze_obstacles.size();i++){
-            //         window.render(maze_obstacles[i]);
-            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
-            //     }
-            // } 
-            // //RENDERING SECOND WALL
-            // else if(player1.getX() >=1120){
-            //     maze_frame = wall2;
-            //     maze_obstacles = secondObstacles;
-            //     for(int i =0; i<maze_frame.size(); i++){
-            //         window.render(maze_frame[i]);
-            //     } 
-            //     for (int i = 0;i<maze_obstacles.size();i++){
-            //         window.render(maze_obstacles[i]);
-            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
-            //     }
-            // }    
-            // if (player1.getX()>=1120){
-            // //RENDERING THIRD WALL
-            //     maze_frame = wall3;
-            //     maze_obstacles = thirdObstacles;
-            //     for(int i =0; i<maze_frame.size(); i++){
-            //         window.render(maze_frame[i]);
-            //     } 
-            //     for (int i = 0;i<maze_obstacles.size();i++){
-            //         window.render(maze_obstacles[i]);
-            //         //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
-            //     }
-            // } 
-
+            // First wall render
             if(frame == 0){
                 for(int i =0; i<maze_frame.size(); i++){
                     window.render(maze_frame[i]);
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
-                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
                 if (FrameChecker(frame, player1)){
                     player1.setX(5);
@@ -319,7 +296,6 @@ int main( int argc, char *argv[] )
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
-                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
                 if (FrameChecker(frame, player1)){
                     // need to check player location and update his values accordingly.
@@ -344,7 +320,6 @@ int main( int argc, char *argv[] )
                 } 
                 for (int i = 0;i<maze_obstacles.size();i++){
                     window.render(maze_obstacles[i]);
-                    //cout<<maze_obstacles[i].GetX() << " " <<maze_obstacles[i].GetY() << endl;
                 }
                 if (FrameChecker(frame, player1)){
                     showGameWonScreen(window,gameWon,gameRunning);
@@ -353,30 +328,30 @@ int main( int argc, char *argv[] )
                 }
             } 
 
-
-            // for (auto& enemy : enemies) {
+            // Move and render the enemy, update player health
             enemy1.moveTowardsPlayer(player1, player_Health , wall, firstObstacles);
             if (enemy1.getCurrentHealth() > 0){
                 window.render(health);
                 window.render(enemy1);
             }
 
+            // Render the player and player health if player is alive
             if(player1.getCurrentHealth() > 0){
                 window.render(player1);
                 window.render(player_Health);
                 window.display();
             }
+            // If player is dead, end the game
             else{
                 gameRunning = false;
                 showGameOverScreen(window,gameOver,gameRunning);
             }
-            
-
         }
     }    
-    // Rough to see how to display a window in SDL.
-    // Need to run SDL renderer and SDL rect for sprites.
-    // need to wrok on the mazes and then display them.
-    // window.cleanUp();
+
+    // Quit SDL
     SDL_Quit();
+
+    // End of the program
+    return 0;
 }
