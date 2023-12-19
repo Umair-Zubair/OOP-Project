@@ -48,4 +48,5 @@
 1. https://foozlecc.itch.io/lucifer-skeleton-grunt-enemy
 2. https://www.youtube.com/watch?v=WK_ojz7TOdM&list=PL2RPjWnJduNmXHRYwdtublIPdlqocBoLS&index=6
 3. https://foozlecc.itch.io/lucifer-warrior
+4. https://youtu.be/OuRvOCf9mJ4?si=nlViL6yRO59AdWR-
 
