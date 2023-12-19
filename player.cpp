@@ -41,8 +41,8 @@ void Player::moveup(std::vector<Entity> wall,std::vector<Entity> checkObstacles,
     }
     for (int i=0;i<checkObstacles.size();i++){
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
-            // obstacleCollided = true;
+            //std::cout << "Wah yaar" << endl;
+            obstacleCollided = true;
         }
     } 
     // std::cout << checkCollision(enemy);
@@ -66,8 +66,8 @@ void Player::movedown(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
-            // obstacleCollided = true;
+            //std::cout << "Wah yaar" << endl;
+            obstacleCollided = true;
         }
     }
 
@@ -95,8 +95,8 @@ void Player::moveright(std::vector<Entity> wall,std::vector<Entity> checkObstacl
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
-            // obstacleCollided = true;
+            //std::cout << "Wah yaar" << endl;
+            obstacleCollided = true;
         }
     }
     // Check collision with enemy
@@ -123,8 +123,8 @@ void Player::moveleft(std::vector<Entity> wall,std::vector<Entity> checkObstacle
     }
     for (int i = 0; i < checkObstacles.size(); i++) {
         if (checkCollision(checkObstacles[i])) {
-            std::cout << "Wah yaar" << endl;
-            // obstacleCollided = true;
+            //std::cout << "Wah yaar" << endl;
+            obstacleCollided = true;
         }
     }
     // Check collision with enemy
