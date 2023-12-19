@@ -1,5 +1,9 @@
 #OOP PROJECT
 # Maze Warrior
+To compile and play the game:
+1) Clone the repository to your PC.
+2) For windows use this command to compile the code: g++ *.cpp -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -o output
+3) After the code compiles, enter this command to start the game: .\output.exe
 
 ## Overview
 "Maze Warrior" is an engaging 2D RPG game where players embark on an adventure through challenging handcrafted mazes filled with armed enemies and obstacles. The goal is to survive, navigate through the maze, defeat enemies, and reach the finish line within a set time limit.
@@ -14,7 +18,6 @@
 - **Maze Class:** Represents the maze in the game, including layout, traps, and obstacles.
 - **Player Class:** Manages the player's location, health, and actions.
 - **Health Class:** Handles player and enemy health, including methods to update health.
-- **Weapons Class:** Manages the player's weapon attributes such as damage rate, max fire rate, and ammunition.
 - **Enemy Class:** Represents enemies in the game, controlling their movement and attacks.
 - **Enemy Health Class:** Manages the health of each enemy, increasing difficulty as the game progresses.
 - **Game State Class:** Keeps track of the game state, updating based on player actions and displaying win/lose messages.
@@ -32,15 +35,11 @@
    - Engage in turn-based combat with enemies by moving into their tiles.
    - Choose actions during your turn, such as attacking or using skills.
 
-4. **Ammo Management:**
-   - Monitor ammunition count and find ammo boxes to resupply.
-   - Reload weapons strategically to ensure firepower during battles.
-
-5. **Game Progression:**
+4. **Game Progression:**
    - Reach the finish line within the time limit to win.
    - Manage player health to avoid losing the game.
 
-6. **Ending the Game:**
+5. **Ending the Game:**
    - Receive win or lose messages based on game outcomes.
    - Restart the game or return to the main menu.
   
