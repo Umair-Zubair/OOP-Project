@@ -1,4 +1,3 @@
-#OOP PROJECT
 # Maze Warrior
 To compile and play the game:
 1) Clone the repository to your PC.
